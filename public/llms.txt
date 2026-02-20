@@ -1,0 +1,47 @@
+# Business — Generative Engine Optimization Map
+
+---
+
+## Pages
+
+### בית
+https://example.com
+Ezuz מציעה שירותי מודיעין עסקי תחרותי וניהול מוניטין דיגיטלי לעסקים בישראל. פתרונות מותאמים אישית לשיפור הנוכחות הדיגיטלית שלכם. התחילו עכשיו!
+
+### שירותים
+https://example.com/services
+גלו את מגוון השירותים הדיגיטליים שלנו: ניהול מוניטין מקצועי, מודיעין עסקי מתקדם, וניתוח תחרות מעמיק. פתרונות מותאמים להצלחה דיגיטלית מובטחת.
+
+### תובנות
+https://example.com/insights
+קבלו גישה לתובנות עסקיות בלעדיות, מגמות שוק עדכניות וטיפים מקצועיים לשיפור מוניטין באינטרנט. המומחיות שלנו לשירותכם - התעדכנו היום!
+
+### צור קשר
+https://example.com/contact
+מוכנים לשדרג את המוניטין הדיגיטלי של העסק? צרו קשר עם המומחים של Ezuz לייעוץ אישי ופתרונות מודיעין עסקי מותאמים. נשמח לסייע לכם להצליח!
+
+## Legal & Policy
+
+### Privacy Policy
+https://example.com/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://example.com/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://example.com/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+# Business Context (for LLM understanding)
+
+## About Business
+---
+
+# Additional Resources
+
+- **Sitemap**: https://example.com/sitemap.xml
+- **Robots.txt**: https://example.com/robots.txt
