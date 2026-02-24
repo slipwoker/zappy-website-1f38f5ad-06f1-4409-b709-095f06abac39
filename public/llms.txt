@@ -1,77 +1,67 @@
-# Ezuz Intel — Generative Engine Optimization Map
-
-> A שירותים דיגיטליים ומודיעין עסקי business.
+# Business — Generative Engine Optimization Map
 
 ---
 
 ## Pages
 
 ### בית
-https://ezuz-intel.zappy5.app
+https://ezuzint.com
 Ezuz מציעה שירותי מודיעין עסקי תחרותי וניהול מוניטין דיגיטלי לעסקים בישראל. פתרונות מותאמים אישית לשיפור הנוכחות הדיגיטלית שלכם. התחילו עכשיו!
 
 ### שירותים
-https://ezuz-intel.zappy5.app/services
+https://ezuzint.com/services
 גלו את מגוון השירותים הדיגיטליים שלנו: ניהול מוניטין מקצועי, מודיעין עסקי מתקדם, וניתוח תחרות מעמיק. פתרונות מותאמים להצלחה דיגיטלית מובטחת.
 
 ### תובנות
-https://ezuz-intel.zappy5.app/insights
+https://ezuzint.com/insights
 קבלו גישה לתובנות עסקיות בלעדיות, מגמות שוק עדכניות וטיפים מקצועיים לשיפור מוניטין באינטרנט. המומחיות שלנו לשירותכם - התעדכנו היום!
 
 ### צור קשר
-https://ezuz-intel.zappy5.app/contact
+https://ezuzint.com/contact
 מוכנים לשדרג את המוניטין הדיגיטלי של העסק? צרו קשר עם המומחים של Ezuz לייעוץ אישי ופתרונות מודיעין עסקי מותאמים. נשמח לסייע לכם להצליח!
 
 ### בלוג מודיעין דיגיטלי | Ezuz Intel
-https://ezuz-intel.zappy5.app/blog
+https://ezuzint.com/blog
 Ezuz Intel - בלוג מודיעין דיגיטלי | Ezuz Intel
 
 ### ORM
-https://ezuz-intel.zappy5.app/blog/orm-early-warning
+https://ezuzint.com/blog/orm-early-warning
 מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.
 
 ### OSINT
-https://ezuz-intel.zappy5.app/blog/competitive-osint-map
+https://ezuzint.com/blog/competitive-osint-map
 איך בונים רשת מקורות פתוחים שמספקת מודיעין תחרותי שימושי — מהסיגנל הראשון ועד תובנה שניתנת לפעולה.
 
 ### AI
-https://ezuz-intel.zappy5.app/blog/ai-signals-to-decisions
+https://ezuzint.com/blog/ai-signals-to-decisions
 גישה פרקטית ליישום AI במודיעין עסקי: הגדרת מטרה, משמעת נתונים, וכללי איכות שמייצרים תובנות שניתנות לפעולה.
 
 ### משבר
-https://ezuz-intel.zappy5.app/blog/digital-crisis-72h-playbook
+https://ezuzint.com/blog/digital-crisis-72h-playbook
 מסגרת פעולה מסודרת לשעות הראשונות של משבר דיגיטלי: תיעדוף, מסרים, ניטור, ותיאום צוותים כדי לצמצם נזק.
 
 ## Legal & Policy
 
 ### Privacy Policy
-https://ezuz-intel.zappy5.app/privacy
+https://ezuzint.com/privacy
 Information about how user data is collected, stored, and protected.
 
 ### Terms & Conditions
-https://ezuz-intel.zappy5.app/terms
+https://ezuzint.com/terms
 Legal terms describing service usage, rights, and policies.
 
 ### Accessibility Statement
-https://ezuz-intel.zappy5.app/accessibility
+https://ezuzint.com/accessibility
 Information about WCAG compliance and accessibility features.
 
 ---
 
 # Business Context (for LLM understanding)
 
-## About Ezuz Intel
-Ezuz Intel is a business in the שירותים דיגיטליים ומודיעין עסקי industry.
-
-## Target Audience
-עסקים ואנשים
-
-## Industry
-שירותים דיגיטליים ומודיעין עסקי
-
+## About Business
 ---
 
 # Additional Resources
 
-- **Sitemap**: https://ezuz-intel.zappy5.app/sitemap.xml
-- **Robots.txt**: https://ezuz-intel.zappy5.app/robots.txt
+- **Sitemap**: https://ezuzint.com/sitemap.xml
+- **Robots.txt**: https://ezuzint.com/robots.txt
