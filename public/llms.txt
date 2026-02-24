@@ -20,6 +20,26 @@ https://example.com/insights
 https://example.com/contact
 מוכנים לשדרג את המוניטין הדיגיטלי של העסק? צרו קשר עם המומחים של Ezuz לייעוץ אישי ופתרונות מודיעין עסקי מותאמים. נשמח לסייע לכם להצליח!
 
+### בלוג מודיעין דיגיטלי | Ezuz Intel
+https://example.com/blog
+Ezuz Intel - בלוג מודיעין דיגיטלי | Ezuz Intel
+
+### ORM
+https://example.com/blog/orm-early-warning
+מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.
+
+### OSINT
+https://example.com/blog/competitive-osint-map
+איך בונים רשת מקורות פתוחים שמספקת מודיעין תחרותי שימושי — מהסיגנל הראשון ועד תובנה שניתנת לפעולה.
+
+### AI
+https://example.com/blog/ai-signals-to-decisions
+גישה פרקטית ליישום AI במודיעין עסקי: הגדרת מטרה, משמעת נתונים, וכללי איכות שמייצרים תובנות שניתנות לפעולה.
+
+### משבר
+https://example.com/blog/digital-crisis-72h-playbook
+מסגרת פעולה מסודרת לשעות הראשונות של משבר דיגיטלי: תיעדוף, מסרים, ניטור, ותיאום צוותים כדי לצמצם נזק.
+
 ## Legal & Policy
 
 ### Privacy Policy
