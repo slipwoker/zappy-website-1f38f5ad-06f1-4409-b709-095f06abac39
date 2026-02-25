@@ -24,10 +24,6 @@ https://ezuzint.com/contact
 https://ezuzint.com/blog
 Ezuz Intel - בלוג מודיעין דיגיטלי | Ezuz Intel
 
-### ORM
-https://ezuzint.com/blog/orm-early-warning
-מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.
-
 ### OSINT
 https://ezuzint.com/blog/competitive-osint-map
 איך בונים רשת מקורות פתוחים שמספקת מודיעין תחרותי שימושי — מהסיגנל הראשון ועד תובנה שניתנת לפעולה.
