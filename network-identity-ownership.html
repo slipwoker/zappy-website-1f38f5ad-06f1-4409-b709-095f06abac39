@@ -998,363 +998,381 @@ html[dir="rtl"] body {
 </nav>
   
   <main>
-      <section style="
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  min-height: 100vh;
-  background: var(--bg-dark);
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-" data-zappy-section="true" class="section">
+      <section style="position: relative; width: 100%; max-width: 100%; box-sizing: border-box; background: linear-gradient(135deg, #0E1014 0%, #161A22 50%, #0E1014 100%); overflow: hidden; padding: 120px 0 100px;" data-zappy-section="true" class="section">
   <style>
-    @keyframes floatDiagonal {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(30px, -30px) rotate(3deg); }
-    }
-    
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.1); }
-    }
-    
-    @keyframes slideInRight {
-      from { transform: translateX(100px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    
-    @keyframes fadeInUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .manifesto-container {
+    .blog-article-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
       position: relative;
       z-index: 10;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 140px 40px 100px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0;
     }
 
-    .manifesto-hero-block {
+    .article-hero {
+      text-align: center;
+      margin-bottom: 80px;
       position: relative;
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(0, 212, 255, 0.02) 100%);
-      border: 2px solid rgba(0, 212, 255, 0.2);
-      border-radius: 24px;
-      padding: 80px 60px;
-      margin-bottom: 60px;
-      backdrop-filter: blur(20px);
-      animation: fadeInUp 1s ease-out;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%);
     }
 
-    .manifesto-hero-block::before {
+    .article-hero::before {
       content: '';
       position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(135deg, var(--accent), transparent, var(--accent));
-      border-radius: 24px;
-      opacity: 0;
-      transition: opacity 0.6s ease;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+      pointer-events: none;
       z-index: -1;
-      animation: pulseGlow 4s ease-in-out infinite;
     }
 
-    .manifesto-title {
+    .article-hero h1 {
       font-family: var(--font-heading);
-      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 800;
-      line-height: 1.1;
       color: var(--text-light);
-      margin: 0 0 40px 0;
-      text-align: right;
-      background: linear-gradient(135deg, var(--accent) 0%, #ffffff 50%, var(--accent) 100%);
-      background-clip: text;
+      line-height: 1.2;
+      margin: 0 0 30px;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 0%, #00D4FF 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-size: 200% auto;
-      animation: slideInRight 1s ease-out;
+      background-clip: text;
+      animation: fadeInUp 0.8s ease-out;
     }
 
-    .manifesto-intro {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 30px;
-      margin-bottom: 80px;
+    .article-intro {
+      background: var(--gradient-light-section);
+      border: 1px solid var(--border-dark);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 60px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 1s ease-out 0.2s both;
     }
 
-    .intro-box {
-      background: rgba(255, 255, 255, 0.03);
-      border-right: 4px solid var(--accent);
-      padding: 35px 40px;
-      border-radius: 16px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    .article-intro::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+      animation: shimmer 3s infinite;
     }
 
-    .intro-box:hover {
-      background: rgba(0, 212, 255, 0.08);
-      transform: translateX(-10px);
-      border-right-width: 8px;
-    }
-
-    .intro-box p {
+    .article-intro p {
       font-family: var(--font-body);
-      font-size: 1.35rem;
-      line-height: 1.7;
+      font-size: 1.25rem;
+      line-height: 1.8;
       color: var(--text-light);
-      margin: 0;
-      text-align: right;
+      margin: 0 0 20px;
+      position: relative;
+      z-index: 2;
     }
 
-    .manifesto-content {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 50px;
+    .article-intro p:last-child {
+      margin-bottom: 0;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 1.35rem;
     }
 
     .content-block {
+      margin-bottom: 70px;
       position: relative;
-      background: linear-gradient(135deg, rgba(22, 26, 34, 0.95) 0%, rgba(14, 16, 20, 0.95) 100%);
-      border: 1px solid var(--border-dark);
-      border-radius: 20px;
-      padding: 50px;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      overflow: hidden;
+      animation: fadeInUp 1s ease-out both;
+      animation-delay: calc(var(--delay) * 0.15s);
     }
 
     .content-block::before {
       content: '';
       position: absolute;
-      top: 0;
-      right: 0;
+      right: -50px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 200px;
       height: 200px;
-      background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
-      animation: floatDiagonal 6s ease-in-out infinite;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
       pointer-events: none;
+      z-index: -1;
     }
 
-    .content-block:hover {
-      transform: translateY(-8px);
-      border-color: var(--accent);
-      box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);
+    .content-block:nth-child(even)::before {
+      right: auto;
+      left: -50px;
+      background: radial-gradient(circle, rgba(255, 138, 30, 0.08) 0%, transparent 70%);
     }
 
     .content-block h2 {
       font-family: var(--font-heading);
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
       font-weight: 700;
-      color: var(--accent);
-      margin: 0 0 25px 0;
-      text-align: right;
+      color: var(--text-light);
+      margin: 0 0 25px;
       position: relative;
-      z-index: 2;
+      padding-right: 50px;
+      line-height: 1.3;
+    }
+
+    .content-block h2::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 3px;
+      background: var(--gradient-secondary);
+      border-radius: 2px;
     }
 
     .content-block p {
       font-family: var(--font-body);
-      font-size: 1.15rem;
+      font-size: 1.125rem;
       line-height: 1.9;
-      color: rgba(238, 242, 246, 0.9);
-      margin: 0 0 20px 0;
-      text-align: right;
-      position: relative;
-      z-index: 2;
+      color: var(--text-muted);
+      margin: 0 0 20px;
+      text-align: justify;
     }
 
     .content-block p:last-child {
       margin-bottom: 0;
     }
 
-    .manifesto-conclusion {
-      background: linear-gradient(135deg, rgba(255, 138, 30, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-      border: 2px solid var(--accent);
-      border-radius: 24px;
-      padding: 60px 50px;
-      margin-top: 60px;
+    .highlight-block {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 138, 30, 0.05) 100%);
+      border-right: 4px solid var(--accent);
+      padding: 30px 40px;
+      margin: 40px 0;
+      border-radius: 0 15px 15px 0;
       position: relative;
-      overflow: hidden;
+      animation: fadeInUp 1s ease-out both;
     }
 
-    .manifesto-conclusion::after {
+    .highlight-block p {
+      color: var(--text-light);
+      font-weight: 500;
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .conclusion {
+      background: var(--gradient-dark-section);
+      border: 2px solid var(--accent);
+      border-radius: 25px;
+      padding: 50px;
+      margin-top: 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 1s ease-out both;
+    }
+
+    .conclusion::before {
       content: '';
       position: absolute;
       top: -50%;
       left: -50%;
       width: 200%;
       height: 200%;
-      background: conic-gradient(from 0deg, transparent, rgba(0, 212, 255, 0.1), transparent 30%);
-      animation: rotate 8s linear infinite;
+      background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0, 212, 255, 0.1) 180deg, transparent 360deg);
+      animation: rotate 10s linear infinite;
       pointer-events: none;
+    }
+
+    .conclusion h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 25px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .conclusion p {
+      font-family: var(--font-body);
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: var(--text-light);
+      margin: 0 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .conclusion p:last-child {
+      margin-bottom: 0;
+      font-weight: 600;
+      font-size: 1.3rem;
+      background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .floating-accent {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .floating-accent-1 {
+      top: 10%;
+      right: -200px;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .floating-accent-2 {
+      bottom: 20%;
+      left: -200px;
+      background: radial-gradient(circle, rgba(255, 138, 30, 0.05) 0%, transparent 70%);
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer {
+      to {
+        left: 100%;
+      }
     }
 
     @keyframes rotate {
-      100% { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
-    .manifesto-conclusion h2 {
-      font-family: var(--font-heading);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      color: var(--text-light);
-      margin: 0 0 30px 0;
-      text-align: right;
-      position: relative;
-      z-index: 2;
-    }
-
-    .manifesto-conclusion p {
-      font-family: var(--font-body);
-      font-size: 1.25rem;
-      line-height: 1.8;
-      color: var(--text-light);
-      margin: 0 0 20px 0;
-      text-align: right;
-      position: relative;
-      z-index: 2;
-    }
-
-    .manifesto-conclusion p:last-child {
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 0;
-    }
-
-    .bg-pattern {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      opacity: 0.03;
-      background-image: 
-        linear-gradient(30deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
-        linear-gradient(150deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
-        linear-gradient(30deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
-        linear-gradient(150deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent));
-      background-size: 80px 140px;
-      background-position: 0 0, 0 0, 40px 70px, 40px 70px;
-      pointer-events: none;
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-30px) scale(1.05);
+      }
     }
 
     @media (max-width: 768px) {
-      .manifesto-container {
-        padding: 100px 20px 60px;
+      .blog-article-container {
+        padding: 0 16px;
       }
 
-      .manifesto-hero-block {
-        padding: 50px 30px;
+      .article-hero {
+        margin-bottom: 50px;
+      }
+
+      .article-intro {
+        padding: 30px 25px;
         margin-bottom: 40px;
-        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 25px), calc(100% - 25px) 100%, 0 100%);
+        border-radius: 15px;
       }
 
-      .manifesto-title {
-        font-size: 2.2rem;
-        margin-bottom: 30px;
-      }
-
-      .intro-box {
-        padding: 25px 20px;
-      }
-
-      .intro-box p {
+      .article-intro p {
         font-size: 1.1rem;
       }
 
       .content-block {
-        padding: 30px 25px;
+        margin-bottom: 50px;
       }
 
       .content-block h2 {
-        font-size: 1.6rem;
+        padding-right: 0;
         margin-bottom: 20px;
       }
 
-      .content-block p {
-        font-size: 1rem;
-        line-height: 1.7;
+      .content-block h2::after {
+        display: none;
       }
 
-      .manifesto-conclusion {
-        padding: 40px 25px;
-        margin-top: 40px;
+      .content-block::before {
+        display: none;
       }
 
-      .manifesto-conclusion h2 {
-        font-size: 1.75rem;
-        margin-bottom: 20px;
+      .highlight-block {
+        padding: 25px 20px;
+        margin: 30px 0;
       }
 
-      .manifesto-conclusion p {
-        font-size: 1.05rem;
+      .conclusion {
+        padding: 35px 25px;
+        margin-top: 60px;
+        border-radius: 20px;
       }
 
-      .manifesto-conclusion p:last-child {
-        font-size: 1.15rem;
+      .floating-accent {
+        width: 250px;
+        height: 250px;
       }
     }
   </style>
 
-  <div class="bg-pattern"></div>
+  <div class="floating-accent floating-accent-1"></div>
+  <div class="floating-accent floating-accent-2"></div>
 
-  <div class="manifesto-container">
-    <div class="manifesto-hero-block">
-      <h1 class="manifesto-title">הזהות שלך ברשת לא שייכת לך וזו בעיה שהחוק עדיין לא פתר</h1>
+  <div class="blog-article-container">
+    <div class="article-hero">
+      <h1>הזהות שלך ברשת לא שייכת לך וזו בעיה שהחוק עדיין לא פתר</h1>
     </div>
 
-    <div class="manifesto-intro">
-      <div class="intro-box">
-        <p>אני רוצה לשאול אתכם משהו פשוט. אם מחר בוקר מישהו יחפש את השם שלכם בגוגל, מה הוא יראה? האם זה מה שאתם רוצים שהוא יראה? ואם לא - מה אתם יכולים לעשות בקשר לזה?</p>
-      </div>
-      <div class="intro-box">
-        <p>התשובה הקצרה היא: פחות ממה שאתם חושבים.</p>
-      </div>
+    <div class="article-intro">
+      <p>אני רוצה לשאול אתכם משהו פשוט. אם מחר בוקר מישהו יחפש את השם שלכם בגוגל, מה הוא יראה? האם זה מה שאתם רוצים שהוא יראה? ואם לא - מה אתם יכולים לעשות בקשר לזה?</p>
+      <p>התשובה הקצרה היא: פחות ממה שאתם חושבים.</p>
     </div>
 
-    <div class="manifesto-content">
-      <div class="content-block">
-        <h2>הרגע שבו הבנתי שמשהו שבור</h2>
-        <p>לפני זמן מה ישבתי וחשבתי על שאלה שנשמעת פשוטה אבל ככל שחפרתי בה יותר, הבנתי שהיא הרבה יותר מורכבת ממה שנדמה. הנה השאלה: מה ההבדל בין ילד בגן שאסור לצלם אותו ובין מבוגר שצולם בהרצאה מקצועית שלו ב-2015?</p>
-        <p>החוק מגן על הילד בצורה הרמטית. צריך אישור הורים, אסור להשתמש בטלפון אישי, אסור להעלות שום דבר ללא הסכמה מפורשת. הסיבה פשוטה - ילד לא יכול לדמיין מה יקרה לתמונה שלו בעוד עשרים שנה.</p>
-        <p>אבל מה עם המבוגר? הוא הסכים. הוא עמד מול קהל ואמר "כן, תצלמו." אז הכל בסדר, נכון?</p>
-        <p>לא בדיוק.</p>
+    <div class="content-block" style="--delay: 1;">
+      <h2>הרגע שבו הבנתי שמשהו שבור</h2>
+      <p>לפני זמן מה ישבתי וחשבתי על שאלה שנשמעת פשוטה אבל ככל שחפרתי בה יותר, הבנתי שהיא הרבה יותר מורכבת ממה שנדמה. הנה השאלה: מה ההבדל בין ילד בגן שאסור לצלם אותו ובין מבוגר שצולם בהרצאה מקצועית שלו ב-2015?</p>
+      <p>החוק מגן על הילד בצורה הרמטית. צריך אישור הורים, אסור להשתמש בטלפון אישי, אסור להעלות שום דבר ללא הסכמה מפורשת. הסיבה פשוטה - ילד לא יכול לדמיין מה יקרה לתמונה שלו בעוד עשרים שנה.</p>
+      <p>אבל מה עם המבוגר? הוא הסכים. הוא עמד מול קהל ואמר "כן, תצלמו." אז הכל בסדר, נכון?</p>
+      <p>לא בדיוק.</p>
+      <div class="highlight-block">
         <p>הוא הסכים לעולם שהיה קיים ב-2015. עולם שבו הקלטה נשמרת ביוטיוב ואנשים יכולים לראות אותה. הוא לא הסכים לעולם של 2025, שבו מערכת בינה מלאכותית יכולה לאמן את עצמה על הקול שלו, על הידע שלו, על הסגנון שלו, ואז לייצר גרסה דיגיטלית שלו שמדברת, מייעצת ומוכרת - בלי לשלם לו שקל ובלי לשאול אותו.</p>
-        <p>ההסכמה שנתת בעולם ישן לא תקפה בעולם חדש. וזה פרצה ענקית שאף אחד עוד לא סגר.</p>
       </div>
+      <p>ההסכמה שנתת בעולם ישן לא תקפה בעולם חדש. וזה פרצה ענקית שאף אחד עוד לא סגר.</p>
+    </div>
 
-      <div class="content-block">
-        <h2>השייק שאי אפשר לפרק</h2>
-        <p>כדי להבין למה כל כך קשה להגן על עצמך היום, צריך להבין איך בינה מלאכותית עובדת.</p>
-        <p>כשמערכת בינה מלאכותית מאומנת, היא "בולעת" מיליארדי טקסטים מהרשת. כתבות, ראיונות, פוסטים, הקלטות. כל המידע הזה לא נשמר כקובץ נפרד שאפשר למחוק. הוא מתמזג לתוך המוח הדיגיטלי בצורה שדומה לשייק. ברגע שהכנסת תות, בננה ומלון לבלנדר - אי אפשר להוציא את התות בחזרה. אפשר לזרוק את כל השייק ולהתחיל מחדש. אבל לבנות מחדש מערכת בינה מלאכותית עולה מאות מיליוני דולרים. אף חברה לא תעשה את זה בגלל בקשת מחיקה של אדם אחד.</p>
-        <p>האירופאים חוקקו חוק שאומר שאנשים יכולים לדרוש מחיקת המידע שלהם ממערכות כאלה. אבל הפתרון הטכני היחיד לא קיים עדיין. אז יש חוק שאי אפשר לאכוף אותו. קנסות שמשולמים, שייק שנשאר.</p>
-        <p>ובישראל? אין אפילו את החוק הזה.</p>
-      </div>
+    <div class="content-block" style="--delay: 2;">
+      <h2>השייק שאי אפשר לפרק</h2>
+      <p>כדי להבין למה כל כך קשה להגן על עצמך היום, צריך להבין איך בינה מלאכותית עובדת.</p>
+      <p>כשמערכת בינה מלאכותית מאומנת, היא "בולעת" מיליארדי טקסטים מהרשת. כתבות, ראיונות, פוסטים, הקלטות. כל המידע הזה לא נשמר כקובץ נפרד שאפשר למחוק. הוא מתמזג לתוך המוח הדיגיטלי בצורה שדומה לשייק. ברגע שהכנסת תות, בננה ומלון לבלנדר - אי אפשר להוציא את התות בחזרה. אפשר לזרוק את כל השייק ולהתחיל מחדש. אבל לבנות מחדש מערכת בינה מלאכותית עולה מאות מיליוני דולרים. אף חברה לא תעשה את זה בגלל בקשת מחיקה של אדם אחד.</p>
+      <p>האירופאים חוקקו חוק שאומר שאנשים יכולים לדרוש מחיקת המידע שלהם ממערכות כאלה. אבל הפתרון הטכני היחיד לא קיים עדיין. אז יש חוק שאי אפשר לאכוף אותו. קנסות שמשולמים, שייק שנשאר.</p>
+      <p>ובישראל? אין אפילו את החוק הזה.</p>
+    </div>
 
-      <div class="content-block">
-        <h2>מתי הצינור הופך לאחראי</h2>
-        <p>פלטפורמות כמו גוגל ויוטיוב תמיד טענו שהן רק "צינור". הן לא אחראיות למה שמועלה אליהן, בדיוק כמו שחברת הטלפון לא אחראית למה שאתה אומר בשיחה.</p>
-        <p>אבל יש רגע שהצינור הופך לאחראי. פורנהאב למדה את זה בדרך הקשה. בית משפט קבע שברגע שעובדי החברה הוסיפו תגיות, כותרות וקטגוריות לתוכן כדי למשוך יותר צופים ולמכור פרסומות - הם כבר לא "צינור". הם עורכים פעילים שמרוויחים מהתוכן.</p>
+    <div class="content-block" style="--delay: 3;">
+      <h2>מתי הצינור הופך לאחראי</h2>
+      <p>פלטפורמות כמו גוגל ויוטיוב תמיד טענו שהן רק "צינור". הן לא אחראיות למה שמועלה אליהן, בדיוק כמו שחברת הטלפון לא אחראית למה שאתה אומר בשיחה.</p>
+      <p>אבל יש רגע שהצינור הופך לאחראי. פורנהאב למדה את זה בדרך הקשה. בית משפט קבע שברגע שעובדי החברה הוסיפו תגיות, כותרות וקטגוריות לתוכן כדי למשוך יותר צופים ולמכור פרסומות - הם כבר לא "צינור". הם עורכים פעילים שמרוויחים מהתוכן.</p>
+      <div class="highlight-block">
         <p>גוגל עושה בדיוק אותו דבר. האלגוריתם שלה בוחר מה להציג ראשון, מה להמליץ עליו, מה לדרג גבוה. היא לא סתם מאחסנת - היא עורכת ומקדמת. השאלה אם ומתי בית משפט ישראלי יגיע לאותה מסקנה היא שאלה שעדיין פתוחה לגמרי.</p>
       </div>
-
-      <div class="content-block">
-        <h2>השם שלך הוא המותג שלך - אבל החוק לא יודע את זה</h2>
-        <p>בעידן שבו כולם צריכים לשווק את עצמם, הגבול בין עצמאי לשכיר כמעט נמחק. רופא, מתכנת, יועץ, מטפל - כולם בונים פרופיל, מציגים הישגים, מנהלים מוניטין דיגיטלי. השם שלהם הוא המותג שלהם.</p>
-        <p>אבל החוק עדיין חי בעולם ישן. הוא מגן על מותגים רשומים, על לוגואים, על סימני מסחר. מי שיש לו חשבונית מוגן יותר ממי שיש לו תלוש משכורת. ואם מישהו בונה "נדל"ן דיגיטלי" שלילי על השם שלך - קונה דומיינים, מפרסם כתבות שמות אותך בראש תוצאות החיפוש - החוק הישראלי נותן לך מעט מאוד כלים להתמודד.</p>
-      </div>
     </div>
 
-    <div class="manifesto-conclusion">
+    <div class="content-block" style="--delay: 4;">
+      <h2>השם שלך הוא המותג שלך - אבל החוק לא יודע את זה</h2>
+      <p>בעידן שבו כולם צריכים לשווק את עצמם, הגבול בין עצמאי לשכיר כמעט נמחק. רופא, מתכנת, יועץ, מטפל - כולם בונים פרופיל, מציגים הישגים, מנהלים מוניטין דיגיטלי. השם שלהם הוא המותג שלהם.</p>
+      <p>אבל החוק עדיין חי בעולם ישן. הוא מגן על מותגים רשומים, על לוגואים, על סימני מסחר. מי שיש לו חשבונית מוגן יותר ממי שיש לו תלוש משכורת. ואם מישהו בונה "נדל"ן דיגיטלי" שלילי על השם שלך - קונה דומיינים, מפרסם כתבות שמות אותך בראש תוצאות החיפוש - החוק הישראלי נותן לך מעט מאוד כלים להתמודד.</p>
+    </div>
+
+    <div class="conclusion">
       <h2>אז מה עושים</h2>
       <p>אין לי תשובות קלות. אבל יש לי שאלה אחת שאני חושב שכל אחד צריך לשאול את עצמו:</p>
       <p>האם אני שולט במה שאנשים רואים כשהם מחפשים אותי?</p>
