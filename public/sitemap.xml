@@ -164,24 +164,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog/digital-crisis-72h-playbook" />
   </url>
   <url>
-    <loc>https://ezuzint.com/network-identity-ownership</loc>
-    <lastmod>2026-02-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/network-identity-ownership" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/network-identity-ownership" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/network-identity-ownership" />
-  </url>
-  <url>
-    <loc>https://ezuzint.com/en/network-identity-ownership</loc>
-    <lastmod>2026-02-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/network-identity-ownership" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/network-identity-ownership" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/network-identity-ownership" />
-  </url>
-  <url>
     <loc>https://ezuzint.com/privacy</loc>
     <lastmod>2026-02-25</lastmod>
     <changefreq>monthly</changefreq>
