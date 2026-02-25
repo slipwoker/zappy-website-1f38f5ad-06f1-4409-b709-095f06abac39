@@ -24,8 +24,8 @@ https://ezuzint.com/contact
 https://ezuzint.com/blog
 Ezuz Intel - בלוג מודיעין דיגיטלי | Ezuz Intel
 
-### ORM
-https://ezuzint.com/blog/orm-early-warning
+### דרכי פעולה הלכת קראוס | Ezuz Intel
+https://ezuzint.com/operating-procedures-krauss
 מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.
 
 ### OSINT

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
-    <title>מדיניות פרטיות</title>
-    <meta name="description" content="מדיניות הפרטיות שלנו - כיצד אנו אוספים, משתמשים ומגנים על המידע שלכם">
+    <title>איך לבנות שכבת ניטור ORM שלא מפספסת סימנים מוקדמים | Ezuz Intel</title>
+    <meta name="description" content="מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.">
     <meta name="keywords" content="">
     
     <!-- Favicons -->
@@ -218,81 +218,288 @@
 })();
 </script>
 <!-- End Zappy Analytics -->
-    <title data-i18n="privacy_page_title">מדיניות פרטיות</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    
-    
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style id="zappy-legal-page-styles">
-    /* Legal Page Original Styles */
-    
-        .legal-page-wrapper {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-            direction: rtl;
-        }
-        .legal-page-wrapper .legal-container {
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .legal-page-wrapper h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .legal-page-wrapper h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-        .legal-page-wrapper .last-updated {
-            background: #ecf0f1;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-        .legal-page-wrapper .contact-info {
-            background: #e8f4fd;
-            border: 1px solid #3498db;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        .legal-page-wrapper ul {
-            padding-right: 20px;
-        }
-        .legal-page-wrapper li {
-            margin-bottom: 8px;
-        }
-        .legal-page-wrapper .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: #3498db;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .legal-page-wrapper .back-link:hover {
-            text-decoration: underline;
-        }
-    
-    </style>
+    <title data-i18n="blog_orm_early_warning_page_title">דרכי פעולה הלכת קראוס | Ezuz Intel</title>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
     <!-- Cookie Consent -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
     <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
     <!-- Mickidum Accessibility Toolbar -->
     <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
-<style>
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="איך לבנות שכבת ניטור ORM שלא מפספסת סימנים מוקדמים | Ezuz Intel">
+    <meta property="og:description" content="מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.">
+    <meta property="og:image" content="https://ezuzint.com/assets/ezuz-intel-section-blog-article-orm-ezuz-intel-blog-article-image-1-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:alt" content="איך לבנות שכבת ניטור ORM שלא מפספסת סימנים מוקדמים | Ezuz Intel">
+    <meta property="og:locale" content="he_IL">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="איך לבנות שכבת ניטור ORM שלא מפספסת סימנים מוקדמים | Ezuz Intel">
+    <meta name="twitter:description" content="מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.">
+    <meta name="twitter:image" content="https://ezuzint.com/assets/ezuz-intel-section-blog-article-orm-ezuz-intel-blog-article-image-1-og.jpg">
+    <meta name="twitter:image:alt" content="איך לבנות שכבת ניטור ORM שלא מפספסת סימנים מוקדמים | Ezuz Intel"><style id="zappy-ai-page-styles">.orm-ezuz-intel-blog-article-section {
+  background-color: #FFFFFF;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='rgba(14,16,20,0.03)' stroke-width='1'%3E%3Cpath d='M0 20 H80'/%3E%3Cpath d='M0 40 H80'/%3E%3Cpath d='M0 60 H80'/%3E%3Cpath d='M20 0 V80'/%3E%3Cpath d='M40 0 V80'/%3E%3Cpath d='M60 0 V80'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px 80px;
+  color: var(--text-dark);
+  padding: 120px 16px 60px;
+  position: relative;
+  overflow: visible;
+}
+
+.orm-ezuz-intel-blog-article-section .article-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.orm-ezuz-intel-blog-article-section .back-to-blog {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color 0.2s ease;
+}
+
+.orm-ezuz-intel-blog-article-section .back-to-blog:hover {
+  color: var(--primary);
+}
+
+.orm-ezuz-intel-blog-article-section .social-share-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--bg-light);
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+}
+
+.orm-ezuz-intel-blog-article-section .share-label {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-inline-end: 8px;
+}
+
+.orm-ezuz-intel-blog-article-section .share-copy,
+.orm-ezuz-intel-blog-article-section .share-linkedin,
+.orm-ezuz-intel-blog-article-section .share-twitter,
+.orm-ezuz-intel-blog-article-section .share-facebook,
+.orm-ezuz-intel-blog-article-section .share-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.orm-ezuz-intel-blog-article-section .share-copy {
+  border: none;
+  padding: 0;
+}
+
+.orm-ezuz-intel-blog-article-section .share-copy:hover {
+  background: var(--accent);
+  color: #FFFFFF;
+  border-color: var(--accent);
+}
+
+.orm-ezuz-intel-blog-article-section .share-linkedin:hover {
+  background: #0077B5;
+  color: #FFFFFF;
+  border-color: #0077B5;
+}
+
+.orm-ezuz-intel-blog-article-section .share-twitter:hover {
+  background: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
+}
+
+.orm-ezuz-intel-blog-article-section .share-facebook:hover {
+  background: #1877F2;
+  color: #FFFFFF;
+  border-color: #1877F2;
+}
+
+.orm-ezuz-intel-blog-article-section .share-whatsapp:hover {
+  background: #25D366;
+  color: #FFFFFF;
+  border-color: #25D366;
+}
+
+.orm-ezuz-intel-blog-article-section .hero-image-wrapper {
+  width: 100%;
+  margin: 30px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.orm-ezuz-intel-blog-article-section .hero-image-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.orm-ezuz-intel-blog-article-section .article-content {
+  position: relative;
+  z-index: 1;
+}
+
+.orm-ezuz-intel-blog-article-section .article-header {
+  margin-bottom: 40px;
+}
+
+.orm-ezuz-intel-blog-article-section .article-header h1 {
+  font-family: 'Space Grotesk', 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.orm-ezuz-intel-blog-article-section .article-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.orm-ezuz-intel-blog-article-section .article-meta time,
+.orm-ezuz-intel-blog-article-section .article-meta .reading-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.orm-ezuz-intel-blog-article-section .article-meta time::before {
+  content: '📅';
+}
+
+.orm-ezuz-intel-blog-article-section .article-meta .reading-time::before {
+  content: '⏱️';
+}
+
+.orm-ezuz-intel-blog-article-section .article-body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  line-height: 1.8;
+  color: var(--text-dark);
+}
+
+.orm-ezuz-intel-blog-article-section .article-body h2 {
+  font-family: 'Space Grotesk', 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-dark);
+  margin-top: 48px;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+.orm-ezuz-intel-blog-article-section .article-body p {
+  margin-bottom: 24px;
+}
+
+.orm-ezuz-intel-blog-article-section .article-body p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .orm-ezuz-intel-blog-article-section {
+    padding: 100px 16px 40px;
+  }
+
+  .orm-ezuz-intel-blog-article-section .article-header h1 {
+    font-size: 32px;
+  }
+
+  .orm-ezuz-intel-blog-article-section .article-body h2 {
+    font-size: 24px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  .orm-ezuz-intel-blog-article-section .social-share-bar {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .orm-ezuz-intel-blog-article-section .share-label {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  .orm-ezuz-intel-blog-article-section .share-copy,
+  .orm-ezuz-intel-blog-article-section .share-linkedin,
+  .orm-ezuz-intel-blog-article-section .share-twitter,
+  .orm-ezuz-intel-blog-article-section .share-facebook,
+  .orm-ezuz-intel-blog-article-section .share-whatsapp {
+    width: 36px;
+    height: 36px;
+  }
+
+  .orm-ezuz-intel-blog-article-section .hero-image-wrapper {
+    margin: 20px 0;
+    border-radius: 8px;
+  }
+
+  .orm-ezuz-intel-blog-article-section .article-header {
+    margin-bottom: 24px;
+  }
+
+  .orm-ezuz-intel-blog-article-section .article-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}</style><style>
       /* Dropdown sub-menu styles (AI-generated page) */
       .nav-menu li:has(.sub-menu),
       nav li:has(.sub-menu),
@@ -1003,7 +1210,7 @@ html[dir="rtl"] body {
 </head>
 <body>
 
-    <nav class="navbar">
+  <nav class="navbar">
   <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
     <svg class="hamburger-icon" width="24" height="24" viewbox="0 0 24 24" fill="none">
       <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
@@ -1022,11 +1229,15 @@ html[dir="rtl"] body {
   <div class="nav-container">
     <div class="nav-brand">
       <a href="/" class="logo-link">
-        <img src="/assets/ezuz-logo-1771583530795-m0d2d8.webp?v=1771583531687-i0w9tu" alt="Ezuz Intel" class="logo" data-i18n-alt="privacy_alt_70">
+        <img src="/assets/ezuz-logo-1771583530795-m0d2d8.webp?v=1771583531687-i0w9tu" alt="Ezuz Intel" class="logo" data-i18n-alt="blog_orm_early_warning_alt_48">
       </a>
     </div>
     
-    <ul class="nav-menu" id="navMenu"><li><a href="/services" data-i18n="privacy_nav_62">שירותים</a></li><li><a href="/insights" data-i18n="privacy_nav_63">תובנות</a></li><li><a href="/blog" class="nav-link" data-i18n="privacy_nav_64">בלוג</a><ul class="sub-menu"><li><a href="/operating-procedures-krauss" class="nav-link" data-i18n="privacy_nav_65">דרכי פעולה הלכת קראוס | Ezuz Intel</a></li><li><a href="/blog/competitive-osint-map" class="nav-link" data-i18n="privacy_nav_66">OSINT</a></li><li><a href="/blog/ai-signals-to-decisions" class="nav-link" data-i18n="privacy_nav_67">AI</a></li><li><a href="/blog/digital-crisis-72h-playbook" class="nav-link" data-i18n="privacy_nav_68">משבר</a></li><li><a href="/network-identity-ownership" class="nav-link">הזהות שלך ברשת לא שייכת לך וזו בעיה שהחוק עדיין לא פתר</a></li></ul></li></ul>
+    <ul class="nav-menu" id="navMenu"><li><a href="/services" data-i18n="blog_orm_early_warning_nav_40">שירותים</a></li><li><a href="/insights" data-i18n="blog_orm_early_warning_nav_41">תובנות</a></li><li><a href="/blog" class="nav-link" data-i18n="blog_orm_early_warning_nav_42">בלוג</a><ul class="sub-menu"><li><a href="/operating-procedures-krauss" class="nav-link" data-i18n="blog_orm_early_warning_nav_43">דרכי פעולה הלכת קראוס | Ezuz Intel</a></li><li><a href="/blog/competitive-osint-map" class="nav-link" data-i18n="blog_orm_early_warning_nav_44">OSINT</a></li><li><a href="/blog/ai-signals-to-decisions" class="nav-link" data-i18n="blog_orm_early_warning_nav_45">AI</a></li><li><a href="/blog/digital-crisis-72h-playbook" class="nav-link" data-i18n="blog_orm_early_warning_nav_46">מה אמרה לנו הלכת קראוס (ולמה היא שינתה את המשחק)
+
+ה אמרה לנו הלכת קראוס (ולמה היא שינתה את המשחק)&nbsp;&nbsp;ה אמרה לנו הלכת קראוס (ולמה היא שינתה את המשחק)
+
+שבר</a></li><li><a href="/network-identity-ownership" class="nav-link">הזהות שלך ברשת לא שייכת לך וזו בעיה שהחוק עדיין לא פתר</a></li></ul></li></ul>
     
     
 <div class="lang-switcher" data-icon-color="#0F172A" style="position:relative;display:inline-flex;align-items:center;z-index:1000;margin:0 4px;">
@@ -1037,119 +1248,184 @@ html[dir="rtl"] body {
     <button class="lang-option" data-lang="en" style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;background:none;border:none;text-align:left;cursor:pointer;font-size:14px;color:#333;"><img src="https://api.iconify.design/circle-flags/us.svg" width="20" height="20" alt="" style="display:inline-block;vertical-align:middle;border-radius:50%;"> English</button>
   </div>
 </div><div class="nav-cta-container">
-      <a href="/contact" class="nav-cta-btn" data-i18n="privacy_nav_69">צור קשר</a>
+      <a href="/contact" class="nav-cta-btn" data-i18n="blog_orm_early_warning_nav_47">צור קשר</a>
     </div>
   </div>
 </nav>
-    <main>
-    <div class="legal-page-wrapper"><div class="legal-container">
-        <h1 data-i18n="privacy_h1_1">מדיניות פרטיות</h1>
-        
-        <div class="last-updated" data-i18n="privacy_div_61">
-            <strong>עדכון אחרון:</strong> 20.2.2026
+  
+  <main class="blog-page ai-generated-page"><section class="orm-ezuz-intel-blog-article-section" data-layout-spec="איך הסרנו תוצאת חיפוש שעצרה סבב גיוס של 8 מיליון דולר | Ezuz Intel-blog-article" id="zappy-section-0">
+  <div class="article-container">
+    <p data-i18n="blog_orm_early_warning_p_8"><a href="/blog" class="back-to-blog" data-i18n="blog_orm_early_warning_link_23">← חזרה לבלוג</a>
+    
+    </p><div class="social-share-bar" style="display:flex;align-items:center;gap:12px;margin:20px 0;">
+      <span class="share-label" data-i18n="blog_orm_early_warning_span_19">שתף:</span>
+      <button class="share-copy" aria-label="העתק קישור" data-element-type="button" data-element-id="btn-1772023070044-43rpzfyfe" data-native-element="true" title="Copy link will work after publishing" style="opacity: 0.5; cursor: not-allowed;" data-i18n-title="blog_orm_early_warning_title_51">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-line&nbsp;הבעיה="" שגוגל="" יצר="" (ואדם="" סמה="" אומרת="" לנו="" הלכת="" קראוס,="" ואיך="" היא="" משנה="" את="" המשחק.ה="" אמרה="" קראוס="" (ולמה="" שינתה="" המשחק)="" ית'="" היה="" שונא)="" oin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+      </button>
+      <a href="#" target="_blank" rel="noopener" class="share-linkedin" aria-label="שתף בלינקדאין" style="display: none !important; opacity: 0.5; cursor: not-allowed;" title="Share links will work after publishing" data-i18n-title="blog_orm_early_warning_title_52">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path>
+        </svg>
+      </a>
+      <a href="#" target="_blank" rel="noopener" class="share-twitter" aria-label="שתף בטוויטר" style="display: none !important; opacity: 0.5; cursor: not-allowed;" title="Share links will work after publishing" data-i18n-title="blog_orm_early_warning_title_53">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+        </svg>
+      </a>
+      <a href="#" target="_blank" rel="noopener" class="share-facebook" aria-label="שתף בפייסבוק" style="display: none !important; opacity: 0.5; cursor: not-allowed;" title="Share links will work after publishing" data-i18n-title="blog_orm_early_warning_title_54">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+        </svg>
+      </a>
+      <a href="https://wa.me/972559971849" target="_blank" rel="noopener" class="share-whatsapp" aria-label="שתף בוואטסאפ" title="Share links will work after publishing" style="opacity: 0.5; cursor: not-allowed;" data-i18n-title="blog_orm_early_warning_title_55">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" data-element-type="icon" data-element-id="icon-1772025832401-izzbbhged" data-icon-type="svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
+        </svg>
+      </a>
+    </div>
+
+    <div class="hero-image-wrapper">
+      <img data-context="Professional ORM monitoring dashboard on multiple screens showing real-time alerts, social media feeds, sentiment analysis graphs, and early warning indicators for a business intelligence company. Dark modern interface with cyan and purple accent colors, clean data visualization, corporate setting." width="1200" height="506" src="/assets/ezuz-intel-section-blog-article-orm-ezuz-intel-blog-article-image-1.webp" alt="מערכת ניטור ORM מתקדמת עם התראות בזמן אמת" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1772023070046-u9x0y5o8p" class="zappy-editable-image" data-i18n-alt="blog_orm_early_warning_alt_49">
+    </div>
+
+    <article class="article-content">
+      <header class="article-header">
+        <h1 data-i18n="blog_orm_early_warning_h1_1">איך טיפלנו בתוצאת חיפוש שעצרה סבב גיוס של 8 מיליון דולר</h1>
+        <div class="article-meta">
+          <time datetime="2024-01-15">15 ינואר 2024</time>
+          <span class="reading-time" data-i18n="blog_orm_early_warning_span_20">5 דקות קריאה</span>
         </div>
+      </header>
 
-        <p data-i18n="privacy_p_13">
-            Ezuz Intel ("החברה", "אנו", "שלנו") מחויבת להגן על פרטיותכם. מדיניות פרטיות זו מסבירה כיצד אנו אוספים, 
-            משתמשים ומגינים על המידע שלכם בעת השימוש באתר www.company.com ("השירות").
-        </p>
+      <div class="article-body">
+        <p data-i18n="blog_orm_early_warning_p_9">בספטמבר 2023 פנה אלינו מנכ"ל סטארטאפ בתחום הפינטק. קראו לו איתן . הוא עמד לסגור סבב A עם קרן אמריקאית, וביום רביעי אחד התקבלה אצלו הודעת וואטצסאפ מה-CFO של הקרן: "אנחנו צריכים לדבר על משהו שמצאנו."
 
-        <h2 data-i18n="privacy_h2_2">1. איסוף מידע</h2>
-        <p data-i18n="privacy_p_14">אנו עשויים לאסוף את סוגי המידע הבאים:</p>
-        <ul>
-            <li data-i18n="privacy_li_36"><strong>מידע אישי:</strong> שם, כתובת אימייל, מספר טלפון וכתובת</li>
-            <li data-i18n="privacy_li_37"><strong>מידע טכני:</strong> כתובת IP, סוג דפדפן, מערכת הפעלה ונתוני שימוש באתר</li>
-            <li data-i18n="privacy_li_38"><strong>עוגיות:</strong> מידע הנשמר במחשבכם לשיפור חוויית השימוש</li>
-        </ul>
+</p>
 
-        <h2 data-i18n="privacy_h2_3">2. שימוש במידע</h2>
-        <p data-i18n="privacy_p_15">אנו משתמשים במידע שנאסף למטרות הבאות:</p>
-        <ul>
-            <li data-i18n="privacy_li_39">מתן השירותים המבוקשים</li>
-            <li data-i18n="privacy_li_40">שיפור השירות וחוויית המשתמש</li>
-            <li data-i18n="privacy_li_41">יצירת קשר עמכם בנוגע לשירותינו</li>
-            <li data-i18n="privacy_li_42">עמידה בדרישות חוקיות</li>
-        </ul>
+        <p data-i18n="blog_orm_early_warning_p_10">מה שהם מצאנו: כתבה מ-2016 על סכסוך משפטי בין איתן לבין שותפים עסקיים בחברה קודמת. הכתבה הייתה במקום השלישי בגוגל כשמחפשים את שמו. הסכסוך הסתיים בפשרה לפני 6 שנים, אבל הכותרת נשארה: "מנכ"ל חברת X מואשם בניהול כושל והעלמת מידע"<br>
+התוצאה: הקרן ביקשה "להקפיא את התהליך לשבועיים" כדי לבדוק. בשפה של VCs, זה אומר "אנחנו בחוץ אלא אם תוכיח שזה לא בעיה"&nbsp;&nbsp;</p>
 
-        <h2 data-i18n="privacy_h2_4">3. שיתוף מידע</h2>
-        <p data-i18n="privacy_p_16">אנו לא נמכור, נחכיר או נשתף את המידע האישי שלכם עם צדדים שלישיים, למעט במקרים הבאים:</p>
-        <ul>
-            <li data-i18n="privacy_li_43">בהסכמתכם המפורשת</li>
-            <li data-i18n="privacy_li_44">כאשר נדרש על פי חוק</li>
-            <li data-i18n="privacy_li_45">להגנה על זכויותינו או בטחון משתמשינו</li>
-            <li data-i18n="privacy_li_46">עם ספקי שירות המסייעים בהפעלת השירות (תחת הסכמי סודיות)</li>
-        </ul>
+        <h2 data-i18n="blog_orm_early_warning_h2_2">הבעיה שגוגל יצר (ואדם סמית' היה שונא)
 
-        <h2 data-i18n="privacy_h2_5">4. זכויות המשתמש</h2>
-        <p data-i18n="privacy_p_17">בהתאם לחוק הגנת הפרטיות התשמ"א-1981, יש לכם הזכויות הבאות:</p>
-        <ul>
-            <li data-i18n="privacy_li_47">זכות עיון במידע האישי השמור עליכם</li>
-            <li data-i18n="privacy_li_48">זכות לתיקון מידע שגוי או לא מדויק</li>
-            <li data-i18n="privacy_li_49">זכות למחיקת מידע אישי בנסיבות מסוימות</li>
-            <li data-i18n="privacy_li_50">זכות להתנגד לעיבוד מידע למטרות שיווק</li>
-            <li data-i18n="privacy_li_51">זכות להגשת תלונה לרשם מאגרי המידע</li>
-        </ul>
+</h2>
 
-        <h2 data-i18n="privacy_h2_6">5. עוגיות (Cookies)</h2>
-        <p data-i18n="privacy_p_18">
-            אתרנו משתמש בעוגיות לשיפור חוויית השימוש. ניתן לנהל את העוגיות דרך הגדרות הדפדפן שלכם. 
-            השבתת עוגיות עלולה להשפיע על פונקציונליות האתר.
-        </p>
-
-        <h2 data-i18n="privacy_h2_7">6. אבטחת מידע</h2>
-        <p data-i18n="privacy_p_19">
-            אנו נוקטים באמצעי אבטחה סבירים להגנה על המידע שלכם, כולל הצפנה, חומות אש ובקרת גישה מוגבלת. 
-            עם זאת, אף שיטת העברה או אחסון אינה בטוחה ב-100%.
-        </p>
-
-        <h2 data-i18n="privacy_h2_8">7. שינויים במדיניות</h2>
-        <p data-i18n="privacy_p_20">
-            אנו עשויים לעדכן מדיניות פרטיות זו מעת לעת. שינויים מהותיים יפורסמו באתר עם הודעה מוקדמת של 30 יום.
-        </p>
-
-        <div class="contact-info">
-            <h2 data-i18n="privacy_h2_9">8. יצירת קשר</h2>
-            <p data-i18n="privacy_p_21">לשאלות או בקשות בנוגע למדיניות פרטיות זו, ניתן לפנות אלינו:</p>
-            <ul>
-                <li data-i18n="privacy_li_52"><strong>חברה:</strong> Ezuz Intel</li>
-                <li data-i18n="privacy_li_53"><strong>אימייל:</strong> <a href="mailto:ezuzint@gmail.com" data-i18n="privacy_link_26">ezuzint@gmail.com</a></li>
-                <li data-i18n="privacy_li_54"><strong>טלפון:</strong> <a href="tel:03-1234567">03-1234567</a></li>
-                <li data-i18n="privacy_li_55"><strong>כתובת:</strong> מנחם בגין 30 ישראל</li>
-            </ul>
-            <p data-i18n="privacy_p_22"><strong>רשם מאגרי המידע:</strong> לתלונות ניתן לפנות לרשם מאגרי המידע במשרד המשפטים</p>
-        </div>
+        <p data-i18n="blog_orm_early_warning_p_11">איתן לא היה פושע. הוא היה יזם שעבר משבר עסקי, תיקן אותו, והמשיך הלאה. בשוק בריא, זה בדיוק מה שאמור לקרות. אדם סמית', אבי הכלכלה המודרנית, כתב על "היד הנעלמה" - הרעיון ששוק חופשי מאפשר לאנשים לכשול, ללמוד, ולחזור חזקים יותר.<br>
+אבל גוגל שבר את המנגנון הזה. במקום "יד נעלמה" שמאפשרת תיקון, נוצרה "יד שולטת" שמקפיאה אותך בגרסה הכי גרועה של עצמך. הכתבה מ-2016 לא רק נשארה באינטרנט - <b>היא הפכה לכרטיס הביקור הדיגיטלי של איתן.</b><br>
+כל משקיע פוטנציאלי שבדק אותו ראה את זה ראשון. לא את החברות שהוא בנה מאז. לא את הלקוחות המרוצים. לא את ה track record של 7 שנים ללא בעיות. רק את הכתבה.</p>
 
         
-    </div></div>
-    </main>
-    <footer class="site-footer">
+
+        
+
+        <h2 style="" data-i18n="blog_orm_early_warning_h2_3">מה אומרת לנו הלכת קראוס, ואיך משנה את המשחק?</h2>
+
+        <p data-element-id="move-1772023772313-5jukvd4i" data-i18n="blog_orm_early_warning_p_12">כשאיתן&nbsp; הגיע אלינו, הוא חשב שאין לו סיכוי. "הכתבה נכונה עובדתית" הוא אמר. "אני לא יכול לתבוע על דיבה" הוא צדק בחלקו. אבל יחד עם עו"ד גיגי, השותף המשפטי שלנו, הבנו שהשאלה היא לא "האם המידע נכון?" אלא <b>"האם המידע הזה עדיין רלוונטי?"</b><br>
+ב-2010, בית המשפט העליון דן בדיוק בסוגיה הזו בפרשה שנקראת "הלכת קראוס". המקרה עסק בעיתון שסירב להסיר ידיעות ישנות מהארכיון הדיגיטלי שלו. בית המשפט קבע שני עקרונות חשובים:<br><b>
+ראשית</b>, חופש הביטוי וזכות הציבור לדעת הם ערכים עליונים - <b>אבל הם לא מוחלטים.</b><br><b>
+שנית, </b>ככל שחולף הזמן, האיזון משתנה. מידע שהיה בעל עניין ציבורי לגיטימי לפני 7 שנים לא בהכרח רלוונטי היום. בפרט כשמדובר באדם פרטי (לא איש ציבור) שהאירוע בעברו כבר הסתיים.<br>
+בית המשפט הנחה לבצע <b>"מבחן איזון"</b> בין שלושה גורמים:<br>
+
+כמה זמן עבר מאז האירוע?<br>
+מה חומרת הפגיעה במוניטין של האדם?<br>
+מה העניין הציבורי <b>כיום </b>במידע הזה
+
+במקרה של איתן?<br>התשובות היו ברורות:<br>
+
+7 <b>שנים </b>מאז הסכסוך הסתיים<br>
+הפגיעה<b> עצרה סבב גיוס</b> - משמעותית ביותר.<br>
+העניין הציבורי?<b> קרוב לאפס. </b>איתן לא איש ציבור, לא פוליטיקאי, לא מנהל תאגיד ציבורי<br>הלכת קראוס נתנה לנו את המסגרת לטעון שגוגל (ובעיקר העיתון שפרסם את הכתבה המקורית) <b>מפרים את זכותו של איתן לשם</b> <b>טוב </b>על ידי המשך החשיפה של מידע שאינו רלוונטי עוד.&nbsp;&nbsp;</p>
+
+        <p data-i18n="blog_orm_early_warning_p_13">חשוב לזכור שלא כל תגובה צריכה להיות פומבית. לעיתים, פנייה ישירה למקור הביקורת, תיקון פנימי של בעיה, או ניטור מתמשך מספיקים. המטרה היא לנטרל איומים בשלב המוקדם ביותר האפשרי, לפני שהם הופכים למשברים גלויים שדורשים ניהול תקשורת מורכב.</p>
+
+        <h2 data-i18n="blog_orm_early_warning_h2_4">מה עשינו בפועל?</h2>
+
+        <p style="" data-i18n="blog_orm_early_warning_p_14">עם הבנה משפטית ברורה, בנינו אסטרטגיה משולבת:<br><b>
+1. פנייה משפטית מבוססת קראוס</b><br>
+הגשנו תלונה לעיתון המקורי עם בקשה להסרת הכתבה מהארכיון או לפחות שינוי הכותרת. טענו על פי הלכת קראוס: האיזון בין זכות הציבור לדעת (אפסית) לבין הנזק למוניטין (אדיר) מחייב הסרה.<br><b>
+2. בקשת GDPR לגוגל</b><br>
+מכיוון שאיתן היה אזרח אירופי, הגשנו גם בקשה לגוגל תחת תקנת ה-GDPR על "הזכות להישכח" - שהיא למעשה הגרסה האירופית של הלכת קראוס.<br><b>
+3. אסטרטגיית תוכן נגדי</b><br>
+במקביל לזרוע המשפטית, בנינו "שכבת אמת עכשווית":<br>
+
+הקמנו דף לינקדאין מחוזק עם המלצות מלקוחות.<br>
+יצרנו 3 מאמרי thought leadership בפינטק שאיתן פרסם בבלוגים רלוונטיים.<br>
+ביצענו OSINT מלא ועדכנו כל פרופיל מקצועי שלו.&nbsp;&nbsp;</p><div class="zappy-inserted-element" id="zappy-element-1772025955943-bk1gomi1i" data-element-id="zappy-element-1772025955943-bk1gomi1i" data-element-type="h2" data-zappy-newly-inserted="true" style="max-width: 800px; margin-left: auto; margin-right: auto; width: 100%;" data-i18n="blog_orm_early_warning_div_39">התוצאה (והפער בין ישראל לעולם)</div>
+
+        <p style="" data-i18n="blog_orm_early_warning_p_15">אחרי 11 ימים, גוגל הסירה את הלינק מתוצאות החיפוש<b> באיחוד האירופי בלבד.</b> בארה"ב? הוא נשאר. זה החושף בעיה: הלכת קראוס קיימת בישראל, GDPR באירופה - אבל בארה"ב, שם רוב המשקיעים, אין הגנה דומה.
+לכן המשכנו באסטרטגיית התוכן. אחרי 6 שבועות, הצלחנו להוריד את הכתבה למקום ה-8 בגוגל ארה"ב. בפרקטיקה - מתחת לקו הראות.<br>
+איתן סגר את סבב הגיוס בינואר 2024.<br><b>
+מה זה אומר עליך?</b><br>
+הלכת קראוס היא כלי חשוב, אבל היא לא קסם. היא לא תמחק אוטומטית כל כתבה ישנה עליך. <b>היא נותנת לך זכות לטעון</b> שהעבר שלך לא צריך להיות העתיד שלך. אבל בסוף, הקרב הוא על מי שולט על הנרטיב.<br>
+אם הסיפור שגוגל מספר עליך לא משקף מי שאתה היום - תתחיל לספר סיפור אחר. חזק יותר. נכון יותר. עכשווי יותר.<br><b>
+רוצים לדעת איך הנרטיב הדיגיטלי שלכם נראה? חפשו את השם שלכם בגוגל במצב incognito ושאלו את עצמכם: זה מי שאני באמת?&nbsp;&nbsp;</b></p>
+      </div>
+    </article>
+
+    <div class="social-share-bar" style="display:flex;align-items:center;gap:12px;margin:40px 0 20px;">
+      <span class="share-label" data-i18n="blog_orm_early_warning_span_21">שתף:</span>
+      <button class="share-copy" aria-label="העתק קישור" data-element-type="button" data-element-id="btn-1772023070044-x99s8lzx5" data-native-element="true" title="Copy link will work after publishing" style="opacity: 0.5; cursor: not-allowed;" data-i18n-title="blog_orm_early_warning_title_56">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+      </button>
+      <a href="#" target="_blank" rel="noopener" class="share-linkedin" aria-label="שתף בלינקדאין" style="display: none !important; opacity: 0.5; cursor: not-allowed;" title="Share links will work after publishing" data-i18n-title="blog_orm_early_warning_title_57">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path>
+        </svg>
+      </a>
+      <a href="#" target="_blank" rel="noopener" class="share-twitter" aria-label="שתף בטוויטר" style="display: none !important; opacity: 0.5; cursor: not-allowed;" title="Share links will work after publishing" data-i18n-title="blog_orm_early_warning_title_58">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+        </svg>
+      </a>
+      <a href="#" target="_blank" rel="noopener" class="share-facebook" aria-label="שתף בפייסבוק" style="display: none !important; opacity: 0.5; cursor: not-allowed;" title="Share links will work after publishing" data-i18n-title="blog_orm_early_warning_title_59">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+        </svg>
+      </a>
+      <a href="https://wa.me/972559971849" target="_blank" rel="noopener" class="share-whatsapp" aria-label="שתף בוואטסאפ" title="Share links will work after publishing" style="opacity: 0.5; cursor: not-allowed;" data-i18n-title="blog_orm_early_warning_title_60">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" data-element-type="icon" data-element-id="icon-1772025832401-xunv9hb6e" data-icon-type="svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
+        </svg>
+      </a>
+    </div>
+
+    <p data-i18n="blog_orm_early_warning_p_16"><a href="/blog" class="back-to-blog" data-i18n="blog_orm_early_warning_link_24">← חזרה לבלוג</a>
+  </p></div>
+</section></main>
+  
+  <footer class="site-footer">
   <div class="footer-container">
     <div class="footer-grid">
       <div class="footer-column footer-about">
-        <img src="/assets/ezuz-logo-1771583530795-m0d2d8.webp?v=1771583531687-i0w9tu" alt="Ezuz Intel" class="logo" data-i18n-alt="privacy_alt_71">
-        <p class="footer-description" data-i18n="privacy_p_23">שירותים דיגיטליים ומודיעין עסקי מתקדם לעסקים המובילים בישראל</p>
+        <img src="/assets/ezuz-logo-1771583530795-m0d2d8.webp?v=1771583531687-i0w9tu" alt="Ezuz Intel" class="logo" data-i18n-alt="blog_orm_early_warning_alt_50">
+        <p class="footer-description" data-i18n="blog_orm_early_warning_p_17">שירותים דיגיטליים ומודיעין עסקי מתקדם לעסקים המובילים בישראל</p>
       </div>
       
       <div class="footer-column footer-links">
-        <h3 class="footer-heading" data-i18n="privacy_h3_10">קישורים מהירים</h3>
+        <h3 class="footer-heading" data-i18n="blog_orm_early_warning_h3_5">קישורים מהירים</h3>
         <ul class="footer-nav">
-          <li data-i18n="privacy_li_56"><a href="/services" data-i18n="privacy_link_27">שירותים</a></li>
-          <li data-i18n="privacy_li_57"><a href="/insights" data-i18n="privacy_link_28">תובנות</a></li>
-          <li data-i18n="privacy_li_58"><a href="/contact" data-i18n="privacy_link_29">צור קשר</a></li>
+          <li data-i18n="blog_orm_early_warning_li_34"><a href="/services" data-i18n="blog_orm_early_warning_link_25">שירותים</a></li>
+          <li data-i18n="blog_orm_early_warning_li_35"><a href="/insights" data-i18n="blog_orm_early_warning_link_26">תובנות</a></li>
+          <li data-i18n="blog_orm_early_warning_li_36"><a href="/contact" data-i18n="blog_orm_early_warning_link_27">צור קשר</a></li>
         </ul>
       </div>
       
       <div class="footer-column footer-contact">
-        <h3 class="footer-heading" data-i18n="privacy_h3_11">יצירת קשר</h3>
+        <h3 class="footer-heading" data-i18n="blog_orm_early_warning_h3_6">יצירת קשר</h3>
         <ul class="contact-list">
-          <li data-i18n="privacy_li_59"><i class="fas fa-envelope"></i> <a href="mailto:ezuzint@gmail.com" data-i18n="privacy_link_30">ezuzint@gmail.com</a></li>
+          <li data-i18n="blog_orm_early_warning_li_37"><i class="fas fa-envelope"></i> <a href="mailto:ezuzint@gmail.com" data-i18n="blog_orm_early_warning_link_28">ezuzint@gmail.com</a></li>
           <li><i class="fas fa-phone"></i> <a href="tel:03-1234567">03-1234567</a></li>
-          <li data-i18n="privacy_li_60"><a href="/" data-i18n="privacy_link_31"><i class="fas fa-map-marker-alt"></i> <span data-i18n="privacy_span_25">מנחם בגין 30 Israel</span></a></li>
+          <li data-i18n="blog_orm_early_warning_li_38"><a href="/" data-i18n="blog_orm_early_warning_link_29"><i class="fas fa-map-marker-alt"></i> <span data-i18n="blog_orm_early_warning_span_22">מנחם בגין 30 Israel</span></a></li>
         </ul>
       </div>
       
       <div class="footer-column footer-social">
-        <h3 class="footer-heading" data-i18n="privacy_h3_12">עקבו אחרינו</h3>
+        <h3 class="footer-heading" data-i18n="blog_orm_early_warning_h3_7">עקבו אחרינו</h3>
         <div class="social-links">
           <a href="#" aria-label="Facebook" style="display:none !important;"><i class="fab fa-facebook-f"></i></a>
           <a href="#" aria-label="Instagram" style="display:none !important;"><i class="fab fa-instagram"></i></a>
@@ -1160,24 +1436,139 @@ html[dir="rtl"] body {
     
     <div class="footer-bottom">
       <div class="footer-legal">
-        <a href="/privacy" data-i18n="privacy_link_32">מדיניות פרטיות</a>
+        <a href="/privacy" data-i18n="blog_orm_early_warning_link_30">מדיניות פרטיות</a>
         <span class="separator">|</span>
-        <a href="/terms" data-i18n="privacy_link_33">תנאים והגבלות</a>
+        <a href="/terms" data-i18n="blog_orm_early_warning_link_31">תנאים והגבלות</a>
         <span class="separator">|</span>
-        <a href="/accessibility" data-i18n="privacy_link_34">הצהרת נגישות</a>
+        <a href="/accessibility" data-i18n="blog_orm_early_warning_link_32">הצהרת נגישות</a>
       </div>
       <div class="footer-copyright">
-        <p data-i18n="privacy_p_24">© 2026 Ezuz Intel. כל הזכויות שמורות.</p>
+        <p data-i18n="blog_orm_early_warning_p_18">© 2026 Ezuz Intel. כל הזכויות שמורות.</p>
       </div>
       <div class="footer-attribution">
-        <a href="https://zappy5.com" target="_blank" class="zappy-attribution" data-i18n="privacy_link_35">Generated by Zappy</a>
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution" data-i18n="blog_orm_early_warning_link_33">Generated by Zappy</a>
       </div>
     </div>
   </div>
 </footer>
-    <div data-integration="accessibility:toolbar"></div>
+  
+  <a href="https://wa.me/972559971849" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
 
-
+<script id="zappy-share-script">
+(function() {
+  function getShareUrl() {
+    // Priority 1: Check for deployed site URL meta tag (set by Zappy when site is published)
+    var siteUrl = document.querySelector('meta[name="zappy-site-url"]');
+    if (siteUrl && siteUrl.content) {
+      var basePath = window.location.pathname;
+      var pageParam = new URLSearchParams(window.location.search).get('page');
+      var pagePath = pageParam || basePath;
+      if (pagePath.startsWith('/api/website/preview')) pagePath = '/';
+      return siteUrl.content.replace(/\/$/, '') + pagePath;
+    }
+    var c = document.querySelector('link[rel="canonical"]');
+    if (c && c.href && !c.href.includes('localhost') && !c.href.includes('preview')) return c.href;
+    var m = document.querySelector('meta[property="og:url"]');
+    if (m && m.content && !m.content.includes('localhost') && !m.content.includes('preview')) return m.content;
+    var isPreview = window.location.href.includes('preview') || window.location.href.includes('localhost') || window.location.href.includes('auth_token');
+    if (isPreview) return null;
+    return window.location.origin + window.location.pathname;
+  }
+  function setShareHref(selectors, href, isDisabled) {
+    selectors.forEach(function(sel) {
+      document.querySelectorAll(sel).forEach(function(el) {
+        if (isDisabled) {
+          el.style.opacity = '0.5';
+          el.style.cursor = 'not-allowed';
+          el.title = 'Share links will work after publishing';
+          el.onclick = function(e) { e.preventDefault(); };
+        } else {
+          el.href = href;
+        }
+      });
+    });
+  }
+  // Normalize share bars to ensure all 5 icons are present
+  function normalizeShareBars() {
+    var shareBars = document.querySelectorAll('.social-share-bar');
+    if (shareBars.length === 0) return;
+    // Define all required share icons with their SVG
+    var shareIcons = {
+      copy: { selectors: ['.share-copy', 'button[title="Copy link"]', 'a[title="Copy link"]'], 
+        html: '<a href="#" class="share-copy" title="Copy link" style="color:#666;display:flex;align-items:center;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></a>' },
+      linkedin: { selectors: ['.share-linkedin', 'a[title="LinkedIn"]'], 
+        html: '<a href="#" class="share-linkedin" target="_blank" title="LinkedIn" style="color:#0a66c2!important;display:flex;align-items:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>' },
+      twitter: { selectors: ['.share-twitter', 'a[title="Twitter"]', 'a[title="Twitter/X"]', 'a[title="X"]'], 
+        html: '<a href="#" class="share-twitter" target="_blank" title="X" style="color:#000!important;display:flex;align-items:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>' },
+      facebook: { selectors: ['.share-facebook', 'a[title="Facebook"]'], 
+        html: '<a href="#" class="share-facebook" target="_blank" title="Facebook" style="color:#1877f2!important;display:flex;align-items:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>' },
+      whatsapp: { selectors: ['.share-whatsapp', 'a[title="WhatsApp"]'], 
+        html: '<a href="#" class="share-whatsapp" target="_blank" title="WhatsApp" style="color:#25d366!important;display:flex;align-items:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>' }
+    };
+    // Order of icons (right to left for RTL, so we add in this order)
+    var iconOrder = ['copy', 'linkedin', 'twitter', 'facebook', 'whatsapp'];
+    shareBars.forEach(function(bar) {
+      iconOrder.forEach(function(iconKey) {
+        var icon = shareIcons[iconKey];
+        var exists = icon.selectors.some(function(sel) { return bar.querySelector(sel); });
+        if (!exists) {
+          // Find the label span and insert after it
+          var label = bar.querySelector('span');
+          if (label) {
+            label.insertAdjacentHTML('afterend', icon.html);
+          } else {
+            bar.insertAdjacentHTML('afterbegin', icon.html);
+          }
+        }
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    // First normalize the share bars to ensure all icons exist
+    normalizeShareBars();
+    var url = getShareUrl();
+    var title = document.title;
+    var isDisabled = !url;
+    if (isDisabled) console.log('[Zappy] Share links disabled in preview mode - will work after publishing');
+    // WhatsApp
+    setShareHref(['.share-whatsapp', 'a[title="WhatsApp"]', 'a[title="whatsapp"]'], 
+      url ? 'https://wa.me/?text=' + encodeURIComponent(title + ' ' + url) : '#', isDisabled);
+    // Facebook
+    setShareHref(['.share-facebook', 'a[title="Facebook"]', 'a[title="facebook"]'], 
+      url ? 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) : '#', isDisabled);
+    // Twitter/X
+    setShareHref(['.share-twitter', 'a[title="Twitter"]', 'a[title="Twitter/X"]', 'a[title="X"]'], 
+      url ? 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(title) : '#', isDisabled);
+    // LinkedIn
+    setShareHref(['.share-linkedin', 'a[title="LinkedIn"]', 'a[title="linkedin"]'], 
+      url ? 'https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(title) : '#', isDisabled);
+    // Copy link button
+    ['.share-copy', 'button[title="Copy link"]', 'button[title="copy"]', 'a[title="Copy link"]'].forEach(function(sel) {
+      document.querySelectorAll(sel).forEach(function(el) {
+        if (isDisabled) {
+          el.style.opacity = '0.5';
+          el.style.cursor = 'not-allowed';
+          el.title = 'Copy link will work after publishing';
+          el.onclick = function(e) { e.preventDefault(); };
+        } else {
+          el.onclick = function(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText(url).then(function() {
+              var orig = el.innerHTML;
+              el.innerHTML = '✓';
+              setTimeout(function() { el.innerHTML = orig; }, 1500);
+            });
+          };
+        }
+      });
+    });
+  });
+})();
+</script>
 <!-- i18next Multi-Language Support -->
 <script>
 (function() {

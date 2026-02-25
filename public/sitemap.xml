@@ -92,22 +92,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog" />
   </url>
   <url>
-    <loc>https://ezuzint.com/blog/orm-early-warning</loc>
+    <loc>https://ezuzint.com/operating-procedures-krauss</loc>
     <lastmod>2026-02-25</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog/orm-early-warning" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog/orm-early-warning" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog/orm-early-warning" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/operating-procedures-krauss" />
   </url>
   <url>
-    <loc>https://ezuzint.com/en/blog/orm-early-warning</loc>
+    <loc>https://ezuzint.com/en/operating-procedures-krauss</loc>
     <lastmod>2026-02-25</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog/orm-early-warning" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog/orm-early-warning" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog/orm-early-warning" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/operating-procedures-krauss" />
   </url>
   <url>
     <loc>https://ezuzint.com/blog/competitive-osint-map</loc>
