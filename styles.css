@@ -973,7 +973,7 @@ input, textarea, select {
 
 .nav-menu > li > a:hover,
 .nav-menu > .nav-item > a:hover {
-  color: var(--secondary) !important;
+  color: var(--accent) !important;
 }
 
 /* CTA Container - pushed to end of navbar */
