@@ -92,22 +92,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog" />
   </url>
   <url>
-    <loc>https://ezuzint.com/operating-procedures-krauss</loc>
+    <loc>https://ezuzint.com/orm</loc>
     <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/operating-procedures-krauss" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/operating-procedures-krauss" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/orm" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/orm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/orm" />
   </url>
   <url>
-    <loc>https://ezuzint.com/en/operating-procedures-krauss</loc>
+    <loc>https://ezuzint.com/en/orm</loc>
     <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/operating-procedures-krauss" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/operating-procedures-krauss" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/orm" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/orm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/orm" />
   </url>
   <url>
     <loc>https://ezuzint.com/blog/competitive-osint-map</loc>
