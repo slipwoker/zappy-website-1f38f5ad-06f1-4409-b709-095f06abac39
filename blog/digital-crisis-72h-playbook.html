@@ -1094,8 +1094,7 @@ html[dir="rtl"] body {
         .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
         .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
         .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
-        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-light) !important; position: absolute !important; top: 0 !important; right: 0 !important; left: auto !important; z-index: 2 !important; }
-        [dir="rtl"] .mobile-submenu-toggle, html[lang="he"] .mobile-submenu-toggle, html[lang="ar"] .mobile-submenu-toggle { left: 0 !important; right: auto !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-light) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
         .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
         .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
         .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-light) !important; }
@@ -1536,7 +1535,7 @@ html[dir="rtl"] body {
       "blog_p_18": "צרו קשר עכשיו וקבלו ייעוץ מקצועי מותאם אישית לצרכי העסק שלכם. אנחנו זמינים לענות על כל שאלה ולהציע פתרונות מדויקים בתחום המודיעין העסקי והשירותים הדיגיטליים.",
       "blog_p_19": "שירותים דיגיטליים ומודיעין עסקי מתקדם לעסקים המובילים בישראל",
       "blog_p_20": "© 2026 Ezuz Intel. כל הזכויות שמורות.",
-      "home_h1_1": "נוכחות דיגיטלית מבוקרת\nומודיעין עסקי איכותי",
+      "home_h1_1": "מודיעין עסקי ומוניטין דיגיטלי מתקדם - Ezuz Intel\n\n",
       "home_h2_2": "יכולות מודיעין ליבה",
       "home_h2_3": "תוצאות, לא רעש",
       "home_h2_4": "מוכנים לפעול בבהירות מלאה?",
@@ -2518,7 +2517,7 @@ html[dir="rtl"] body {
       "blog_p_18": "Contact us now and receive professional consultation tailored to your business needs. We are available to answer any question and offer precise solutions in business intelligence and digital services.",
       "blog_p_19": "Advanced digital services and business intelligence for leading businesses in Israel",
       "blog_p_20": "© 2026 Ezuz Intel. All rights reserved.",
-      "home_h1_1": "Controlled Digital Presence\nand Quality Business Intelligence",
+      "home_h1_1": "Advanced Business Intelligence and Digital Reputation - Ezuz Intel\n\n",
       "home_h2_2": "Core Intelligence Capabilities",
       "home_h2_3": "Results, Not Noise",
       "home_h2_4": "Ready to Act with Complete Clarity?",
@@ -3643,6 +3642,57 @@ html[dir="rtl"] body {
       el.style.textAlign = isRTL ? 'right' : 'left';
     });
     
+    // Swap inline text-align on content elements when direction changes.
+    // RTL-primary sites have text-align:right baked into inline styles;
+    // these must become text-align:left when viewing in LTR, and vice versa.
+    var defaultIsRTL = rtlLanguages.includes('he');
+    var needsSwap = isRTL !== defaultIsRTL;
+    document.querySelectorAll('[style]').forEach(function(el) {
+      if (el.closest('header') || el.closest('nav') || el.closest('.navbar') || el.closest('.lang-switcher')) return;
+      if (el.closest('.legal-content') || el.closest('.terms-content') || el.closest('.privacy-content')) return;
+      var ta = el.style.textAlign;
+      if (!ta || ta === 'center' || ta === 'justify' || ta === 'start' || ta === 'end') return;
+      if (!el.hasAttribute('data-ta-orig')) {
+        el.setAttribute('data-ta-orig', ta);
+      }
+      var origTA = el.getAttribute('data-ta-orig');
+      if (needsSwap) {
+        el.style.textAlign = origTA === 'right' ? 'left' : 'right';
+      } else {
+        el.style.textAlign = origTA;
+      }
+    });
+
+    // Swap text-align in CSS stylesheet rules when direction changes.
+    // CSS rules with text-align:right (from RTL-primary generation) must become
+    // text-align:left when viewing in LTR, and vice versa.
+    if (!window.__zappyOrigTA) window.__zappyOrigTA = new WeakMap();
+    var origTAMap = window.__zappyOrigTA;
+    for (var si = 0; si < document.styleSheets.length; si++) {
+      try {
+        var sheetRules = document.styleSheets[si].cssRules;
+        for (var ri = 0; ri < sheetRules.length; ri++) {
+          var cssRule = sheetRules[ri];
+          if (!cssRule.style || !cssRule.selectorText) continue;
+          var rta = cssRule.style.textAlign;
+          if (!rta || rta === 'center' || rta === 'justify' || rta === 'start' || rta === 'end') continue;
+          if (cssRule.selectorText.indexOf('[dir=') !== -1) continue;
+          if (/direction\s*:/i.test(cssRule.cssText)) continue;
+          if (/^(html|body)\s*,?\s*(html|body)?\s*$/.test(cssRule.selectorText.trim())) continue;
+          if (/\.(lang-option|lang-switcher|mobile-lang)/.test(cssRule.selectorText)) continue;
+          if (!origTAMap.has(cssRule)) {
+            origTAMap.set(cssRule, rta);
+          }
+          var origRTA = origTAMap.get(cssRule);
+          if (needsSwap) {
+            cssRule.style.textAlign = origRTA === 'right' ? 'left' : 'right';
+          } else {
+            cssRule.style.textAlign = origRTA;
+          }
+        }
+      } catch(e) {}
+    }
+
     // Update catalog menu RTL class to match current direction
     // This is critical for e-commerce sites with category navigation
     document.querySelectorAll('.zappy-catalog-menu').forEach(function(el) {
