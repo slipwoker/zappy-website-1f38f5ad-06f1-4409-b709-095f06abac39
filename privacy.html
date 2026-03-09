@@ -231,7 +231,7 @@
       .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
       /* Submenu item styling */
       .sub-menu li { list-style: none; margin: 0; padding: 0; }
-      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
       .sub-menu a:hover { background-color: #f5f5f5; }
       /* RTL (Hebrew/Arabic) dropdown positioning */
       [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
@@ -3275,17 +3275,22 @@ html[dir="rtl"] body {
     var newlineChar = String.fromCharCode(10);
     // HTML tag pattern for detection (common formatting tags)
     var htmlTagPattern = /<(font|b|i|u|strong|em|span|br|a|sub|sup|mark|del|ins|s|small|big)[^>]*>/i;
-    
+
     // Update text content - use innerHTML when text contains line breaks or HTML tags
     document.querySelectorAll('[data-i18n]').forEach(function(el) {
       var key = el.getAttribute('data-i18n');
       var translation = zappyI18n.t(key);
       if (translation && translation !== key) {
+        // Skip parent elements whose children have their own data-i18n keys
+        // (e.g., <li data-i18n="key1"><a data-i18n="key2">text</a></li>)
+        // Setting textContent/innerHTML on the parent would destroy child elements.
+        if (el.querySelector('[data-i18n]')) return;
+
         var hasNewlines = translation.indexOf(newlineChar) !== -1;
         var hasHtmlTags = htmlTagPattern.test(translation);
         var hasEntities = /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/.test(translation);
         var elementHasBr = /<br\s*\/?>/i.test(el.innerHTML);
-        
+
         if (hasNewlines || hasHtmlTags || hasEntities || elementHasBr) {
           el.innerHTML = translation.split(newlineChar).join('<br>');
         } else {
@@ -3293,7 +3298,7 @@ html[dir="rtl"] body {
         }
       }
     });
-    
+
     // Update placeholders
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
       const key = el.getAttribute('data-i18n-placeholder');
