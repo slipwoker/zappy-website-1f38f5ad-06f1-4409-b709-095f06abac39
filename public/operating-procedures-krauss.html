@@ -1,304 +1,3 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow">
-    <title>איך לבנות שכבת ניטור ORM שלא מפספסת סימנים מוקדמים | Ezuz Intel</title>
-    <meta name="description" content="מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.">
-    <meta name="keywords" content="">
-    
-    <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-    <!-- Zappy Analytics -->
-<script>
-(function() {
-  'use strict';
-  
-  // Configuration
-  var config = {
-    websiteId: '1f38f5ad-06f1-4409-b709-095f06abac39',
-    apiUrl: 'https://api.zappy5.com/api/analytics/track',
-    sessionDuration: 30 * 60 * 1000, // 30 minutes
-    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
-    trackPageViews: true,
-    trackClicks: true,
-    trackFormSubmissions: true
-  };
-  
-  // Generate or retrieve persistent visitor ID (30 days)
-  function getVisitorId() {
-    var visitorKey = 'zappy_visitor_' + config.websiteId;
-    var visitor = null;
-    
-    try {
-      visitor = localStorage.getItem(visitorKey);
-      if (visitor) {
-        var visitorData = JSON.parse(visitor);
-        var now = Date.now();
-        
-        // Check if visitor ID is still valid (30 days)
-        if (now - visitorData.created < config.visitorDuration) {
-          // Update last seen timestamp
-          visitorData.lastSeen = now;
-          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
-          return visitorData.id;
-        }
-      }
-    } catch (e) {
-      console.warn('Zappy Analytics: LocalStorage not available');
-    }
-    
-    // Generate new visitor ID
-    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    
-    try {
-      localStorage.setItem(visitorKey, JSON.stringify({
-        id: newVisitorId,
-        created: Date.now(),
-        lastSeen: Date.now()
-      }));
-    } catch (e) {
-      // Continue without local storage
-    }
-    
-    return newVisitorId;
-  }
-  
-  // Generate or retrieve session ID (30 minutes)
-  function getSessionId() {
-    var sessionKey = 'zappy_session_' + config.websiteId;
-    var session = null;
-    
-    try {
-      session = sessionStorage.getItem(sessionKey);
-      if (session) {
-        var sessionData = JSON.parse(session);
-        var now = Date.now();
-        
-        // Check if session is still valid
-        if (now - sessionData.timestamp < config.sessionDuration) {
-          // Update timestamp
-          sessionData.timestamp = now;
-          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
-          return sessionData.id;
-        }
-      }
-    } catch (e) {
-      console.warn('Zappy Analytics: SessionStorage not available');
-    }
-    
-    // Generate new session ID
-    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    
-    try {
-      sessionStorage.setItem(sessionKey, JSON.stringify({
-        id: newSessionId,
-        timestamp: Date.now()
-      }));
-    } catch (e) {
-      // Continue without session storage
-    }
-    
-    return newSessionId;
-  }
-  
-  var visitorId = getVisitorId();
-  var sessionId = getSessionId();
-  
-  // Track an event
-  function trackEvent(eventType, data) {
-    data = data || {};
-    
-    var eventData = {
-      website_id: config.websiteId,
-      event_type: eventType,
-      page_path: window.location.pathname,
-      referrer: document.referrer || 'direct',
-      visitor_id: visitorId,
-      session_id: sessionId,
-      metadata: data
-    };
-    
-    // Use sendBeacon if available (better for page unload events)
-    if (navigator.sendBeacon) {
-      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
-      navigator.sendBeacon(config.apiUrl, blob);
-    } else {
-      // Fallback to fetch
-      fetch(config.apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(eventData),
-        keepalive: true
-      }).catch(function(error) {
-        console.warn('Zappy Analytics: Failed to track event', error);
-      });
-    }
-  }
-  
-  // Track page view
-  if (config.trackPageViews) {
-    trackEvent('pageview', {
-      title: document.title,
-      url: window.location.href
-    });
-  }
-  
-  // Track clicks on important elements
-  if (config.trackClicks) {
-    document.addEventListener('click', function(e) {
-      var target = e.target;
-      
-      // Track button clicks (counted as actions)
-      if (target.tagName === 'BUTTON' || target.closest('button')) {
-        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
-        trackEvent('click', {
-          element: 'button',
-          text: button.textContent.trim().substring(0, 100),
-          id: button.id || null,
-          class: button.className || null
-        });
-      }
-      
-      // Track link clicks (navigation - not counted as actions)
-      else if (target.tagName === 'A' || target.closest('a')) {
-        var link = target.tagName === 'A' ? target : target.closest('a');
-        trackEvent('navigation', {
-          element: 'link',
-          text: link.textContent.trim().substring(0, 100),
-          href: link.href,
-          external: link.hostname !== window.location.hostname
-        });
-      }
-    }, true);
-  }
-  
-  // Track form submissions
-  if (config.trackFormSubmissions) {
-    document.addEventListener('submit', function(e) {
-      var form = e.target;
-      
-      trackEvent('form_submit', {
-        form_id: form.id || null,
-        form_name: form.name || null,
-        form_action: form.action || null,
-        form_method: form.method || 'GET'
-      });
-    }, true);
-  }
-  
-  // Track time on page (send on page unload)
-  var pageLoadTime = Date.now();
-  
-  window.addEventListener('beforeunload', function() {
-    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
-    
-    trackEvent('page_unload', {
-      time_on_page: timeOnPage,
-      page_path: window.location.pathname
-    });
-  });
-  
-  // Expose tracking function globally for custom events
-  window.zappyAnalytics = {
-    track: trackEvent,
-    getVisitorId: function() { return visitorId; },
-    getSessionId: function() { return sessionId; }
-  };
-  
-})();
-</script>
-<!-- End Zappy Analytics -->
-    
-    <link rel="stylesheet" href="/styles.css">
-
-    <style id="zappy-dropdown-submenu-styles">
-      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
-      /* Base styles for dropdown submenus - parent must be positioned */
-      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
-      /* Submenu base - hidden by default */
-      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
-      /* CRITICAL: Desktop hover styles to show dropdown */
-      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
-      /* Submenu item styling */
-      .sub-menu li { list-style: none; margin: 0; padding: 0; }
-      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
-      .sub-menu a:hover { background-color: #f5f5f5; }
-      /* RTL (Hebrew/Arabic) dropdown positioning */
-      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
-      /* Hide empty dropdown menus */
-      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
-      /* Desktop: show submenu on Menu Group hover */
-      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
-      /* Menu Group title styling */
-      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
-      
-      /* ========== MOBILE SUBMENU STYLES ========== */
-      @media (max-width: 768px) {
-        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
-        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
-        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
-        /* Disable hover behavior on mobile */
-        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
-        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
-        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
-        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
-        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
-        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
-        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
-        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-light) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
-        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
-        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
-        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-light) !important; }
-        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-light) !important; }
-      }
-      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
-    </style>
-
-    <style id="mobile-lang-menu-deployed-css">
-    @media (max-width: 768px) {
-      .lang-switcher,
-      .nav-cta-container .lang-switcher,
-      .nav-container .lang-switcher,
-      .navbar .lang-switcher,
-      .navbar .nav-cta-container .lang-switcher,
-      .nav-icons-left .lang-switcher,
-      .nav-ecommerce-icons .lang-switcher { display: none !important; }
-      .mobile-lang-menu { width: 100%; border-top: 1px solid rgba(128,128,128,0.2); padding: 8px 0 0 0; margin-top: 8px; }
-      .mobile-lang-toggle { display: flex !important; align-items: center; justify-content: space-between; width: 100%; padding: 12px 16px; background: none; border: none; cursor: pointer; font-size: 15px; color: inherit; font-family: inherit; }
-      .mobile-lang-toggle::after { content: ''; display: inline-block; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform 0.3s ease; margin-left: 8px; }
-      .mobile-lang-toggle.expanded::after { transform: rotate(-135deg); }
-      .mobile-lang-options { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-      .mobile-lang-options.expanded { max-height: 300px; }
-      .mobile-lang-option { display: flex !important; align-items: center; gap: 10px; padding: 10px 24px; text-decoration: none; color: inherit; font-size: 14px; font-family: inherit; }
-      .mobile-lang-option:hover { background: rgba(128,128,128,0.1); }
-      .mobile-lang-option.active { font-weight: 600; opacity: 0.7; pointer-events: none; }
-      .mobile-lang-option img { width: 20px; height: 20px; border-radius: 50%; }
-    }
-    @media (min-width: 769px) {
-      .mobile-lang-menu { display: none !important; }
-    }
-    </style>
-
-    <style id="zappy-widget-visibility">
-      #mic-access-tool-general-button, .mic-access-tool-general-button,
-      #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
-      ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
-      #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
-        display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
-      }
-    </style>
-</head>
-<body>
 
   <!DOCTYPE >
   <html lang="he" dir="rtl"><meta charset="UTF-8">
@@ -337,7 +36,7 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="איך לבנות שכבת ניטור ORM שלא מפספסת סימנים מוקדמים | Ezuz Intel">
     <meta property="og:description" content="מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.">
-    <meta property="og:image" content="https://ezuzint.com/assets/ezuz-intel-section-blog-article-orm-ezuz-intel-blog-article-image-1-og.jpg">
+    <meta property="og:image" content="assets/ezuz-intel-section-blog-article-orm-ezuz-intel-blog-article-image-1-og.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:type" content="image/jpeg">
@@ -347,7 +46,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="איך לבנות שכבת ניטור ORM שלא מפספסת סימנים מוקדמים | Ezuz Intel">
     <meta name="twitter:description" content="מדריך מעשי לבניית ניטור מוניטין שמפריד בין רעש לאיתות, מגדיר ספים, ומקצר זמן תגובה בלי להעמיס על הצוות.">
-    <meta name="twitter:image" content="https://ezuzint.com/assets/ezuz-intel-section-blog-article-orm-ezuz-intel-blog-article-image-1-og.jpg">
+    <meta name="twitter:image" content="assets/ezuz-intel-section-blog-article-orm-ezuz-intel-blog-article-image-1-og.jpg">
     <meta name="twitter:image:alt" content="איך לבנות שכבת ניטור ORM שלא מפספסת סימנים מוקדמים | Ezuz Intel"><style id="zappy-ai-page-styles">.orm-ezuz-intel-blog-article-section {
   background-color: #FFFFFF;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='rgba(14,16,20,0.03)' stroke-width='1'%3E%3Cpath d='M0 20 H80'/%3E%3Cpath d='M0 40 H80'/%3E%3Cpath d='M0 60 H80'/%3E%3Cpath d='M20 0 V80'/%3E%3Cpath d='M40 0 V80'/%3E%3Cpath d='M60 0 V80'/%3E%3C/g%3E%3C/svg%3E");
@@ -1242,7 +941,30 @@ html[dir="rtl"] body {
     
     
 
-<div class="nav-cta-container">
+
+
+      
+      <style>
+        .lang-switcher:hover .lang-switcher-dropdown,
+        .lang-switcher:focus-within .lang-switcher-dropdown {
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: translateY(0) !important;
+        }
+        .lang-option:hover {
+          background: #f5f5f5;
+        }
+      </style>
+      <script data-no-icon-edit="true">(function(){function f(){var b=document.querySelector('.lang-switcher-current');if(!b)return;var n=b.closest('nav')||b.closest('header')||b.closest('.navbar');if(!n)return;var a=n.querySelector('.nav-menu a,.nav-links a');if(!a)a=n.querySelector('a:not(.lang-option):not(.lang-switcher-current):not([class*="logo"])');if(a){var c=getComputedStyle(a).color;if(c&&c!=='rgb(0, 0, 0)'&&c!=='rgba(0, 0, 0, 0)'){b.style.color=c;return;}}var s=getComputedStyle(n).backgroundColor;if(s&&s!=='rgba(0, 0, 0, 0)'&&s!=='transparent'){var m=s.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);if(m){var l=(0.299*parseInt(m[1])+0.587*parseInt(m[2])+0.114*parseInt(m[3]))/255;b.style.color=l>0.5?'#1a1a1a':'#F3FAFF';}}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',f);}else{setTimeout(f,0);}})()</script>
+    
+<script data-no-icon-edit="true">(function(){function f(){var b=document.querySelector('.lang-switcher-current');if(!b)return;var n=b.closest('nav')||b.closest('header')||b.closest('.navbar');if(!n)return;var a=n.querySelector('.nav-menu a,.nav-links a');if(!a)a=n.querySelector('a:not(.lang-option):not(.lang-switcher-current):not([class*="logo"])');if(a){var c=getComputedStyle(a).color;if(c&&c!=='rgb(0, 0, 0)'&&c!=='rgba(0, 0, 0, 0)'){b.style.color=c;return;}}var s=getComputedStyle(n).backgroundColor;if(s&&s!=='rgba(0, 0, 0, 0)'&&s!=='transparent'){var m=s.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);if(m){var l=(0.299*parseInt(m[1])+0.587*parseInt(m[2])+0.114*parseInt(m[3]))/255;b.style.color=l>0.5?'#1a1a1a':'#F3FAFF';}}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',f);}else{setTimeout(f,0);}})()</script><div class="nav-cta-container" style="align-items: center;"><div class="lang-switcher" data-icon-color="#0F172A" style="position:relative;display:inline-flex;align-items:center;margin-left:auto;margin-right:8px;">
+        <button class="lang-switcher-current" type="button" style="display:flex;align-items:center;justify-content:center;gap:6px;background:transparent;border:none;cursor:pointer;padding:8px;border-radius:8px;color:inherit;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M12.039,.002s0,0,0,0c-.013,0-.026-.002-.039-.002-.005,0-.009,0-.014,0-.002,0-.003,0-.005,0C5.373,.011,0,5.39,0,12s5.383,12,12,12,12-5.383,12-12S18.638,.023,12.039,.002Zm9.747,6.998h-4.814c-1.067-2.669-2.712-4.781-3.731-5.925,3.734,.421,6.901,2.719,8.546,5.925Zm-4.786,5c0,1.407-.292,2.753-.731,4H7.731c-.439-1.247-.731-2.593-.731-4s.292-2.754,.73-4h8.539c.439,1.247,.731,2.593,.731,4Zm-1.122,5c-1.229,2.838-3.116,4.99-3.878,5.788-.762-.798-2.649-2.95-3.878-5.788h7.755ZM8.121,7c1.229-2.841,3.117-4.992,3.879-5.789,.762,.798,2.649,2.95,3.878,5.789h-7.757ZM10.757,1.075c-1.025,1.15-2.668,3.264-3.73,5.925H2.214C3.859,3.795,7.024,1.498,10.757,1.075ZM1.764,8H6.668c-.403,1.247-.668,2.589-.668,4s.265,2.752,.669,4H1.764c-.487-1.242-.764-2.588-.764-4s.277-2.758,.764-4Zm.45,9H7.029c1.067,2.669,2.712,4.781,3.731,5.925-3.734-.421,6.901-2.719-8.546-5.925Zm11.026,5.925c1.019-1.144,2.664-3.257,3.731-5.925h4.814c-1.645,3.206-4.812,5.504-8.546,5.925Zm8.996-6.925h-4.905c.404-1.248,.669-2.589,.669-4s-.265-2.752-.669-4h4.905c.487,1.242,.764,2.588,.764,4s-.277,2.758-.764,4Z"></path></svg>
+        </button>
+        <div class="lang-switcher-dropdown" style="position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);min-width:150px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.2s ease;z-index:1000;">
+          <a href="/en/operating-procedures-krauss" class="lang-option" style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;text-decoration:none;color:#333;font-size:14px;"><img src="https://api.iconify.design/circle-flags/us.svg" width="20" height="20" alt="" style="display:inline-block;vertical-align:middle;border-radius:50%;"> English</a>
+        </div>
+      </div>
       <a href="/contact" class="nav-cta-btn">צור קשר</a>
     </div>
   </div>
@@ -1250,9 +972,7 @@ html[dir="rtl"] body {
   
   <main class="blog-page ai-generated-page"><section class="orm-ezuz-intel-blog-article-section" data-layout-spec="איך הסרנו תוצאת חיפוש שעצרה סבב גיוס של 8 מיליון דולר | Ezuz Intel-blog-article" id="zappy-section-0">
   <div class="article-container">
-    <p><a href="/blog" class="back-to-blog">← חזרה לבלוג</a>
-    
-    </p><div class="social-share-bar" style="display:flex;align-items:center;gap:12px;margin:20px 0;">
+    <p>← חזרה לבלוג</p><div class="social-share-bar" style="display:flex;align-items:center;gap:12px;margin:20px 0;">
       <span class="share-label">שתף:</span>
       <button class="share-copy" aria-label="העתק קישור" data-element-type="button" data-element-id="btn-1772023070044-43rpzfyfe" data-native-element="true" title="Copy link will work after publishing" style="opacity: 0.5; cursor: not-allowed;">
         <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-line&nbsp;הבעיה="" שגוגל="" יצר="" (ואדם="" סמה="" אומרת="" לנו="" הלכת="" קראוס,="" ואיך="" היא="" משנה="" את="" המשחק.ה="" אמרה="" קראוס="" (ולמה="" שינתה="" המשחק)="" ית'="" היה="" שונא)="" oin="round">
@@ -1306,20 +1026,13 @@ html[dir="rtl"] body {
       </header>
 
       <div class="article-body">
-        <p>בספטמבר 2023 פנה אלינו מנכ"ל סטארטאפ בתחום הפינטק. קראו לו איתן . הוא עמד לסגור סבב A עם קרן אמריקאית, וביום רביעי אחד התקבלה אצלו הודעת וואטצסאפ מה-CFO של הקרן: "אנחנו צריכים לדבר על משהו שמצאנו."
+        <p>בספטמבר 2023 פנה אלינו מנכ"ל סטארטאפ בתחום הפינטק. קראו לו איתן . הוא עמד לסגור סבב A עם קרן אמריקאית, וביום רביעי אחד התקבלה אצלו הודעת וואטצסאפ מה-CFO של הקרן: "אנחנו צריכים לדבר על משהו שמצאנו."</p>
 
-</p>
+        <p>מה שהם מצאנו: כתבה מ-2016 על סכסוך משפטי בין איתן לבין שותפים עסקיים בחברה קודמת. הכתבה הייתה במקום השלישי בגוגל כשמחפשים את שמו. הסכסוך הסתיים בפשרה לפני 6 שנים, אבל הכותרת נשארה: "מנכ"ל חברת X מואשם בניהול כושל והעלמת מידע"<br><br>התוצאה: הקרן ביקשה "להקפיא את התהליך לשבועיים" כדי לבדוק. בשפה של VCs, זה אומר "אנחנו בחוץ אלא אם תוכיח שזה לא בעיה"</p>
 
-        <p>מה שהם מצאנו: כתבה מ-2016 על סכסוך משפטי בין איתן לבין שותפים עסקיים בחברה קודמת. הכתבה הייתה במקום השלישי בגוגל כשמחפשים את שמו. הסכסוך הסתיים בפשרה לפני 6 שנים, אבל הכותרת נשארה: "מנכ"ל חברת X מואשם בניהול כושל והעלמת מידע"<br>
-התוצאה: הקרן ביקשה "להקפיא את התהליך לשבועיים" כדי לבדוק. בשפה של VCs, זה אומר "אנחנו בחוץ אלא אם תוכיח שזה לא בעיה"&nbsp;&nbsp;</p>
+        <h2>הבעיה שגוגל יצר (ואדם סמית' היה שונא)</h2>
 
-        <h2>הבעיה שגוגל יצר (ואדם סמית' היה שונא)
-
-</h2>
-
-        <p>איתן לא היה פושע. הוא היה יזם שעבר משבר עסקי, תיקן אותו, והמשיך הלאה. בשוק בריא, זה בדיוק מה שאמור לקרות. אדם סמית', אבי הכלכלה המודרנית, כתב על "היד הנעלמה" - הרעיון ששוק חופשי מאפשר לאנשים לכשול, ללמוד, ולחזור חזקים יותר.<br>
-אבל גוגל שבר את המנגנון הזה. במקום "יד נעלמה" שמאפשרת תיקון, נוצרה "יד שולטת" שמקפיאה אותך בגרסה הכי גרועה של עצמך. הכתבה מ-2016 לא רק נשארה באינטרנט - <b>היא הפכה לכרטיס הביקור הדיגיטלי של איתן.</b><br>
-כל משקיע פוטנציאלי שבדק אותו ראה את זה ראשון. לא את החברות שהוא בנה מאז. לא את הלקוחות המרוצים. לא את ה track record של 7 שנים ללא בעיות. רק את הכתבה.</p>
+        <p>איתן לא היה פושע. הוא היה יזם שעבר משבר עסקי, תיקן אותו, והמשיך הלאה. בשוק בריא, זה בדיוק מה שאמור לקרות. אדם סמית', אבי הכלכלה המודרנית, כתב על "היד הנעלמה" - הרעיון ששוק חופשי מאפשר לאנשים לכשול, ללמוד, ולחזור חזקים יותר.<br><br>אבל גוגל שבר את המנגנון הזה. במקום "יד נעלמה" שמאפשרת תיקון, נוצרה "יד שולטת" שמקפיאה אותך בגרסה הכי גרועה של עצמך. הכתבה מ-2016 לא רק נשארה באינטרנט - היא הפכה לכרטיס הביקור הדיגיטלי של איתן.<br><br>כל משקיע פוטנציאלי שבדק אותו ראה את זה ראשון. לא את החברות שהוא בנה מאז. לא את הלקוחות המרוצים. לא את ה track record של 7 שנים ללא בעיות. רק את הכתבה.</p>
 
         
 
@@ -1327,45 +1040,15 @@ html[dir="rtl"] body {
 
         <h2 style="">מה אומרת לנו הלכת קראוס, ואיך משנה את המשחק?</h2>
 
-        <p data-element-id="move-1772023772313-5jukvd4i">כשאיתן&nbsp; הגיע אלינו, הוא חשב שאין לו סיכוי. "הכתבה נכונה עובדתית" הוא אמר. "אני לא יכול לתבוע על דיבה" הוא צדק בחלקו. אבל יחד עם עו"ד גיגי, השותף המשפטי שלנו, הבנו שהשאלה היא לא "האם המידע נכון?" אלא <b>"האם המידע הזה עדיין רלוונטי?"</b><br>
-ב-2010, בית המשפט העליון דן בדיוק בסוגיה הזו בפרשה שנקראת "הלכת קראוס". המקרה עסק בעיתון שסירב להסיר ידיעות ישנות מהארכיון הדיגיטלי שלו. בית המשפט קבע שני עקרונות חשובים:<br><b>
-ראשית</b>, חופש הביטוי וזכות הציבור לדעת הם ערכים עליונים - <b>אבל הם לא מוחלטים.</b><br><b>
-שנית, </b>ככל שחולף הזמן, האיזון משתנה. מידע שהיה בעל עניין ציבורי לגיטימי לפני 7 שנים לא בהכרח רלוונטי היום. בפרט כשמדובר באדם פרטי (לא איש ציבור) שהאירוע בעברו כבר הסתיים.<br>
-בית המשפט הנחה לבצע <b>"מבחן איזון"</b> בין שלושה גורמים:<br>
-
-כמה זמן עבר מאז האירוע?<br>
-מה חומרת הפגיעה במוניטין של האדם?<br>
-מה העניין הציבורי <b>כיום </b>במידע הזה
-
-במקרה של איתן?<br>התשובות היו ברורות:<br>
-
-7 <b>שנים </b>מאז הסכסוך הסתיים<br>
-הפגיעה<b> עצרה סבב גיוס</b> - משמעותית ביותר.<br>
-העניין הציבורי?<b> קרוב לאפס. </b>איתן לא איש ציבור, לא פוליטיקאי, לא מנהל תאגיד ציבורי<br>הלכת קראוס נתנה לנו את המסגרת לטעון שגוגל (ובעיקר העיתון שפרסם את הכתבה המקורית) <b>מפרים את זכותו של איתן לשם</b> <b>טוב </b>על ידי המשך החשיפה של מידע שאינו רלוונטי עוד.&nbsp;&nbsp;</p>
+        <p data-element-id="move-1772023772313-5jukvd4i">כשאיתן&nbsp; הגיע אלינו, הוא חשב שאין לו סיכוי. "הכתבה נכונה עובדתית" הוא אמר. "אני לא יכול לתבוע על דיבה" הוא צדק בחלקו. אבל יחד עם עו"ד גיגי, השותף המשפטי שלנו, הבנו שהשאלה היא לא "האם המידע נכון?" אלא "האם המידע הזה עדיין רלוונטי?"<br><br>ב-2010, בית המשפט העליון דן בדיוק בסוגיה הזו בפרשה שנקראת "הלכת קראוס". המקרה עסק בעיתון שסירב להסיר ידיעות ישנות מהארכיון הדיגיטלי שלו. בית המשפט קבע שני עקרונות חשובים:<br><br>ראשית, חופש הביטוי וזכות הציבור לדעת הם ערכים עליונים - אבל הם לא מוחלטים.<br><br>שנית, ככל שחולף הזמן, האיזון משתנה. מידע שהיה בעל עניין ציבורי לגיטימי לפני 7 שנים לא בהכרח רלוונטי היום. בפרט כשמדובר באדם פרטי (לא איש ציבור) שהאירוע בעברו כבר הסתיים.<br><br>בית המשפט הנחה לבצע "מבחן איזון" בין שלושה גורמים:<br><br><br>כמה זמן עבר מאז האירוע?<br><br>מה חומרת הפגיעה במוניטין של האדם?<br><br>מה העניין הציבורי כיום במידע הזה<br><br>במקרה של איתן?<br>התשובות היו ברורות:<br><br><br>7 שנים מאז הסכסוך הסתיים<br><br>הפגיעה עצרה סבב גיוס - משמעותית ביותר.<br><br>העניין הציבורי? קרוב לאפס. איתן לא איש ציבור, לא פוליטיקאי, לא מנהל תאגיד ציבורי<br>הלכת קראוס נתנה לנו את המסגרת לטעון שגוגל (ובעיקר העיתון שפרסם את הכתבה המקורית) מפרים את זכותו של איתן לשם טוב על ידי המשך החשיפה של מידע שאינו רלוונטי עוד.</p>
 
         <p>חשוב לזכור שלא כל תגובה צריכה להיות פומבית. לעיתים, פנייה ישירה למקור הביקורת, תיקון פנימי של בעיה, או ניטור מתמשך מספיקים. המטרה היא לנטרל איומים בשלב המוקדם ביותר האפשרי, לפני שהם הופכים למשברים גלויים שדורשים ניהול תקשורת מורכב.</p>
 
         <h2>מה עשינו בפועל?</h2>
 
-        <p style="">עם הבנה משפטית ברורה, בנינו אסטרטגיה משולבת:<br><b>
-1. פנייה משפטית מבוססת קראוס</b><br>
-הגשנו תלונה לעיתון המקורי עם בקשה להסרת הכתבה מהארכיון או לפחות שינוי הכותרת. טענו על פי הלכת קראוס: האיזון בין זכות הציבור לדעת (אפסית) לבין הנזק למוניטין (אדיר) מחייב הסרה.<br><b>
-2. בקשת GDPR לגוגל</b><br>
-מכיוון שאיתן היה אזרח אירופי, הגשנו גם בקשה לגוגל תחת תקנת ה-GDPR על "הזכות להישכח" - שהיא למעשה הגרסה האירופית של הלכת קראוס.<br><b>
-3. אסטרטגיית תוכן נגדי</b><br>
-במקביל לזרוע המשפטית, בנינו "שכבת אמת עכשווית":<br>
+        <p style="">עם הבנה משפטית ברורה, בנינו אסטרטגיה משולבת:<br><br>1. פנייה משפטית מבוססת קראוס<br><br>הגשנו תלונה לעיתון המקורי עם בקשה להסרת הכתבה מהארכיון או לפחות שינוי הכותרת. טענו על פי הלכת קראוס: האיזון בין זכות הציבור לדעת (אפסית) לבין הנזק למוניטין (אדיר) מחייב הסרה.<br><br>2. בקשת GDPR לגוגל<br><br>מכיוון שאיתן היה אזרח אירופי, הגשנו גם בקשה לגוגל תחת תקנת ה-GDPR על "הזכות להישכח" - שהיא למעשה הגרסה האירופית של הלכת קראוס.<br><br>3. אסטרטגיית תוכן נגדי<br><br>במקביל לזרוע המשפטית, בנינו "שכבת אמת עכשווית":<br><br><br>הקמנו דף לינקדאין מחוזק עם המלצות מלקוחות.<br><br>יצרנו 3 מאמרי thought leadership בפינטק שאיתן פרסם בבלוגים רלוונטיים.<br><br>ביצענו OSINT מלא ועדכנו כל פרופיל מקצועי שלו.</p><div class="zappy-inserted-element" id="zappy-element-1772025955943-bk1gomi1i" data-element-id="zappy-element-1772025955943-bk1gomi1i" data-element-type="h2" data-zappy-newly-inserted="true" style="max-width: 800px; margin-left: auto; margin-right: auto; width: 100%;">התוצאה (והפער בין ישראל לעולם)</div>
 
-הקמנו דף לינקדאין מחוזק עם המלצות מלקוחות.<br>
-יצרנו 3 מאמרי thought leadership בפינטק שאיתן פרסם בבלוגים רלוונטיים.<br>
-ביצענו OSINT מלא ועדכנו כל פרופיל מקצועי שלו.&nbsp;&nbsp;</p><div class="zappy-inserted-element" id="zappy-element-1772025955943-bk1gomi1i" data-element-id="zappy-element-1772025955943-bk1gomi1i" data-element-type="h2" data-zappy-newly-inserted="true" style="max-width: 800px; margin-left: auto; margin-right: auto; width: 100%;">התוצאה (והפער בין ישראל לעולם)</div>
-
-        <p style="">אחרי 11 ימים, גוגל הסירה את הלינק מתוצאות החיפוש<b> באיחוד האירופי בלבד.</b> בארה"ב? הוא נשאר. זה החושף בעיה: הלכת קראוס קיימת בישראל, GDPR באירופה - אבל בארה"ב, שם רוב המשקיעים, אין הגנה דומה.
-לכן המשכנו באסטרטגיית התוכן. אחרי 6 שבועות, הצלחנו להוריד את הכתבה למקום ה-8 בגוגל ארה"ב. בפרקטיקה - מתחת לקו הראות.<br>
-איתן סגר את סבב הגיוס בינואר 2024.<br><b>
-מה זה אומר עליך?</b><br>
-הלכת קראוס היא כלי חשוב, אבל היא לא קסם. היא לא תמחק אוטומטית כל כתבה ישנה עליך. <b>היא נותנת לך זכות לטעון</b> שהעבר שלך לא צריך להיות העתיד שלך. אבל בסוף, הקרב הוא על מי שולט על הנרטיב.<br>
-אם הסיפור שגוגל מספר עליך לא משקף מי שאתה היום - תתחיל לספר סיפור אחר. חזק יותר. נכון יותר. עכשווי יותר.<br><b>
-רוצים לדעת איך הנרטיב הדיגיטלי שלכם נראה? חפשו את השם שלכם בגוגל במצב incognito ושאלו את עצמכם: זה מי שאני באמת?&nbsp;&nbsp;</b></p>
+        <p style="">אחרי 11 ימים, גוגל הסירה את הלינק מתוצאות החיפוש באיחוד האירופי בלבד. בארה"ב? הוא נשאר. זה החושף בעיה: הלכת קראוס קיימת בישראל, GDPR באירופה - אבל בארה"ב, שם רוב המשקיעים, אין הגנה דומה.<br>לכן המשכנו באסטרטגיית התוכן. אחרי 6 שבועות, הצלחנו להוריד את הכתבה למקום ה-8 בגוגל ארה"ב. בפרקטיקה - מתחת לקו הראות.<br><br>איתן סגר את סבב הגיוס בינואר 2024.<br><br>מה זה אומר עליך?<br><br>הלכת קראוס היא כלי חשוב, אבל היא לא קסם. היא לא תמחק אוטומטית כל כתבה ישנה עליך. היא נותנת לך זכות לטעון שהעבר שלך לא צריך להיות העתיד שלך. אבל בסוף, הקרב הוא על מי שולט על הנרטיב.<br><br>אם הסיפור שגוגל מספר עליך לא משקף מי שאתה היום - תתחיל לספר סיפור אחר. חזק יותר. נכון יותר. עכשווי יותר.<br><br>רוצים לדעת איך הנרטיב הדיגיטלי שלכם נראה? חפשו את השם שלכם בגוגל במצב incognito ושאלו את עצמכם: זה מי שאני באמת?</p>
       </div>
     </article>
 
@@ -1399,8 +1082,7 @@ html[dir="rtl"] body {
       </a>
     </div>
 
-    <p><a href="/blog" class="back-to-blog">← חזרה לבלוג</a>
-  </p></div>
+    <p>← חזרה לבלוג</p></div>
 </section></main>
   
   <footer class="site-footer">
@@ -1414,18 +1096,18 @@ html[dir="rtl"] body {
       <div class="footer-column footer-links">
         <h3 class="footer-heading">קישורים מהירים</h3>
         <ul class="footer-nav">
-          <li><a href="/services">שירותים</a></li>
-          <li><a href="/insights">תובנות</a></li>
-          <li><a href="/contact">צור קשר</a></li>
+          <li>שירותים</li>
+          <li>תובנות</li>
+          <li>צור קשר</li>
         </ul>
       </div>
       
       <div class="footer-column footer-contact">
         <h3 class="footer-heading">יצירת קשר</h3>
         <ul class="contact-list">
-          <li><i class="fas fa-envelope"></i> <a href="mailto:ezuzint@gmail.com">ezuzint@gmail.com</a></li>
+          <li>ezuzint@gmail.com</li>
           <li><i class="fas fa-phone"></i> <a href="tel:0559971849">0559971849</a></li>
-          <li><a href="/"><i class="fas fa-map-marker-alt"></i> <span>מנחם בגין 30, תל אביב, ישראל</span></a></li>
+          <li>מנחם בגין 30, תל אביב, ישראל</li>
         </ul>
       </div>
       
@@ -1609,128 +1291,4 @@ html[dir="rtl"] body {
 
 
 
-</html>
-    <script src="/script.js"></script>
-
-    <script id="zappy-mobile-submenu-script">
-    (function() {
-      function initMobileSubmenuToggles() {
-        if (window.innerWidth > 768) {
-          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
-          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
-          return;
-        }
-        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
-        items.forEach(function(li) {
-          if (li.querySelector('.mobile-submenu-toggle')) return;
-          var submenu = li.querySelector('.sub-menu');
-          var parentLink = li.querySelector(':scope > a');
-          if (!submenu || !parentLink) return;
-          var toggleBtn = document.createElement('button');
-          toggleBtn.className = 'mobile-submenu-toggle';
-          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
-          toggleBtn.setAttribute('type', 'button');
-          parentLink.insertAdjacentElement('afterend', toggleBtn);
-          toggleBtn.addEventListener('click', function(e) {
-            e.preventDefault(); e.stopPropagation();
-            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
-              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
-            });
-            submenu.classList.toggle('mobile-expanded');
-            toggleBtn.classList.toggle('expanded');
-          });
-        });
-      }
-      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
-      else { initMobileSubmenuToggles(); }
-      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
-      // Re-initialize when mobile menu becomes visible (MutationObserver)
-      var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.type === 'attributes') {
-            var target = mutation.target;
-            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
-              setTimeout(initMobileSubmenuToggles, 100);
-            }
-          }
-        });
-      });
-      setTimeout(function() {
-        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
-          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
-        });
-      }, 500);
-    })();
-    </script>
-
-    <script id="zappy-mobile-lang-menu-script">
-    (function() {
-      function initMobileLangMenu() {
-        if (window.innerWidth > 768) {
-          var existingMenu = document.querySelector('.mobile-lang-menu');
-          if (existingMenu) existingMenu.remove();
-          return;
-        }
-        if (document.querySelector('.mobile-lang-menu')) return;
-        var switcher = document.querySelector('.lang-switcher');
-        if (!switcher) return;
-        var dropdown = switcher.querySelector('.lang-switcher-dropdown');
-        if (!dropdown) return;
-        var options = dropdown.querySelectorAll('.lang-option');
-        if (options.length === 0) return;
-        var navMenu = document.getElementById('navMenu') || document.querySelector('.nav-menu') || document.querySelector('nav ul');
-        if (!navMenu) return;
-        var currentLang = document.documentElement.lang || 'en';
-        var langConfigs = {
-          he: {name:'עברית',flag:'https://api.iconify.design/circle-flags/il.svg'},
-          en: {name:'English',flag:'https://api.iconify.design/circle-flags/us.svg'},
-          ar: {name:'العربية',flag:'https://api.iconify.design/circle-flags/sa.svg'},
-          fr: {name:'Français',flag:'https://api.iconify.design/circle-flags/fr.svg'},
-          es: {name:'Español',flag:'https://api.iconify.design/circle-flags/es.svg'},
-          de: {name:'Deutsch',flag:'https://api.iconify.design/circle-flags/de.svg'},
-          ru: {name:'Русский',flag:'https://api.iconify.design/circle-flags/ru.svg'},
-          zh: {name:'中文',flag:'https://api.iconify.design/circle-flags/cn.svg'},
-          ja: {name:'日本語',flag:'https://api.iconify.design/circle-flags/jp.svg'},
-          pt: {name:'Português',flag:'https://api.iconify.design/circle-flags/br.svg'},
-          it: {name:'Italiano',flag:'https://api.iconify.design/circle-flags/it.svg'},
-          ko: {name:'한국어',flag:'https://api.iconify.design/circle-flags/kr.svg'}
-        };
-        var container = document.createElement('div');
-        container.className = 'mobile-lang-menu';
-        var currentConfig = langConfigs[currentLang] || {name:currentLang,flag:''};
-        var toggleBtn = document.createElement('button');
-        toggleBtn.className = 'mobile-lang-toggle';
-        toggleBtn.type = 'button';
-        var currentFlagHtml = currentConfig.flag ? '<img src="' + currentConfig.flag + '" width="20" height="20" alt="" style="border-radius:50%;margin-right:8px;margin-left:8px;">' : '';
-        toggleBtn.innerHTML = currentFlagHtml + currentConfig.name;
-        container.appendChild(toggleBtn);
-        var optionsDiv = document.createElement('div');
-        optionsDiv.className = 'mobile-lang-options';
-        var currentLink = document.createElement('a');
-        currentLink.className = 'mobile-lang-option active';
-        currentLink.href = '#';
-        currentLink.innerHTML = currentFlagHtml + currentConfig.name;
-        optionsDiv.appendChild(currentLink);
-        options.forEach(function(opt) {
-          var link = document.createElement('a');
-          link.className = 'mobile-lang-option';
-          link.href = opt.getAttribute('href');
-          link.innerHTML = opt.innerHTML;
-          optionsDiv.appendChild(link);
-        });
-        container.appendChild(optionsDiv);
-        navMenu.appendChild(container);
-        toggleBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          toggleBtn.classList.toggle('expanded');
-          optionsDiv.classList.toggle('expanded');
-        });
-      }
-      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileLangMenu); }
-      else { initMobileLangMenu(); }
-      window.addEventListener('resize', function() { clearTimeout(window._mlrt); window._mlrt = setTimeout(initMobileLangMenu, 250); });
-    })();
-    </script>
-</body>
 </html>
