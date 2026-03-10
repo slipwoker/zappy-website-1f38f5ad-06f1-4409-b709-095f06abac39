@@ -1,81 +1,238 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ezuzint.com</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com" />
   </url>
   <url>
     <loc>https://ezuzint.com/services</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/services" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/services" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/services" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/services</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/services" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/services" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/services" />
   </url>
   <url>
     <loc>https://ezuzint.com/insights</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/insights" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/insights" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/insights" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/insights</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/insights" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/insights" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/insights" />
   </url>
   <url>
     <loc>https://ezuzint.com/contact</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/contact" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/contact</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/contact" />
   </url>
   <url>
     <loc>https://ezuzint.com/blog</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/blog</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog" />
   </url>
   <url>
     <loc>https://ezuzint.com/operating-procedures-krauss</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/operating-procedures-krauss" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/operating-procedures-krauss</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/operating-procedures-krauss" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/operating-procedures-krauss" />
   </url>
   <url>
     <loc>https://ezuzint.com/blog/competitive-osint-map</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog/competitive-osint-map" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog/competitive-osint-map" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog/competitive-osint-map" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/blog/competitive-osint-map</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog/competitive-osint-map" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog/competitive-osint-map" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog/competitive-osint-map" />
   </url>
   <url>
     <loc>https://ezuzint.com/blog/ai-signals-to-decisions</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog/ai-signals-to-decisions" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog/ai-signals-to-decisions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog/ai-signals-to-decisions" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/blog/ai-signals-to-decisions</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog/ai-signals-to-decisions" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog/ai-signals-to-decisions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog/ai-signals-to-decisions" />
   </url>
   <url>
     <loc>https://ezuzint.com/blog/digital-crisis-72h-playbook</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog/digital-crisis-72h-playbook" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog/digital-crisis-72h-playbook" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog/digital-crisis-72h-playbook" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/blog/digital-crisis-72h-playbook</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/blog/digital-crisis-72h-playbook" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/blog/digital-crisis-72h-playbook" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/blog/digital-crisis-72h-playbook" />
   </url>
   <url>
     <loc>https://ezuzint.com/digital-identity-intelligence</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/digital-identity-intelligence" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/digital-identity-intelligence" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/digital-identity-intelligence" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/digital-identity-intelligence</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/digital-identity-intelligence" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/digital-identity-intelligence" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/digital-identity-intelligence" />
   </url>
   <url>
     <loc>https://ezuzint.com/privacy</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/privacy" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/privacy</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/privacy" />
   </url>
   <url>
     <loc>https://ezuzint.com/terms</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/terms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/terms" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/terms</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/terms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/terms" />
   </url>
   <url>
     <loc>https://ezuzint.com/accessibility</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/accessibility" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/accessibility" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/accessibility" />
+  </url>
+  <url>
+    <loc>https://ezuzint.com/en/accessibility</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="he" href="https://ezuzint.com/accessibility" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ezuzint.com/en/accessibility" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ezuzint.com/accessibility" />
   </url>
 </urlset>

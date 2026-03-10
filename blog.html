@@ -228,6 +228,574 @@
   gtag('config', 'G-5QT58PS8VQ');
 </script>
 <!-- ZAPPY_INTEGRATION_END analytics:add_google_analytics -->
+<style id="zappy-multilang-css">
+/* ============================================
+   DIRECTION OVERRIDE STYLES
+   Only set direction property, NOT text-align
+   This preserves centered elements
+   ============================================ */
+
+/* Base direction for LTR */
+html[dir="ltr"], html[dir="ltr"] body {
+  direction: ltr !important;
+}
+
+html[dir="ltr"] main,
+html[dir="ltr"] article,
+html[dir="ltr"] section,
+html[dir="ltr"] .content,
+html[dir="ltr"] .container,
+html[dir="ltr"] .wrapper {
+  direction: ltr !important;
+}
+
+/* ONLY apply text-align to legal page content that needs LTR alignment */
+html[dir="ltr"] .legal-content,
+html[dir="ltr"] .terms-content,
+html[dir="ltr"] .privacy-content,
+html[dir="ltr"] .legal-content p,
+html[dir="ltr"] .terms-content p,
+html[dir="ltr"] .privacy-content p,
+html[dir="ltr"] .legal-content li,
+html[dir="ltr"] .terms-content li,
+html[dir="ltr"] .privacy-content li {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+/* Base direction for RTL */
+html[dir="rtl"], html[dir="rtl"] body {
+  direction: rtl !important;
+}
+
+html[dir="rtl"] main,
+html[dir="rtl"] article,
+html[dir="rtl"] section,
+html[dir="rtl"] .content,
+html[dir="rtl"] .container,
+html[dir="rtl"] .wrapper {
+  direction: rtl !important;
+}
+
+/* ONLY apply text-align to legal page content that needs RTL alignment */
+html[dir="rtl"] .legal-content,
+html[dir="rtl"] .terms-content,
+html[dir="rtl"] .privacy-content,
+html[dir="rtl"] .legal-content p,
+html[dir="rtl"] .terms-content p,
+html[dir="rtl"] .privacy-content p,
+html[dir="rtl"] .legal-content li,
+html[dir="rtl"] .terms-content li,
+html[dir="rtl"] .privacy-content li {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+
+/* ============================================
+   V2 NAVIGATION FIX
+   CRITICAL: For V2 sites created in RTL (Hebrew), the nav elements
+   inherit direction:rtl from the body. This reverses how flex order
+   is interpreted. For LTR pages, we MUST set direction:ltr on nav
+   containers to make the flex order work correctly.
+   
+   This section is ONLY included for V2 sites (detected by nav-right-group
+   or nav-cta-container classes) to avoid affecting V1 site layouts.
+   ============================================ */
+
+/* Fix V2 navbar layout for LTR pages */
+/* Direction must apply to all screen sizes, but flex-direction: row is desktop-only */
+html[dir="ltr"] header,
+html[dir="ltr"] nav,
+html[dir="ltr"] .navbar,
+html[dir="ltr"] .nav-container {
+  direction: ltr !important;
+}
+
+html[dir="ltr"] .nav-right-group {
+  direction: ltr !important;
+  order: -1 !important;
+}
+
+html[dir="ltr"] .nav-cta-container {
+  direction: ltr !important;
+  order: 1 !important;
+  margin-left: auto !important;
+}
+
+html[dir="ltr"] .nav-menu,
+html[dir="ltr"] #navMenu {
+  direction: ltr !important;
+}
+
+html[dir="ltr"] .nav-brand {
+  direction: ltr !important;
+  order: -1 !important;
+}
+
+/* DESKTOP ONLY: Horizontal flex layout for navbar elements */
+@media (min-width: 769px) {
+  html[dir="ltr"] header,
+  html[dir="ltr"] nav,
+  html[dir="ltr"] .navbar,
+  html[dir="ltr"] .nav-container {
+    flex-direction: row !important;
+  }
+  
+  html[dir="ltr"] .nav-right-group,
+  html[dir="ltr"] .nav-cta-container {
+    flex-direction: row !important;
+  }
+  
+  html[dir="ltr"] .nav-menu,
+  html[dir="ltr"] #navMenu {
+    flex-direction: row !important;
+  }
+}
+
+
+/* Language Switcher Container - Fixed Position */
+.zappy-lang-switcher-container {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* RTL: Move to left side */
+html[dir="rtl"] .zappy-lang-switcher-container {
+  right: auto;
+  left: 12px;
+}
+
+/* Language Switcher Styles */
+.lang-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Language switcher positioning - minimal, only gap spacing */
+/* NOTE: Removed margin-left:auto rules that broke V2 layouts */
+/* V2 layouts handle positioning via flexbox, we just add small gap */
+header .lang-switcher,
+nav .lang-switcher,
+.navbar .lang-switcher {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.lang-switcher-current {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.lang-switcher-current:hover {
+  opacity: 0.7;
+}
+
+/* ===========================================
+   LANGUAGE DROPDOWN POSITIONING
+   CRITICAL: position: absolute !important overrides any
+   mobile responsive CSS that resets absolute positioning
+   to relative. The dropdown MUST be absolutely positioned
+   relative to its parent .lang-switcher.
+   
+   HIGH SPECIFICITY SELECTORS needed to override:
+   [style*="position: absolute"]:not(...) { position: relative !important }
+   That selector has specificity ~0,4,0 so we need 0,5,0+ to win
+   =========================================== */
+.lang-switcher-dropdown,
+.lang-switcher .lang-switcher-dropdown,
+div.lang-switcher-dropdown,
+.nav-cta-container .lang-switcher .lang-switcher-dropdown,
+.navbar .nav-cta-container .lang-switcher-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+  /* Default LTR: align dropdown's left edge to switcher's left edge */
+  left: 0;
+  right: auto;
+  margin-top: 6px;
+  min-width: 150px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+  overflow: hidden;
+  z-index: 1002 !important;
+}
+
+/* Ultra-high specificity override for problematic mobile responsive CSS */
+/* The problematic rule [style*="position: absolute"]:not():not():not() has specificity 0,4,0 */
+/* We need 0,5,0+ to win, so we add extra class/attribute selectors */
+.lang-switcher .lang-switcher-dropdown[style*="position: absolute"],
+.lang-switcher .lang-switcher-dropdown[style*="position:absolute"],
+.nav-cta-container .lang-switcher .lang-switcher-dropdown[style],
+.navbar .nav-cta-container .lang-switcher-dropdown[style],
+div.lang-switcher > div.lang-switcher-dropdown[style] {
+  position: absolute !important;
+  top: 100% !important;
+  /* Default LTR: align to left */
+  left: 0;
+  right: auto;
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background 0.15s ease;
+}
+
+html[dir="rtl"] .lang-option {
+  text-align: right;
+}
+
+/* RTL: align dropdown's right edge to switcher's right edge */
+html[dir="rtl"] .lang-switcher-dropdown,
+html[lang="he"] .lang-switcher-dropdown,
+html[lang="ar"] .lang-switcher-dropdown {
+  right: 0;
+  left: auto;
+}
+
+.lang-option:hover {
+  background: #f5f5f5;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  /* Hide desktop lang-switcher on mobile - hamburger menu handles it */
+  /* High specificity needed to override stored CSS: .nav-cta-container .lang-switcher { display: flex !important } */
+  .lang-switcher,
+  .nav-cta-container .lang-switcher,
+  .nav-container .lang-switcher,
+  .navbar .lang-switcher,
+  .navbar .nav-cta-container .lang-switcher,
+  .nav-icons-left .lang-switcher,
+  .nav-ecommerce-icons .lang-switcher {
+    display: none !important;
+  }
+  
+  .zappy-lang-switcher-container {
+    display: none !important;
+  }
+  
+  /* ===========================================
+     MOBILE LANGUAGE SUBMENU (inside hamburger)
+     =========================================== */
+  .mobile-lang-menu {
+    width: 100%;
+    border-top: 1px solid rgba(128, 128, 128, 0.15);
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+  
+  .mobile-lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: 500;
+    color: inherit;
+    text-align: left;
+  }
+  
+  html[dir="rtl"] .mobile-lang-toggle {
+    text-align: right;
+  }
+  
+  .mobile-lang-chevron {
+    margin-left: auto;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  
+  html[dir="rtl"] .mobile-lang-chevron {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  
+  .mobile-lang-options {
+    display: none;
+    flex-direction: column;
+    padding: 0 0 8px 0;
+  }
+  
+  .mobile-lang-options.open {
+    display: flex !important;
+  }
+  
+  .mobile-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 30px 12px 50px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    color: inherit;
+    text-align: left;
+    opacity: 0.85;
+    transition: opacity 0.15s ease;
+  }
+  
+  html[dir="rtl"] .mobile-lang-option {
+    text-align: right;
+    padding: 12px 50px 12px 30px;
+  }
+  
+  .mobile-lang-option:hover,
+  .mobile-lang-option:active {
+    opacity: 1;
+  }
+  
+  .mobile-lang-option img {
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}
+
+/* ===========================================
+   RTL MOBILE HORIZONTAL OVERFLOW FIX
+   Prevents left whitespace gap in RTL mobile
+   caused by elements extending past viewport
+   =========================================== */
+
+/* Prevent horizontal scroll on RTL pages */
+/* Using 'clip' instead of 'hidden' to avoid breaking position:sticky */
+/* 'hidden' causes overflow-y to compute as 'auto', creating a scroll container */
+html[dir="rtl"],
+html[dir="rtl"] body {
+  overflow-x: clip !important;
+  max-width: 100vw !important;
+}
+
+/* Ensure carousel containers clip overflow to prevent horizontal scroll */
+.zappy-carousel-container,
+.zappy-carousel-wrapper,
+.benefits-section,
+.testimonials-section,
+[class*="carousel"] {
+  overflow-x: hidden !important;
+}
+
+/* Ensure lang-switcher parent clips its positioned children */
+.lang-switcher {
+  overflow: visible; /* Keep visible for dropdown to show */
+}
+
+/* ===========================================
+   MOBILE NAV BUTTON POSITIONING
+   CSS handles positioning based on html[dir] attribute.
+   This allows dynamic RTL/LTR switching without inline styles.
+   
+   LTR (default): hamburger LEFT (20px), phone RIGHT (20px)
+   RTL: hamburger RIGHT (20px), phone LEFT (20px) - mirrored
+   =========================================== */
+@media (max-width: 768px) {
+  /* Base positioning and visibility for mobile nav buttons */
+  /* CRITICAL: display: flex overrides any desktop display: none rules */
+  .mobile-toggle,
+  html:not([data-zappy-site-type="ecommerce"]) .phone-header-btn {
+    display: flex !important;
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 1001 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+  }
+  
+  /* Phone button color - use accent color for visibility */
+  html:not([data-zappy-site-type="ecommerce"]) .phone-header-btn {
+    color: var(--accent, #f59e0b) !important;
+  }
+  
+  html:not([data-zappy-site-type="ecommerce"]) .phone-header-btn svg {
+    width: 24px !important;
+    height: 24px !important;
+    fill: currentColor !important;
+  }
+  
+  /* LTR positioning (default) - hamburger LEFT, phone RIGHT */
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+  html[dir="ltr"] .mobile-toggle {
+    left: 20px !important;
+    right: auto !important;
+  }
+  
+  html:not([data-zappy-site-type="ecommerce"]):not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+  html:not([data-zappy-site-type="ecommerce"])[dir="ltr"] .phone-header-btn {
+    right: 20px !important;
+    left: auto !important;
+  }
+  
+  /* LTR mobile menu slides from LEFT */
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu,
+  html[dir="ltr"] .nav-menu {
+    left: 0 !important;
+    right: auto !important;
+  }
+  
+  /* ===========================================
+     MOBILE NAV MENU - VERTICAL LAYOUT FIX
+     CRITICAL: Override any desktop flex-direction: row rules
+     The mobile menu MUST stack vertically (column), not horizontally (row)
+     =========================================== */
+  html[dir="ltr"] .nav-menu,
+  html[dir="ltr"] .nav-menu.active,
+  html[dir="ltr"] #navMenu,
+  html[dir="ltr"] #navMenu.active,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu.active {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  
+  /* RTL mobile menu - also vertical layout */
+  html[dir="rtl"] .nav-menu,
+  html[dir="rtl"] .nav-menu.active,
+  html[dir="rtl"] #navMenu,
+  html[dir="rtl"] #navMenu.active,
+  html[lang="he"] .nav-menu,
+  html[lang="he"] .nav-menu.active,
+  html[lang="ar"] .nav-menu,
+  html[lang="ar"] .nav-menu.active {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  
+  /* LTR mobile menu text alignment - left aligned */
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu li,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu a,
+  html[dir="ltr"] .nav-menu li,
+  html[dir="ltr"] .nav-menu a {
+    text-align: left !important;
+  }
+  
+  /* ===========================================
+     LTR MOBILE NAV-CONTAINER LAYOUT FIX
+     V2 sites have nav-container with flex-direction: row-reverse
+     for RTL. For LTR, we need flex-direction: row and centered logo.
+     =========================================== */
+  html[dir="ltr"] .nav-container,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-container {
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+  
+  /* LTR: Center the logo/nav-brand in mobile navbar */
+  html[dir="ltr"] .nav-brand,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-brand {
+    order: 0 !important;
+    margin: 0 auto !important;
+  }
+  
+  /* RTL: Center the logo/nav-brand in mobile navbar */
+  html[dir="rtl"] .nav-brand,
+  html[lang="he"] .nav-brand,
+  html[lang="ar"] .nav-brand {
+    order: 0 !important;
+    margin: 0 auto !important;
+  }
+  
+  /* RTL lang-switcher dropdown constraint */
+  html[dir="rtl"] .lang-switcher {
+    position: relative;
+  }
+  
+  html[dir="rtl"] .lang-switcher-dropdown {
+    left: auto !important;
+    right: 0 !important;
+    max-width: calc(100vw - 20px);
+  }
+  
+  /* ===========================================
+     RTL MOBILE NAV BUTTON POSITIONING
+     In RTL: hamburger RIGHT, phone LEFT (mirror of LTR)
+     =========================================== */
+  html[dir="rtl"] .mobile-toggle,
+  html[lang="he"] .mobile-toggle,
+  html[lang="ar"] .mobile-toggle {
+    left: auto !important;
+    right: 20px !important;
+  }
+  
+  html[dir="rtl"]:not([data-zappy-site-type="ecommerce"]) .phone-header-btn,
+  html[lang="he"]:not([data-zappy-site-type="ecommerce"]) .phone-header-btn,
+  html[lang="ar"]:not([data-zappy-site-type="ecommerce"]) .phone-header-btn {
+    left: 20px !important;
+    right: auto !important;
+  }
+
+  /* Explicitly hide phone button on e-commerce sites (cleaner than fighting with e-commerce CSS). */
+  html[data-zappy-site-type="ecommerce"] .phone-header-btn {
+    display: none !important;
+  }
+  
+  /* RTL mobile menu slides from RIGHT */
+  html[dir="rtl"] .nav-menu,
+  html[lang="he"] .nav-menu,
+  html[lang="ar"] .nav-menu {
+    left: auto !important;
+    right: 0 !important;
+  }
+  
+  /* ===========================================
+     MOBILE LANGUAGE SWITCHER
+     Desktop lang-switcher is hidden on mobile.
+     Language selection is handled by the hamburger
+     menu submenu (.mobile-lang-menu) instead.
+     High specificity to override stored CSS.
+     =========================================== */
+  .lang-switcher,
+  .nav-cta-container .lang-switcher,
+  .nav-container .lang-switcher,
+  .navbar .lang-switcher,
+  .navbar .nav-cta-container .lang-switcher,
+  .nav-icons-left .lang-switcher,
+  .nav-ecommerce-icons .lang-switcher {
+    display: none !important;
+  }
+}
+
+</style>
     <link rel="stylesheet" href="/styles.css">
 
     <style id="zappy-dropdown-submenu-styles">
@@ -319,12 +887,580 @@
   gtag('config', 'G-5QT58PS8VQ');
 </script>
 <!-- ZAPPY_INTEGRATION_END analytics:add_google_analytics -->
+<style id="zappy-multilang-css">
+/* ============================================
+   DIRECTION OVERRIDE STYLES
+   Only set direction property, NOT text-align
+   This preserves centered elements
+   ============================================ */
+
+/* Base direction for LTR */
+html[dir="ltr"], html[dir="ltr"] body {
+  direction: ltr !important;
+}
+
+html[dir="ltr"] main,
+html[dir="ltr"] article,
+html[dir="ltr"] section,
+html[dir="ltr"] .content,
+html[dir="ltr"] .container,
+html[dir="ltr"] .wrapper {
+  direction: ltr !important;
+}
+
+/* ONLY apply text-align to legal page content that needs LTR alignment */
+html[dir="ltr"] .legal-content,
+html[dir="ltr"] .terms-content,
+html[dir="ltr"] .privacy-content,
+html[dir="ltr"] .legal-content p,
+html[dir="ltr"] .terms-content p,
+html[dir="ltr"] .privacy-content p,
+html[dir="ltr"] .legal-content li,
+html[dir="ltr"] .terms-content li,
+html[dir="ltr"] .privacy-content li {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+/* Base direction for RTL */
+html[dir="rtl"], html[dir="rtl"] body {
+  direction: rtl !important;
+}
+
+html[dir="rtl"] main,
+html[dir="rtl"] article,
+html[dir="rtl"] section,
+html[dir="rtl"] .content,
+html[dir="rtl"] .container,
+html[dir="rtl"] .wrapper {
+  direction: rtl !important;
+}
+
+/* ONLY apply text-align to legal page content that needs RTL alignment */
+html[dir="rtl"] .legal-content,
+html[dir="rtl"] .terms-content,
+html[dir="rtl"] .privacy-content,
+html[dir="rtl"] .legal-content p,
+html[dir="rtl"] .terms-content p,
+html[dir="rtl"] .privacy-content p,
+html[dir="rtl"] .legal-content li,
+html[dir="rtl"] .terms-content li,
+html[dir="rtl"] .privacy-content li {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+
+/* ============================================
+   V2 NAVIGATION FIX
+   CRITICAL: For V2 sites created in RTL (Hebrew), the nav elements
+   inherit direction:rtl from the body. This reverses how flex order
+   is interpreted. For LTR pages, we MUST set direction:ltr on nav
+   containers to make the flex order work correctly.
+   
+   This section is ONLY included for V2 sites (detected by nav-right-group
+   or nav-cta-container classes) to avoid affecting V1 site layouts.
+   ============================================ */
+
+/* Fix V2 navbar layout for LTR pages */
+/* Direction must apply to all screen sizes, but flex-direction: row is desktop-only */
+html[dir="ltr"] header,
+html[dir="ltr"] nav,
+html[dir="ltr"] .navbar,
+html[dir="ltr"] .nav-container {
+  direction: ltr !important;
+}
+
+html[dir="ltr"] .nav-right-group {
+  direction: ltr !important;
+  order: -1 !important;
+}
+
+html[dir="ltr"] .nav-cta-container {
+  direction: ltr !important;
+  order: 1 !important;
+  margin-left: auto !important;
+}
+
+html[dir="ltr"] .nav-menu,
+html[dir="ltr"] #navMenu {
+  direction: ltr !important;
+}
+
+html[dir="ltr"] .nav-brand {
+  direction: ltr !important;
+  order: -1 !important;
+}
+
+/* DESKTOP ONLY: Horizontal flex layout for navbar elements */
+@media (min-width: 769px) {
+  html[dir="ltr"] header,
+  html[dir="ltr"] nav,
+  html[dir="ltr"] .navbar,
+  html[dir="ltr"] .nav-container {
+    flex-direction: row !important;
+  }
+  
+  html[dir="ltr"] .nav-right-group,
+  html[dir="ltr"] .nav-cta-container {
+    flex-direction: row !important;
+  }
+  
+  html[dir="ltr"] .nav-menu,
+  html[dir="ltr"] #navMenu {
+    flex-direction: row !important;
+  }
+}
+
+
+/* Language Switcher Container - Fixed Position */
+.zappy-lang-switcher-container {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* RTL: Move to left side */
+html[dir="rtl"] .zappy-lang-switcher-container {
+  right: auto;
+  left: 12px;
+}
+
+/* Language Switcher Styles */
+.lang-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Language switcher positioning - minimal, only gap spacing */
+/* NOTE: Removed margin-left:auto rules that broke V2 layouts */
+/* V2 layouts handle positioning via flexbox, we just add small gap */
+header .lang-switcher,
+nav .lang-switcher,
+.navbar .lang-switcher {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.lang-switcher-current {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.lang-switcher-current:hover {
+  opacity: 0.7;
+}
+
+/* ===========================================
+   LANGUAGE DROPDOWN POSITIONING
+   CRITICAL: position: absolute !important overrides any
+   mobile responsive CSS that resets absolute positioning
+   to relative. The dropdown MUST be absolutely positioned
+   relative to its parent .lang-switcher.
+   
+   HIGH SPECIFICITY SELECTORS needed to override:
+   [style*="position: absolute"]:not(...) { position: relative !important }
+   That selector has specificity ~0,4,0 so we need 0,5,0+ to win
+   =========================================== */
+.lang-switcher-dropdown,
+.lang-switcher .lang-switcher-dropdown,
+div.lang-switcher-dropdown,
+.nav-cta-container .lang-switcher .lang-switcher-dropdown,
+.navbar .nav-cta-container .lang-switcher-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+  /* Default LTR: align dropdown's left edge to switcher's left edge */
+  left: 0;
+  right: auto;
+  margin-top: 6px;
+  min-width: 150px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+  overflow: hidden;
+  z-index: 1002 !important;
+}
+
+/* Ultra-high specificity override for problematic mobile responsive CSS */
+/* The problematic rule [style*="position: absolute"]:not():not():not() has specificity 0,4,0 */
+/* We need 0,5,0+ to win, so we add extra class/attribute selectors */
+.lang-switcher .lang-switcher-dropdown[style*="position: absolute"],
+.lang-switcher .lang-switcher-dropdown[style*="position:absolute"],
+.nav-cta-container .lang-switcher .lang-switcher-dropdown[style],
+.navbar .nav-cta-container .lang-switcher-dropdown[style],
+div.lang-switcher > div.lang-switcher-dropdown[style] {
+  position: absolute !important;
+  top: 100% !important;
+  /* Default LTR: align to left */
+  left: 0;
+  right: auto;
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background 0.15s ease;
+}
+
+html[dir="rtl"] .lang-option {
+  text-align: right;
+}
+
+/* RTL: align dropdown's right edge to switcher's right edge */
+html[dir="rtl"] .lang-switcher-dropdown,
+html[lang="he"] .lang-switcher-dropdown,
+html[lang="ar"] .lang-switcher-dropdown {
+  right: 0;
+  left: auto;
+}
+
+.lang-option:hover {
+  background: #f5f5f5;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  /* Hide desktop lang-switcher on mobile - hamburger menu handles it */
+  /* High specificity needed to override stored CSS: .nav-cta-container .lang-switcher { display: flex !important } */
+  .lang-switcher,
+  .nav-cta-container .lang-switcher,
+  .nav-container .lang-switcher,
+  .navbar .lang-switcher,
+  .navbar .nav-cta-container .lang-switcher,
+  .nav-icons-left .lang-switcher,
+  .nav-ecommerce-icons .lang-switcher {
+    display: none !important;
+  }
+  
+  .zappy-lang-switcher-container {
+    display: none !important;
+  }
+  
+  /* ===========================================
+     MOBILE LANGUAGE SUBMENU (inside hamburger)
+     =========================================== */
+  .mobile-lang-menu {
+    width: 100%;
+    border-top: 1px solid rgba(128, 128, 128, 0.15);
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+  
+  .mobile-lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: 500;
+    color: inherit;
+    text-align: left;
+  }
+  
+  html[dir="rtl"] .mobile-lang-toggle {
+    text-align: right;
+  }
+  
+  .mobile-lang-chevron {
+    margin-left: auto;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  
+  html[dir="rtl"] .mobile-lang-chevron {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  
+  .mobile-lang-options {
+    display: none;
+    flex-direction: column;
+    padding: 0 0 8px 0;
+  }
+  
+  .mobile-lang-options.open {
+    display: flex !important;
+  }
+  
+  .mobile-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 30px 12px 50px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    color: inherit;
+    text-align: left;
+    opacity: 0.85;
+    transition: opacity 0.15s ease;
+  }
+  
+  html[dir="rtl"] .mobile-lang-option {
+    text-align: right;
+    padding: 12px 50px 12px 30px;
+  }
+  
+  .mobile-lang-option:hover,
+  .mobile-lang-option:active {
+    opacity: 1;
+  }
+  
+  .mobile-lang-option img {
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}
+
+/* ===========================================
+   RTL MOBILE HORIZONTAL OVERFLOW FIX
+   Prevents left whitespace gap in RTL mobile
+   caused by elements extending past viewport
+   =========================================== */
+
+/* Prevent horizontal scroll on RTL pages */
+/* Using 'clip' instead of 'hidden' to avoid breaking position:sticky */
+/* 'hidden' causes overflow-y to compute as 'auto', creating a scroll container */
+html[dir="rtl"],
+html[dir="rtl"] body {
+  overflow-x: clip !important;
+  max-width: 100vw !important;
+}
+
+/* Ensure carousel containers clip overflow to prevent horizontal scroll */
+.zappy-carousel-container,
+.zappy-carousel-wrapper,
+.benefits-section,
+.testimonials-section,
+[class*="carousel"] {
+  overflow-x: hidden !important;
+}
+
+/* Ensure lang-switcher parent clips its positioned children */
+.lang-switcher {
+  overflow: visible; /* Keep visible for dropdown to show */
+}
+
+/* ===========================================
+   MOBILE NAV BUTTON POSITIONING
+   CSS handles positioning based on html[dir] attribute.
+   This allows dynamic RTL/LTR switching without inline styles.
+   
+   LTR (default): hamburger LEFT (20px), phone RIGHT (20px)
+   RTL: hamburger RIGHT (20px), phone LEFT (20px) - mirrored
+   =========================================== */
+@media (max-width: 768px) {
+  /* Base positioning and visibility for mobile nav buttons */
+  /* CRITICAL: display: flex overrides any desktop display: none rules */
+  .mobile-toggle,
+  html:not([data-zappy-site-type="ecommerce"]) .phone-header-btn {
+    display: flex !important;
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 1001 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+  }
+  
+  /* Phone button color - use accent color for visibility */
+  html:not([data-zappy-site-type="ecommerce"]) .phone-header-btn {
+    color: var(--accent, #f59e0b) !important;
+  }
+  
+  html:not([data-zappy-site-type="ecommerce"]) .phone-header-btn svg {
+    width: 24px !important;
+    height: 24px !important;
+    fill: currentColor !important;
+  }
+  
+  /* LTR positioning (default) - hamburger LEFT, phone RIGHT */
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+  html[dir="ltr"] .mobile-toggle {
+    left: 20px !important;
+    right: auto !important;
+  }
+  
+  html:not([data-zappy-site-type="ecommerce"]):not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+  html:not([data-zappy-site-type="ecommerce"])[dir="ltr"] .phone-header-btn {
+    right: 20px !important;
+    left: auto !important;
+  }
+  
+  /* LTR mobile menu slides from LEFT */
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu,
+  html[dir="ltr"] .nav-menu {
+    left: 0 !important;
+    right: auto !important;
+  }
+  
+  /* ===========================================
+     MOBILE NAV MENU - VERTICAL LAYOUT FIX
+     CRITICAL: Override any desktop flex-direction: row rules
+     The mobile menu MUST stack vertically (column), not horizontally (row)
+     =========================================== */
+  html[dir="ltr"] .nav-menu,
+  html[dir="ltr"] .nav-menu.active,
+  html[dir="ltr"] #navMenu,
+  html[dir="ltr"] #navMenu.active,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu.active {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  
+  /* RTL mobile menu - also vertical layout */
+  html[dir="rtl"] .nav-menu,
+  html[dir="rtl"] .nav-menu.active,
+  html[dir="rtl"] #navMenu,
+  html[dir="rtl"] #navMenu.active,
+  html[lang="he"] .nav-menu,
+  html[lang="he"] .nav-menu.active,
+  html[lang="ar"] .nav-menu,
+  html[lang="ar"] .nav-menu.active {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  
+  /* LTR mobile menu text alignment - left aligned */
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu li,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-menu a,
+  html[dir="ltr"] .nav-menu li,
+  html[dir="ltr"] .nav-menu a {
+    text-align: left !important;
+  }
+  
+  /* ===========================================
+     LTR MOBILE NAV-CONTAINER LAYOUT FIX
+     V2 sites have nav-container with flex-direction: row-reverse
+     for RTL. For LTR, we need flex-direction: row and centered logo.
+     =========================================== */
+  html[dir="ltr"] .nav-container,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-container {
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+  
+  /* LTR: Center the logo/nav-brand in mobile navbar */
+  html[dir="ltr"] .nav-brand,
+  html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .nav-brand {
+    order: 0 !important;
+    margin: 0 auto !important;
+  }
+  
+  /* RTL: Center the logo/nav-brand in mobile navbar */
+  html[dir="rtl"] .nav-brand,
+  html[lang="he"] .nav-brand,
+  html[lang="ar"] .nav-brand {
+    order: 0 !important;
+    margin: 0 auto !important;
+  }
+  
+  /* RTL lang-switcher dropdown constraint */
+  html[dir="rtl"] .lang-switcher {
+    position: relative;
+  }
+  
+  html[dir="rtl"] .lang-switcher-dropdown {
+    left: auto !important;
+    right: 0 !important;
+    max-width: calc(100vw - 20px);
+  }
+  
+  /* ===========================================
+     RTL MOBILE NAV BUTTON POSITIONING
+     In RTL: hamburger RIGHT, phone LEFT (mirror of LTR)
+     =========================================== */
+  html[dir="rtl"] .mobile-toggle,
+  html[lang="he"] .mobile-toggle,
+  html[lang="ar"] .mobile-toggle {
+    left: auto !important;
+    right: 20px !important;
+  }
+  
+  html[dir="rtl"]:not([data-zappy-site-type="ecommerce"]) .phone-header-btn,
+  html[lang="he"]:not([data-zappy-site-type="ecommerce"]) .phone-header-btn,
+  html[lang="ar"]:not([data-zappy-site-type="ecommerce"]) .phone-header-btn {
+    left: 20px !important;
+    right: auto !important;
+  }
+
+  /* Explicitly hide phone button on e-commerce sites (cleaner than fighting with e-commerce CSS). */
+  html[data-zappy-site-type="ecommerce"] .phone-header-btn {
+    display: none !important;
+  }
+  
+  /* RTL mobile menu slides from RIGHT */
+  html[dir="rtl"] .nav-menu,
+  html[lang="he"] .nav-menu,
+  html[lang="ar"] .nav-menu {
+    left: auto !important;
+    right: 0 !important;
+  }
+  
+  /* ===========================================
+     MOBILE LANGUAGE SWITCHER
+     Desktop lang-switcher is hidden on mobile.
+     Language selection is handled by the hamburger
+     menu submenu (.mobile-lang-menu) instead.
+     High specificity to override stored CSS.
+     =========================================== */
+  .lang-switcher,
+  .nav-cta-container .lang-switcher,
+  .nav-container .lang-switcher,
+  .navbar .lang-switcher,
+  .navbar .nav-cta-container .lang-switcher,
+  .nav-icons-left .lang-switcher,
+  .nav-ecommerce-icons .lang-switcher {
+    display: none !important;
+  }
+}
+
+</style>
 </head>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>בלוג מודיעין דיגיטלי | Ezuz Intel</title>
-  <meta name="description" content="Ezuz Intel - בלוג מודיעין דיגיטלי | Ezuz Intel">
+  <title data-i18n="blog_page_title">בלוג מודיעין דיגיטלי | Ezuz Intel</title>
+  <meta name="description" content="Ezuz Intel - בלוג מודיעין דיגיטלי | Ezuz Intel" data-i18n-content="blog_meta_description">
   <meta name="keywords" content="Ezuz Intel, מודיעין עסקי תחרותי בישראל, ניהול מוניטין דיגיטלי לעסקים, שירותים דיגיטליים לעסקים, שיפור מוניטין באינטרנט">
   <meta name="robots" content="index, follow">
   
@@ -1587,15 +2723,23 @@ html[dir="rtl"] body {
   <div class="nav-container">
     <div class="nav-brand">
       <a href="/" class="logo-link">
-        <img src="/assets/ezuz-logo-1771583530795-m0d2d8.webp?v=1771583531687-i0w9tu" alt="Ezuz Intel" class="logo">
+        <img src="/assets/ezuz-logo-1771583530795-m0d2d8.webp?v=1771583531687-i0w9tu" alt="Ezuz Intel" class="logo" data-i18n-alt="blog_alt_81">
       </a>
     </div>
     
-    <ul class="nav-menu" id="navMenu"><li><a href="/services">שירותים</a></li><li><a href="/insights">תובנות</a></li><li><a href="/blog" class="nav-link">בלוג</a><ul class="sub-menu"><li><a href="/operating-procedures-krauss" class="nav-link">ORM</a></li><li><a href="/blog/competitive-osint-map" class="nav-link">OSINT</a></li><li><a href="/blog/ai-signals-to-decisions" class="nav-link">AI</a></li><li><a href="/blog/digital-crisis-72h-playbook" class="nav-link">משבר</a></li><li><a href="/digital-identity-intelligence" class="nav-link">ניטור</a></li></ul></li></ul>
+    <ul class="nav-menu" id="navMenu"><li><a href="/services" data-i18n="blog_nav_72">שירותים</a></li><li><a href="/insights" data-i18n="blog_nav_73">תובנות</a></li><li><a href="/blog" class="nav-link" data-i18n="blog_nav_74">בלוג</a><ul class="sub-menu"><li><a href="/operating-procedures-krauss" class="nav-link" data-i18n="blog_nav_75">ORM</a></li><li><a href="/blog/competitive-osint-map" class="nav-link" data-i18n="blog_nav_76">OSINT</a></li><li><a href="/blog/ai-signals-to-decisions" class="nav-link" data-i18n="blog_nav_77">AI</a></li><li><a href="/blog/digital-crisis-72h-playbook" class="nav-link" data-i18n="blog_nav_78">משבר</a></li><li><a href="/digital-identity-intelligence" class="nav-link" data-i18n="blog_nav_79">ניטור</a></li></ul></li></ul>
     
     
-<div class="nav-cta-container">
-      <a href="/contact" class="nav-cta-btn">צור קשר</a>
+
+<div class="lang-switcher" data-no-icon-edit="true" data-icon-color="#0F172A" style="position:relative;display:inline-flex;align-items:center;z-index:1000;margin:0 4px;">
+  <button class="lang-switcher-current" aria-haspopup="true" aria-expanded="false" data-no-icon-edit="true" style="display:flex;align-items:center;padding:8px;background:transparent;border:none;border-radius:6px;cursor:pointer;color:#0F172A;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="#0F172A" style="flex-shrink:0;" data-no-icon-edit="true"><path d="M12.039,.002s0,0,0,0c-.013,0-.026-.002-.039-.002-.005,0-.009,0-.014,0-.002,0-.003,0-.005,0C5.373,.011,0,5.39,0,12s5.383,12,12,12,12-5.383,12-12S18.638,.023,12.039,.002Zm9.747,6.998h-4.814c-1.067-2.669-2.712-4.781-3.731-5.925,3.734,.421,6.901,2.719,8.546,5.925Zm-4.786,5c0,1.407-.292,2.753-.731,4H7.731c-.439-1.247-.731-2.593-.731-4s.292-2.754,.73-4h8.539c.439,1.247,.731,2.593,.731,4Zm-1.122,5c-1.229,2.838-3.116,4.99-3.878,5.788-.762-.798-2.649-2.95-3.878-5.788h7.755ZM8.121,7c1.229-2.841,3.117-4.992,3.879-5.789,.762,.798,2.649,2.95,3.878,5.789h-7.757ZM10.757,1.075c-1.025,1.15-2.668,3.264-3.73,5.925H2.214C3.859,3.795,7.024,1.498,10.757,1.075ZM1.764,8H6.668c-.403,1.247-.668,2.589-.668,4s.265,2.752,.669,4H1.764c-.487-1.242-.764-2.588-.764-4s.277-2.758,.764-4Zm.45,9H7.029c1.067,2.669,2.712,4.781,3.731,5.925-3.734-.421-6.901-2.719-8.546-5.925Zm11.026,5.925c1.019-1.144,2.664-3.257,3.731-5.925h4.814c-1.645,3.206-4.812,5.504-8.546,5.925Zm8.996-6.925h-4.905c.404-1.248,.669-2.589,.669-4s-.265-2.752-.669-4h4.905c.487,1.242,.764,2.588,.764,4s-.277,2.758-.764,4Z"></path></svg>
+  </button>
+  <div class="lang-switcher-dropdown" role="menu" style="position:absolute;top:100%;right:0;margin-top:4px;min-width:140px;background:white;border:1px solid rgba(128,128,128,0.2);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.2s ease;z-index:1001;">
+    <button class="lang-option" data-lang="en" style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;background:none;border:none;text-align:left;cursor:pointer;font-size:14px;color:#333;"><img src="https://api.iconify.design/circle-flags/us.svg" width="20" height="20" alt="" style="display:inline-block;vertical-align:middle;border-radius:50%;"> English</button>
+  </div>
+</div><div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn" data-i18n="blog_nav_80">צור קשר</a>
     </div>
   </div>
 </nav>
@@ -1607,8 +2751,8 @@ html[dir="rtl"] body {
   
   <div class="ezuz-intel-blog-hero-container">
     <div class="ezuz-intel-blog-hero-content">
-      <h1 class="ezuz-intel-blog-hero-title" style="">מודיעין עסקי ומוניטין דיגיטלי<br>מקרי בוחן ומאמרי דעה</h1>
-      <p class="ezuz-intel-blog-hero-description">תובנות עמוקות, ניתוח מתקדם ומקרים אמיתיים לניהול מוניטין דיגיטלי, ולמודיעין עסקי ברשת.</p>
+      <h1 class="ezuz-intel-blog-hero-title" style="" data-i18n="blog_h1_1">מודיעין עסקי ומוניטין דיגיטלי<br>מקרי בוחן ומאמרי דעה</h1>
+      <p class="ezuz-intel-blog-hero-description" data-i18n="blog_p_13">תובנות עמוקות, ניתוח מתקדם ומקרים אמיתיים לניהול מוניטין דיגיטלי, ולמודיעין עסקי ברשת.</p>
       <div class="ezuz-intel-blog-hero-signal-line" aria-hidden="true"></div>
       </div>
   </div>
@@ -1616,65 +2760,65 @@ html[dir="rtl"] body {
 
 <section class="ezuz-intel-blog-grid-section" data-layout-spec="בלוג מודיעין דיגיטלי | Ezuz Intel-blog-grid" style="direction: rtl;" id="zappy-section-1">
   <div class="blog-grid-container zappy-vertical-grid" style="display: grid; --zappy-grid-cols: 1fr;" data-zappy-explicit-columns="true"><div class="zappy-inserted-element" id="zappy-element-1772094832277-lrylp4ekv" data-element-id="zappy-element-1772094832277-lrylp4ekv" data-element-type="icon" data-zappy-newly-inserted="true" data-grid-item-index="6" data-zappy-media-cell="true" style="margin-top: 0px !important; margin-right: 0px; margin-bottom: 0px !important; margin-left: auto; padding: 20px !important; box-sizing: border-box; display: flex !important; flex-direction: column; align-items: stretch; justify-content: flex-start !important; height: 100%; width: 100% !important; text-align: right; color: rgb(14, 16, 20);"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="62" height="62" viewbox="0 0 24 24" data-icon="majesticons:calendar" data-iconify="majesticons:calendar" data-element-type="icon" data-icon-type="iconify" data-size-adjusted="true" style="width: 62px !important; height: 62px !important; display: inline-block; vertical-align: -0.125em; color: rgb(14, 16, 20);" class="iconify iconify--majesticons"><g fill="none"><path fill="currentColor" d="M4 7v2h16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2"></path><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 5h2a2 2 0 0 1 2 2v2H4V7a2 2 0 0 1 2-2h2m8 0V3m0 2H8m0-2v2M4 9.5V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9.5"></path></g></svg></div><div class="blog-grid-header" data-grid-item-index="0" style="text-align: center">
-      <h2>מודיעין עסקי מעשי</h2>
-      <p class="blog-grid-subtitle" style="">תובנות, סיפורים, וגישות מהשטח — בלי קסמים, רק כלים שעובדים</p>
+      <h2 data-i18n="blog_h2_2">מודיעין עסקי מעשי</h2>
+      <p class="blog-grid-subtitle" style="" data-i18n="blog_p_14">תובנות, סיפורים, וגישות מהשטח — בלי קסמים, רק כלים שעובדים</p>
     </div><div class="blog-grid-wrapper zappy-preserve-css-grid zappy-grid-item-nested-grid" id="zappy-auto-grid-1771941112644-537f0m" data-zappy-auto-grid="true" data-original-item-width="1120" data-original-gap="28px" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); --zappy-grid-cols: repeat(2, minmax(0, 1fr));" data-grid-item-index="1" data-zappy-explicit-columns="true"><article class="blog-card blog-card-featured" style="direction: rtl;">
         <div class="blog-card-image">
-          <img data-context="Cinematic dark-themed digital intelligence monitoring dashboard with glowing cyan data streams, network graphs, and early warning signals - professional business intelligence aesthetic for ORM monitoring" width="800" height="450" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-1.webp" alt="ניטור ORM ומערכות התרעה מוקדמת" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-gjiczj0cq" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true">
-          <span class="blog-card-label">ORM</span>
+          <img data-context="Cinematic dark-themed digital intelligence monitoring dashboard with glowing cyan data streams, network graphs, and early warning signals - professional business intelligence aesthetic for ORM monitoring" width="800" height="450" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-1.webp" alt="ניטור ORM ומערכות התרעה מוקדמת" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-gjiczj0cq" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true" data-i18n-alt="blog_alt_82">
+          <span class="blog-card-label" data-i18n="blog_span_29">ORM</span>
         </div>
         <div class="blog-card-content">
-          <h3>&nbsp;איך הסרנו תוצאת חיפוש שעצרה סבב גיוס של 8 מיליון דולר - ORM</h3>
-          <p>לקוח שלנו איתן, ואזכור מהעבר שכמעט הפיל לו את הסטארטפ&nbsp;</p>
-          <div class="blog-card-meta"><span class="blog-card-date"><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome" style="cursor: pointer;"></i> 30 לאוגוסט&nbsp; 2025</span><br>            <span class="blog-card-time"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1771941112654-ogmn1li7k" style="pointer-events: auto; cursor: pointer;"></i> 8 דקות קריאה</span></div>
-          <div class="zappy-inserted-element" id="zappy-element-1772091609783-qz0aq11qn" data-element-id="zappy-element-1772091609783-qz0aq11qn" data-element-type="button" style="margin: 20px auto; text-align: right; display: flex; justify-content: flex-start; align-items: flex-start; max-width: 1118px !important; width: 100% !important; align-self: start !important; height: auto !important;"><a href="/operating-procedures-krauss" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-color: transparent !important; border-style: solid; border-width: 2px; border-image: initial; color: var(--light-text, #ffffff) !important; width: auto !important; flex: 0 0 auto !important; outline: none; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772091626237-cby3g147q" id="btn-1772091626237-cby3g147q">קרא עוד&nbsp; -&gt;</a></div></div>
+          <h3 data-i18n="blog_h3_4">&nbsp;איך הסרנו תוצאת חיפוש שעצרה סבב גיוס של 8 מיליון דולר - ORM</h3>
+          <p data-i18n="blog_p_15">לקוח שלנו איתן, ואזכור מהעבר שכמעט הפיל לו את הסטארטפ&nbsp;</p>
+          <div class="blog-card-meta" data-i18n="blog_div_66"><span class="blog-card-date" data-i18n="blog_span_30"><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome" style="cursor: pointer;"></i> 30 לאוגוסט&nbsp; 2025</span><br>            <span class="blog-card-time" data-i18n="blog_span_31"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1771941112654-ogmn1li7k" style="pointer-events: auto; cursor: pointer;"></i> 8 דקות קריאה</span></div>
+          <div class="zappy-inserted-element" id="zappy-element-1772091609783-qz0aq11qn" data-element-id="zappy-element-1772091609783-qz0aq11qn" data-element-type="button" style="margin: 20px auto; text-align: right; display: flex; justify-content: flex-start; align-items: flex-start; max-width: 1118px !important; width: 100% !important; align-self: start !important; height: auto !important;"><a href="/operating-procedures-krauss" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-color: transparent !important; border-style: solid; border-width: 2px; border-image: initial; color: var(--light-text, #ffffff) !important; width: auto !important; flex: 0 0 auto !important; outline: none; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772091626237-cby3g147q" id="btn-1772091626237-cby3g147q" data-i18n="blog_link_48">קרא עוד&nbsp; -&gt;</a></div></div>
       </article><article class="blog-card" style="direction: rtl;">
         <div class="blog-card-image">
-          <img data-context="Dark-themed OSINT intelligence gathering visualization with multiple data source nodes, connections, and competitive intelligence mapping - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-2.webp" alt="מיפוי מקורות OSINT תחרותי" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-hwdjsfns6" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true">
-          <span class="blog-card-label">OSINT</span>
+          <img data-context="Dark-themed OSINT intelligence gathering visualization with multiple data source nodes, connections, and competitive intelligence mapping - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-2.webp" alt="מיפוי מקורות OSINT תחרותי" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-hwdjsfns6" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true" data-i18n-alt="blog_alt_83">
+          <span class="blog-card-label" data-i18n="blog_span_32">OSINT</span>
         </div>
         <div class="blog-card-content">
-          <h3>OSINT תחרותי: מפת מקורות שמייצרת יתרון אמיתי</h3>
-          <p>איך בונים רשת מקורות פתוחים שמספקת מודיעין תחרותי שימושי — מהסיגנל הראשון ועד תובנה שניתנת לפעולה.</p>
-          <div class="blog-card-meta"><span class="blog-card-date"><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome"></i> 10 ינואר 2025</span><br>            <span class="blog-card-time"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1771941112656-ti81ixg5f" style="pointer-events: auto; cursor: pointer;"></i> 6 דקות קריאה</span></div>
-          <p>קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></p></div>
+          <h3 data-i18n="blog_h3_5">OSINT תחרותי: מפת מקורות שמייצרת יתרון אמיתי</h3>
+          <p data-i18n="blog_p_16">איך בונים רשת מקורות פתוחים שמספקת מודיעין תחרותי שימושי — מהסיגנל הראשון ועד תובנה שניתנת לפעולה.</p>
+          <div class="blog-card-meta" data-i18n="blog_div_67"><span class="blog-card-date" data-i18n="blog_span_33"><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome"></i> 10 ינואר 2025</span><br>            <span class="blog-card-time" data-i18n="blog_span_34"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1771941112656-ti81ixg5f" style="pointer-events: auto; cursor: pointer;"></i> 6 דקות קריאה</span></div>
+          <p data-i18n="blog_p_17">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></p></div>
       </article><article class="blog-card" style="direction: rtl;">
         <div class="blog-card-image">
-          <img data-context="Dark-themed AI and machine learning interface with neural network visualization, data processing pipelines, and decision-making algorithms - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-3.webp" alt="בינה מלאכותית למודיעין עסקי" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-d7v5praz2" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true">
-          <span class="blog-card-label">AI</span>
+          <img data-context="Dark-themed AI and machine learning interface with neural network visualization, data processing pipelines, and decision-making algorithms - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-3.webp" alt="בינה מלאכותית למודיעין עסקי" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-d7v5praz2" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true" data-i18n-alt="blog_alt_84">
+          <span class="blog-card-label" data-i18n="blog_span_35">AI</span>
         </div>
         <div class="blog-card-content">
-          <h3>AI למודיעין עסקי: מסיגנלים להחלטות (בלי קסמים)</h3>
-          <p>גישה פרקטית ליישום AI במודיעין עסקי: הגדרת מטרה, משמעת נתונים, וכללי איכות שמייצרים תובנות שניתנות לפעולה.</p>
-          <div class="blog-card-meta"><span class="blog-card-date"><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome"></i> 5 ינואר 2025</span><br>            <span class="blog-card-time"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1771941112658-s04vy2or4" style="pointer-events: auto; cursor: pointer;"></i> 7 דקות קריאה</span></div>
-          <p>קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></p></div>
+          <h3 data-i18n="blog_h3_6">AI למודיעין עסקי: מסיגנלים להחלטות (בלי קסמים)</h3>
+          <p data-i18n="blog_p_18">גישה פרקטית ליישום AI במודיעין עסקי: הגדרת מטרה, משמעת נתונים, וכללי איכות שמייצרים תובנות שניתנות לפעולה.</p>
+          <div class="blog-card-meta" data-i18n="blog_div_68"><span class="blog-card-date" data-i18n="blog_span_36"><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome"></i> 5 ינואר 2025</span><br>            <span class="blog-card-time" data-i18n="blog_span_37"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1771941112658-s04vy2or4" style="pointer-events: auto; cursor: pointer;"></i> 7 דקות קריאה</span></div>
+          <p data-i18n="blog_p_19">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></p></div>
       </article><article class="blog-card" style="direction: rtl;">
         <div class="blog-card-image">
-          <img data-context="Dark-themed digital crisis management command center with real-time monitoring, alert systems, and response coordination dashboards - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-4.webp" alt="ניהול משבר דיגיטלי" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-cff740h9l" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true">
-          <span class="blog-card-label">משבר</span>
+          <img data-context="Dark-themed digital crisis management command center with real-time monitoring, alert systems, and response coordination dashboards - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-4.webp" alt="ניהול משבר דיגיטלי" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-cff740h9l" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true" data-i18n-alt="blog_alt_85">
+          <span class="blog-card-label" data-i18n="blog_span_38">משבר</span>
         </div>
         <div class="blog-card-content">
-          <h3>Playbook לתגובה למשבר דיגיטלי: 72 השעות הראשונות</h3>
-          <p>מסגרת פעולה מסודרת לשעות הראשונות של משבר דיגיטלי: תיעדוף, מסרים, ניטור, ותיאום צוותים כדי לצמצם נזק.</p>
-          <div class="blog-card-meta"><span class="blog-card-date"><i class="far fa-calendar zappy-native-element" data-element-type="icon" data-icon-type="fontawesome" data-element-id="native-icon-1772094501281-5kbp0a3t5"></i> 28 דצמבר 2024</span><br>            <span class="blog-card-time"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1771941112660-6tuu815kn" style="pointer-events: auto; cursor: pointer;"></i> 9 דקות קריאה</span></div>
-          <p>קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></p></div>
+          <h3 data-i18n="blog_h3_7">Playbook לתגובה למשבר דיגיטלי: 72 השעות הראשונות</h3>
+          <p data-i18n="blog_p_20">מסגרת פעולה מסודרת לשעות הראשונות של משבר דיגיטלי: תיעדוף, מסרים, ניטור, ותיאום צוותים כדי לצמצם נזק.</p>
+          <div class="blog-card-meta" data-i18n="blog_div_69"><span class="blog-card-date" data-i18n="blog_span_39"><i class="far fa-calendar zappy-native-element" data-element-type="icon" data-icon-type="fontawesome" data-element-id="native-icon-1772094501281-5kbp0a3t5"></i> 28 דצמבר 2024</span><br>            <span class="blog-card-time" data-i18n="blog_span_40"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1771941112660-6tuu815kn" style="pointer-events: auto; cursor: pointer;"></i> 9 דקות קריאה</span></div>
+          <p data-i18n="blog_p_21">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></p></div>
       </article><article class="blog-card" style="direction: rtl; display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: stretch !important; align-self: stretch !important; height: 100% !important;">
   <div class="blog-card-image">
-    <div data-zappy-zoom-wrapper="true" data-element-id="img-1772043755201-achz623w4" data-element-type="image" data-zappy-zoom-wrapper-width="540px" data-zappy-zoom-wrapper-height="303px" data-zappy-zoom-wrapper-width-mode="px" style="position: relative !important; overflow: hidden !important; width: 540px !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important; height: 303px !important; display: block !important;" data-zappy-zoom-clip="true" data-zappy-wrapper-margins-applied="true"><img data-context="Brand monitoring and signal detection interface" width="600" height="400" src="/assets/ezuz-intel-section-blog-article-ezuz-intel-blog-article-image-1.webp" alt="ניטור סיגנלים למותג" data-zappy-editable-image="true" data-element-type="image" class="zappy-editable-image" data-original-position="static" style="object-position: 50% 50%; position: absolute !important; margin: 0px !important; left: -60% !important; top: -62.0693% !important; width: 220% !important; height: 224.139% !important; max-width: none !important; max-height: none !important; display: block !important; object-fit: cover !important" data-element-id="img-1772043755201-achz623w4" data-zappy-zoom="2.2" data-resize-handler-attached="true"></div>
-    <p style="">מוניטין</p></div>
+    <div data-zappy-zoom-wrapper="true" data-element-id="img-1772043755201-achz623w4" data-element-type="image" data-zappy-zoom-wrapper-width="540px" data-zappy-zoom-wrapper-height="303px" data-zappy-zoom-wrapper-width-mode="px" style="position: relative !important; overflow: hidden !important; width: 540px !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important; height: 303px !important; display: block !important;" data-zappy-zoom-clip="true" data-zappy-wrapper-margins-applied="true"><img data-context="Brand monitoring and signal detection interface" width="600" height="400" src="/assets/ezuz-intel-section-blog-article-ezuz-intel-blog-article-image-1.webp" alt="ניטור סיגנלים למותג" data-zappy-editable-image="true" data-element-type="image" class="zappy-editable-image" data-original-position="static" style="object-position: 50% 50%; position: absolute !important; margin: 0px !important; left: -60% !important; top: -62.0693% !important; width: 220% !important; height: 224.139% !important; max-width: none !important; max-height: none !important; display: block !important; object-fit: cover !important" data-element-id="img-1772043755201-achz623w4" data-zappy-zoom="2.2" data-resize-handler-attached="true" data-i18n-alt="blog_alt_86"></div>
+    <p style="" data-i18n="blog_p_22">מוניטין</p></div>
   <div class="blog-card-content" style="justify-content: flex-start; width: 100%; margin-left: 0px; margin-right: 0px; text-align: right;">
-    <h3 style="">למי שייכת הזהות הדיגיטלית שלי&nbsp;</h3>
-    <p style="">למי למי שייכת הזהות הדיגיטלית שלנו? שאלה שהחוק הישראלי עדיין לא פתר</p>
-    <div class="blog-card-meta" style=""><span class="blog-card-date" style=""><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome"></i> 5 פברואר 2026&nbsp;</span><br>      <span class="blog-card-time"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" style="pointer-events: auto; cursor: pointer;" data-element-id="icon-1772044727111-jyb9yqtnv"></i> 7 דקות קריאה</span></div><div class="zappy-inserted-element" id="zappy-element-1772045303494-6b9ev9a9y" data-element-id="zappy-element-1772045303494-6b9ev9a9y" data-element-type="button" style="margin: 20px auto; text-align: right !important; display: flex !important; justify-content: flex-start !important; align-items: flex-start !important; max-width: 496px !important; width: 100% !important; align-self: start !important; height: auto !important;"><a href="/digital-identity-intelligence" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-style: solid; border-width: 2px; border-image: initial; outline: none; border-color: transparent !important; color: var(--light-text, #ffffff) !important; flex: 0 0 auto !important; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772045350639-y5kemcxw5" id="btn-1772045350639-y5kemcxw5">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></a></div>
+    <h3 style="" data-i18n="blog_h3_8">למי שייכת הזהות הדיגיטלית שלי&nbsp;</h3>
+    <p style="" data-i18n="blog_p_23">למי למי שייכת הזהות הדיגיטלית שלנו? שאלה שהחוק הישראלי עדיין לא פתר</p>
+    <div class="blog-card-meta" style="" data-i18n="blog_div_70"><span class="blog-card-date" style="" data-i18n="blog_span_41"><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome"></i> 5 פברואר 2026&nbsp;</span><br>      <span class="blog-card-time" data-i18n="blog_span_42"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" style="pointer-events: auto; cursor: pointer;" data-element-id="icon-1772044727111-jyb9yqtnv"></i> 7 דקות קריאה</span></div><div class="zappy-inserted-element" id="zappy-element-1772045303494-6b9ev9a9y" data-element-id="zappy-element-1772045303494-6b9ev9a9y" data-element-type="button" style="margin: 20px auto; text-align: right !important; display: flex !important; justify-content: flex-start !important; align-items: flex-start !important; max-width: 496px !important; width: 100% !important; align-self: start !important; height: auto !important;"><a href="/digital-identity-intelligence" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-style: solid; border-width: 2px; border-image: initial; outline: none; border-color: transparent !important; color: var(--light-text, #ffffff) !important; flex: 0 0 auto !important; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772045350639-y5kemcxw5" id="btn-1772045350639-y5kemcxw5" data-i18n="blog_link_49">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></a></div>
     </div>
 </article><article class="blog-card" style="background-color: rgba(11, 18, 32, 0.72) !important;">
   <div class="blog-card-image">
-    <div data-zappy-zoom-wrapper="true" data-element-id="img-1772043755201-achz623w4-add-1772093658617-u1kjmd" data-element-type="image" data-zappy-zoom-wrapper-width="540px" data-zappy-zoom-wrapper-height="303px" data-zappy-zoom-wrapper-width-mode="px" style="position: relative !important; overflow: hidden !important; width: 540px !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important; height: 303px !important; display: block !important;" data-zappy-zoom-clip="true" data-zappy-wrapper-margins-applied="true"><img data-context="Brand monitoring and signal detection interface" width="600" height="400" src="/assets/image-image-placeholder-1772093836619-alewld.webp?v=1772093838184" alt="Image placeholder" data-zappy-editable-image="true" data-element-type="image" class="zappy-editable-image" data-original-position="static" style="object-position: 50% 50%; position: absolute !important; margin-top: 0px !important; margin-bottom: 0px !important; left: -0.169028% !important; top: 0% !important; width: 100.338% !important; height: 100% !important; max-width: none !important; max-height: none !important; display: block; object-fit: fill !important; cursor: pointer" data-element-id="new-grid-img-1772093658618-0-qx9ia1ms6" data-zappy-zoom="0.9" id="new-grid-img-1772093658618-0-qx9ia1ms6" data-placeholder="image-placeholder" data-ai-slot="grid-item-image" data-zappy-original-width="540" data-zappy-original-height="303" data-resize-handler-attached="true"></div>
-    <p style="cursor: text;">טקסט כאן</p></div>
+    <div data-zappy-zoom-wrapper="true" data-element-id="img-1772043755201-achz623w4-add-1772093658617-u1kjmd" data-element-type="image" data-zappy-zoom-wrapper-width="540px" data-zappy-zoom-wrapper-height="303px" data-zappy-zoom-wrapper-width-mode="px" style="position: relative !important; overflow: hidden !important; width: 540px !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important; height: 303px !important; display: block !important;" data-zappy-zoom-clip="true" data-zappy-wrapper-margins-applied="true"><img data-context="Brand monitoring and signal detection interface" width="600" height="400" src="/assets/image-image-placeholder-1772093836619-alewld.webp?v=1772093838184" alt="Image placeholder" data-zappy-editable-image="true" data-element-type="image" class="zappy-editable-image" data-original-position="static" style="object-position: 50% 50%; position: absolute !important; margin-top: 0px !important; margin-bottom: 0px !important; left: -0.169028% !important; top: 0% !important; width: 100.338% !important; height: 100% !important; max-width: none !important; max-height: none !important; display: block; object-fit: fill !important; cursor: pointer" data-element-id="new-grid-img-1772093658618-0-qx9ia1ms6" data-zappy-zoom="0.9" id="new-grid-img-1772093658618-0-qx9ia1ms6" data-placeholder="image-placeholder" data-ai-slot="grid-item-image" data-zappy-original-width="540" data-zappy-original-height="303" data-resize-handler-attached="true" data-i18n-alt="blog_alt_87"></div>
+    <p style="cursor: text;" data-i18n="blog_p_24">טקסט כאן</p></div>
   <div class="blog-card-content" style="justify-content: flex-start; width: 100%; margin-left: 0px; margin-right: 0px; text-align: right;">
-    <h3 style="cursor: text;">דאטה סקרייפינג, מה מותר ומה אסור?</h3>
-    <p style="cursor: text;">דאטה סקרייפינג (גרידת נתונים) כלי אדיר למודיעין עסקי אבל עם גבולות חוקיים אפורים..&nbsp;</p>
-    <div class="blog-card-meta" style="cursor: text;"><span class="blog-card-date" style="cursor: text;">22 פברואר 2026</span><br>      <span class="blog-card-time" style="cursor: text;">טקסט כאן</span></div><div class="zappy-inserted-element" id="zappy-element-1772045303494-6b9ev9a9y-add-1772093658617-u1kjmd" data-element-id="zappy-element-1772045303494-6b9ev9a9y-add-1772093658617-u1kjmd" data-element-type="button" style="margin: 20px auto; text-align: right !important; display: flex !important; justify-content: flex-start !important; align-items: flex-start !important; max-width: 496px !important; width: 100% !important; align-self: start !important; height: auto !important; cursor: text;"><a href="/digital-identity-intelligence" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-style: solid; border-width: 2px; border-image: initial; outline: none; border-color: transparent !important; color: var(--light-text, #ffffff) !important; flex: 0 0 auto !important; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772045350639-y5kemcxw5-add-1772093658617-u1kjmd" id="btn-1772045350639-y5kemcxw5-add-1772093658617-u1kjmd">כפתור</a></div>
+    <h3 style="cursor: text;" data-i18n="blog_h3_9">דאטה סקרייפינג, מה מותר ומה אסור?</h3>
+    <p style="cursor: text;" data-i18n="blog_p_25">דאטה סקרייפינג (גרידת נתונים) כלי אדיר למודיעין עסקי אבל עם גבולות חוקיים אפורים..&nbsp;</p>
+    <div class="blog-card-meta" style="cursor: text;" data-i18n="blog_div_71"><span class="blog-card-date" style="cursor: text;" data-i18n="blog_span_43">22 פברואר 2026</span><br>      <span class="blog-card-time" style="cursor: text;" data-i18n="blog_span_44">טקסט כאן</span></div><div class="zappy-inserted-element" id="zappy-element-1772045303494-6b9ev9a9y-add-1772093658617-u1kjmd" data-element-id="zappy-element-1772045303494-6b9ev9a9y-add-1772093658617-u1kjmd" data-element-type="button" style="margin: 20px auto; text-align: right !important; display: flex !important; justify-content: flex-start !important; align-items: flex-start !important; max-width: 496px !important; width: 100% !important; align-self: start !important; height: auto !important; cursor: text;"><a href="/digital-identity-intelligence" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-style: solid; border-width: 2px; border-image: initial; outline: none; border-color: transparent !important; color: var(--light-text, #ffffff) !important; flex: 0 0 auto !important; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772045350639-y5kemcxw5-add-1772093658617-u1kjmd" id="btn-1772045350639-y5kemcxw5-add-1772093658617-u1kjmd" data-i18n="blog_link_50">כפתור</a></div>
     </div>
 </article></div></div>
 </section>
@@ -1682,17 +2826,17 @@ html[dir="rtl"] body {
 <section class="ezuz-intel-blog-cta-section" data-layout-spec="בלוג מודיעין דיגיטלי | Ezuz Intel-blog-cta">
   <div class="ezuz-intel-blog-cta-container">
     <div class="ezuz-intel-blog-cta-content">
-      <h2 class="ezuz-intel-blog-cta-title">מוכנים לשדרג את המוניטין הדיגיטלי שלכם?</h2>
-      <p class="ezuz-intel-blog-cta-text">צרו קשר עכשיו וקבלו ייעוץ מקצועי מותאם אישית לצרכי העסק שלכם. אנחנו זמינים לענות על כל שאלה ולהציע פתרונות מדויקים בתחום המודיעין העסקי והשירותים הדיגיטליים.</p>
+      <h2 class="ezuz-intel-blog-cta-title" data-i18n="blog_h2_3">מוכנים לשדרג את המוניטין הדיגיטלי שלכם?</h2>
+      <p class="ezuz-intel-blog-cta-text" data-i18n="blog_p_26">צרו קשר עכשיו וקבלו ייעוץ מקצועי מותאם אישית לצרכי העסק שלכם. אנחנו זמינים לענות על כל שאלה ולהציע פתרונות מדויקים בתחום המודיעין העסקי והשירותים הדיגיטליים.</p>
       <div class="ezuz-intel-blog-cta-buttons">
-        <a href="/contact" class="ezuz-intel-blog-cta-btn ezuz-intel-blog-cta-btn-primary">
-          <span>צרו קשר עכשיו</span>
+        <a href="/contact" class="ezuz-intel-blog-cta-btn ezuz-intel-blog-cta-btn-primary" data-i18n="blog_link_51">
+          <span data-i18n="blog_span_45">צרו קשר עכשיו</span>
           <svg data-element-type="icon" data-icon-type="svg" width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </a>
-        <a href="/contact" class="ezuz-intel-blog-cta-btn ezuz-intel-blog-cta-btn-secondary">
-          <span>קבעו פגישת ייעוץ</span>
+        <a href="/contact" class="ezuz-intel-blog-cta-btn ezuz-intel-blog-cta-btn-secondary" data-i18n="blog_link_52">
+          <span data-i18n="blog_span_46">קבעו פגישת ייעוץ</span>
         </a>
       </div>
     </div>
@@ -1708,30 +2852,30 @@ html[dir="rtl"] body {
   <div class="footer-container">
     <div class="footer-grid">
       <div class="footer-column footer-about">
-        <img src="/assets/ezuz-logo-1771583530795-m0d2d8.webp?v=1771583531687-i0w9tu" alt="Ezuz Intel" class="logo">
-        <p class="footer-description">שירותים דיגיטליים ומודיעין עסקי מתקדם לעסקים המובילים בישראל</p>
+        <img src="/assets/ezuz-logo-1771583530795-m0d2d8.webp?v=1771583531687-i0w9tu" alt="Ezuz Intel" class="logo" data-i18n-alt="blog_alt_88">
+        <p class="footer-description" data-i18n="blog_p_27">שירותים דיגיטליים ומודיעין עסקי מתקדם לעסקים המובילים בישראל</p>
       </div>
       
       <div class="footer-column footer-links">
-        <h3 class="footer-heading">קישורים מהירים</h3>
+        <h3 class="footer-heading" data-i18n="blog_h3_10">קישורים מהירים</h3>
         <ul class="footer-nav">
-          <li><a href="/services">שירותים</a></li>
-          <li><a href="/insights">תובנות</a></li>
-          <li><a href="/contact">צור קשר</a></li>
+          <li data-i18n="blog_li_61"><a href="/services" data-i18n="blog_link_53">שירותים</a></li>
+          <li data-i18n="blog_li_62"><a href="/insights" data-i18n="blog_link_54">תובנות</a></li>
+          <li data-i18n="blog_li_63"><a href="/contact" data-i18n="blog_link_55">צור קשר</a></li>
         </ul>
       </div>
       
       <div class="footer-column footer-contact">
-        <h3 class="footer-heading">יצירת קשר</h3>
+        <h3 class="footer-heading" data-i18n="blog_h3_11">יצירת קשר</h3>
         <ul class="contact-list">
-          <li><i class="fas fa-envelope"></i> <a href="mailto:ezuzint@gmail.com">ezuzint@gmail.com</a></li>
+          <li data-i18n="blog_li_64"><i class="fas fa-envelope"></i> <a href="mailto:ezuzint@gmail.com" data-i18n="blog_link_56">ezuzint@gmail.com</a></li>
           <li><i class="fas fa-phone"></i> <a href="tel:0559971849">0559971849</a></li>
-          <li><a href="/"><i class="fas fa-map-marker-alt"></i> <span>מנחם בגין 30, תל אביב, ישראל</span></a></li>
+          <li data-i18n="blog_li_65"><a href="/" data-i18n="blog_link_57"><i class="fas fa-map-marker-alt"></i> <span data-i18n="blog_span_47">מנחם בגין 30, תל אביב, ישראל</span></a></li>
         </ul>
       </div>
       
       <div class="footer-column footer-social">
-        <h3 class="footer-heading">עקבו אחרינו</h3>
+        <h3 class="footer-heading" data-i18n="blog_h3_12">עקבו אחרינו</h3>
         <div class="social-links">
           <a href="https://facebook.com/#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="https://instagram.com/#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -1744,14 +2888,14 @@ html[dir="rtl"] body {
     
     <div class="footer-bottom">
       <div class="footer-legal">
-        <a href="/privacy">מדיניות פרטיות</a>
+        <a href="/privacy" data-i18n="blog_link_58">מדיניות פרטיות</a>
         <span class="separator">|</span>
-        <a href="/terms">תנאים והגבלות</a>
+        <a href="/terms" data-i18n="blog_link_59">תנאים והגבלות</a>
         <span class="separator">|</span>
-        <a href="/accessibility">הצהרת נגישות</a>
+        <a href="/accessibility" data-i18n="blog_link_60">הצהרת נגישות</a>
       </div>
       <div class="footer-copyright">
-        <p>© 2026 Ezuz Intel. כל הזכויות שמורות.</p>
+        <p data-i18n="blog_p_28">© 2026 Ezuz Intel. כל הזכויות שמורות.</p>
       </div>
       <div class="footer-attribution">
         <a href="https://zappy5.com" target="_blank" class="zappy-attribution"></a>
