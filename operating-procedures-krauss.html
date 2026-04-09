@@ -235,8 +235,8 @@
       .sub-menu a:hover { background-color: #f5f5f5; }
       /* RTL (Hebrew/Arabic) dropdown positioning */
       [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
-      /* Hide empty dropdown menus */
-      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
       /* Desktop: show submenu on Menu Group hover */
       li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
       /* Menu Group title styling */
@@ -245,7 +245,7 @@
       /* ========== MOBILE SUBMENU STYLES ========== */
       @media (max-width: 768px) {
         .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
-        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        .sub-menu.mobile-expanded { max-height: 60vh !important; overflow-y: auto !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
         [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
         /* Disable hover behavior on mobile */
         .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -1296,7 +1296,7 @@ html[dir="rtl"] body {
     </div>
 
     <div class="hero-image-wrapper">
-      <img data-context="Professional ORM monitoring dashboard on multiple screens showing real-time alerts, social media feeds, sentiment analysis graphs, and early warning indicators for a business intelligence company. Dark modern interface with cyan and purple accent colors, clean data visualization, corporate setting." width="1200" height="506" src="/assets/ezuz-intel-section-blog-article-orm-ezuz-intel-blog-article-image-1.webp" alt="מערכת ניטור ORM מתקדמת עם התראות בזמן אמת" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1772023070046-u9x0y5o8p" class="zappy-editable-image" data-i18n-alt="operating_procedures_krauss_alt_49">
+      <img data-context="Professional ORM monitoring dashboard on multiple screens showing real-time alerts, social media feeds, sentiment analysis graphs, and early warning indicators for a business intelligence company. Dark modern interface with cyan and purple accent colors, clean data visualization, corporate setting." width="1200" height="506" src="/assets/ezuz-intel-section-blog-article-orm-ezuz-intel-blog-article-image-1.webp" alt="מערכת ניטור ORM מתקדמת עם התראות בזמן אמת" data-element-type="image" data-element-id="img-1772023070046-u9x0y5o8p" class="zappy-editable-image" data-i18n-alt="operating_procedures_krauss_alt_49">
     </div>
 
     <article class="article-content">
@@ -1338,7 +1338,7 @@ html[dir="rtl"] body {
 
         
 
-        <h2 style="" data-i18n="operating_procedures_krauss_h2_3">מה אומרת לנו הלכת קראוס, ואיך משנה את המשחק?</h2>
+        <h2  data-i18n="operating_procedures_krauss_h2_3">מה אומרת לנו הלכת קראוס, ואיך משנה את המשחק?</h2>
 
         <p data-element-id="move-1772023772313-5jukvd4i" data-i18n="operating_procedures_krauss_p_12">כשאיתן&nbsp; הגיע אלינו, הוא חשב שאין לו סיכוי. "הכתבה נכונה עובדתית" הוא אמר. "אני לא יכול לתבוע על דיבה" הוא צדק בחלקו. אבל יחד עם עו"ד גיגי, השותף המשפטי שלנו, הבנו שהשאלה היא לא "האם המידע נכון?" אלא <b>"האם המידע הזה עדיין רלוונטי?"</b><br>
 ב-2010, בית המשפט העליון דן בדיוק בסוגיה הזו בפרשה שנקראת "הלכת קראוס". המקרה עסק בעיתון שסירב להסיר ידיעות ישנות מהארכיון הדיגיטלי שלו. בית המשפט קבע שני עקרונות חשובים:<br><b>
@@ -1360,7 +1360,7 @@ html[dir="rtl"] body {
 
         <h2 data-i18n="operating_procedures_krauss_h2_4">מה עשינו בפועל?</h2>
 
-        <p style="" data-i18n="operating_procedures_krauss_p_14">עם הבנה משפטית ברורה, בנינו אסטרטגיה משולבת:<br><b>
+        <p  data-i18n="operating_procedures_krauss_p_14">עם הבנה משפטית ברורה, בנינו אסטרטגיה משולבת:<br><b>
 1. פנייה משפטית מבוססת קראוס</b><br>
 הגשנו תלונה לעיתון המקורי עם בקשה להסרת הכתבה מהארכיון או לפחות שינוי הכותרת. טענו על פי הלכת קראוס: האיזון בין זכות הציבור לדעת (אפסית) לבין הנזק למוניטין (אדיר) מחייב הסרה.<br><b>
 2. בקשת GDPR לגוגל</b><br>
@@ -1372,7 +1372,7 @@ html[dir="rtl"] body {
 יצרנו 3 מאמרי thought leadership בפינטק שאיתן פרסם בבלוגים רלוונטיים.<br>
 ביצענו OSINT מלא ועדכנו כל פרופיל מקצועי שלו.&nbsp;&nbsp;</p><div class="zappy-inserted-element" id="zappy-element-1772025955943-bk1gomi1i" data-element-id="zappy-element-1772025955943-bk1gomi1i" data-element-type="h2" data-zappy-newly-inserted="true" style="max-width: 800px; margin-left: auto; margin-right: auto; width: 100%;" data-i18n="operating_procedures_krauss_div_38">התוצאה (והפער בין ישראל לעולם)</div>
 
-        <p style="" data-i18n="operating_procedures_krauss_p_15">אחרי 11 ימים, גוגל הסירה את הלינק מתוצאות החיפוש<b> באיחוד האירופי בלבד.</b> בארה"ב? הוא נשאר. זה החושף בעיה: הלכת קראוס קיימת בישראל, GDPR באירופה - אבל בארה"ב, שם רוב המשקיעים, אין הגנה דומה.
+        <p  data-i18n="operating_procedures_krauss_p_15">אחרי 11 ימים, גוגל הסירה את הלינק מתוצאות החיפוש<b> באיחוד האירופי בלבד.</b> בארה"ב? הוא נשאר. זה החושף בעיה: הלכת קראוס קיימת בישראל, GDPR באירופה - אבל בארה"ב, שם רוב המשקיעים, אין הגנה דומה.
 לכן המשכנו באסטרטגיית התוכן. אחרי 6 שבועות, הצלחנו להוריד את הכתבה למקום ה-8 בגוגל ארה"ב. בפרקטיקה - מתחת לקו הראות.<br>
 איתן סגר את סבב הגיוס בינואר 2024.<br><b>
 מה זה אומר עליך?</b><br>

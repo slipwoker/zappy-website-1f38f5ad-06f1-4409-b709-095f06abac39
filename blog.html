@@ -2570,8 +2570,8 @@ html[dir="rtl"] body {
       .sub-menu a:hover { background-color: #f5f5f5; }
       /* RTL (Hebrew/Arabic) dropdown positioning */
       [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
-      /* Hide empty dropdown menus */
-      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
       /* Desktop: show submenu on Menu Group hover */
       li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
       /* Menu Group title styling */
@@ -2580,7 +2580,7 @@ html[dir="rtl"] body {
       /* ========== MOBILE SUBMENU STYLES ========== */
       @media (max-width: 768px) {
         .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
-        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        .sub-menu.mobile-expanded { max-height: 60vh !important; overflow-y: auto !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
         [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
         /* Disable hover behavior on mobile */
         .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -6273,7 +6273,7 @@ html[dir="rtl"] body {
   
   <div class="ezuz-intel-blog-hero-container">
     <div class="ezuz-intel-blog-hero-content">
-      <h1 class="ezuz-intel-blog-hero-title" style="" data-i18n="blog_h1_1">מודיעין עסקי ומוניטין דיגיטלי<br>מקרי בוחן ומאמרי דעה</h1>
+      <h1 class="ezuz-intel-blog-hero-title"  data-i18n="blog_h1_1">מודיעין עסקי ומוניטין דיגיטלי<br>מקרי בוחן ומאמרי דעה</h1>
       <p class="ezuz-intel-blog-hero-description" data-i18n="blog_p_13">תובנות עמוקות, ניתוח מתקדם ומקרים אמיתיים לניהול מוניטין דיגיטלי, ולמודיעין עסקי ברשת.</p>
       <div class="ezuz-intel-blog-hero-signal-line" aria-hidden="true"></div>
       </div>
@@ -6281,12 +6281,12 @@ html[dir="rtl"] body {
 </section>
 
 <section class="ezuz-intel-blog-grid-section" data-layout-spec="בלוג מודיעין דיגיטלי | Ezuz Intel-blog-grid" style="direction: rtl;" id="zappy-section-1">
-  <div class="blog-grid-container zappy-vertical-grid" style="display: grid; --zappy-grid-cols: 1fr;" data-zappy-explicit-columns="true"><div class="zappy-inserted-element" id="zappy-element-1772094832277-lrylp4ekv" data-element-id="zappy-element-1772094832277-lrylp4ekv" data-element-type="icon" data-zappy-newly-inserted="true" data-grid-item-index="6" data-zappy-media-cell="true" style="margin-top: 0px !important; margin-right: 0px; margin-bottom: 0px !important; margin-left: auto; padding: 20px !important; box-sizing: border-box; display: flex !important; flex-direction: column; align-items: stretch; justify-content: flex-start !important; height: 100%; width: 100% !important; text-align: right; color: rgb(14, 16, 20);"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="62" height="62" viewbox="0 0 24 24" data-icon="majesticons:calendar" data-iconify="majesticons:calendar" data-element-type="icon" data-icon-type="iconify" data-size-adjusted="true" style="width: 62px !important; height: 62px !important; display: inline-block; vertical-align: -0.125em; color: rgb(14, 16, 20);" class="iconify iconify--majesticons"><g fill="none"><path fill="currentColor" d="M4 7v2h16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2"></path><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 5h2a2 2 0 0 1 2 2v2H4V7a2 2 0 0 1 2-2h2m8 0V3m0 2H8m0-2v2M4 9.5V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9.5"></path></g></svg></div><div class="blog-grid-header" data-grid-item-index="0" style="text-align: center">
+  <div class="blog-grid-container" style="display: grid; --zappy-grid-cols: 1fr; grid-template-columns: 1fr" data-zappy-explicit-columns="true"><div class="zappy-inserted-element" id="zappy-element-1772094832277-lrylp4ekv" data-element-id="zappy-element-1772094832277-lrylp4ekv" data-element-type="icon" data-zappy-newly-inserted="true" data-grid-item-index="6" data-zappy-media-cell="true" style="margin-top: 0px !important; margin-right: 0px; margin-bottom: 0px !important; margin-left: auto; padding: 20px !important; box-sizing: border-box; display: flex !important; flex-direction: column; align-items: stretch; justify-content: flex-start !important; height: 100%; width: 100% !important; text-align: right; color: rgb(14, 16, 20);"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="62" height="62" viewbox="0 0 24 24" data-icon="majesticons:calendar" data-iconify="majesticons:calendar" data-element-type="icon" data-icon-type="iconify" data-size-adjusted="true" style="width: 62px !important; height: 62px !important; display: inline-block; vertical-align: -0.125em; color: rgb(14, 16, 20);" class="iconify iconify--majesticons"><g fill="none"><path fill="currentColor" d="M4 7v2h16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2"></path><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 5h2a2 2 0 0 1 2 2v2H4V7a2 2 0 0 1 2-2h2m8 0V3m0 2H8m0-2v2M4 9.5V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9.5"></path></g></svg></div><div class="blog-grid-header" data-grid-item-index="0" style="text-align: center">
       <h2 data-i18n="blog_h2_2">מודיעין עסקי מעשי</h2>
-      <p class="blog-grid-subtitle" style="" data-i18n="blog_p_14">תובנות, סיפורים, וגישות מהשטח — בלי קסמים, רק כלים שעובדים</p>
+      <p class="blog-grid-subtitle"  data-i18n="blog_p_14">תובנות, סיפורים, וגישות מהשטח — בלי קסמים, רק כלים שעובדים</p>
     </div><div class="blog-grid-wrapper zappy-preserve-css-grid zappy-grid-item-nested-grid" id="zappy-auto-grid-1771941112644-537f0m" data-zappy-auto-grid="true" data-original-item-width="1120" data-original-gap="28px" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); --zappy-grid-cols: repeat(2, minmax(0, 1fr));" data-grid-item-index="1" data-zappy-explicit-columns="true"><article class="blog-card blog-card-featured" style="direction: rtl;">
         <div class="blog-card-image">
-          <img data-context="Cinematic dark-themed digital intelligence monitoring dashboard with glowing cyan data streams, network graphs, and early warning signals - professional business intelligence aesthetic for ORM monitoring" width="800" height="450" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-1.webp" alt="ניטור ORM ומערכות התרעה מוקדמת" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-gjiczj0cq" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true" data-i18n-alt="blog_alt_82">
+          <img data-context="Cinematic dark-themed digital intelligence monitoring dashboard with glowing cyan data streams, network graphs, and early warning signals - professional business intelligence aesthetic for ORM monitoring" width="800" height="450" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-1.webp" alt="ניטור ORM ומערכות התרעה מוקדמת" data-element-type="image" data-element-id="img-1771941112608-gjiczj0cq" class="zappy-editable-image"  data-i18n-alt="blog_alt_82">
           <span class="blog-card-label" data-i18n="blog_span_29">ORM</span>
         </div>
         <div class="blog-card-content">
@@ -6296,7 +6296,7 @@ html[dir="rtl"] body {
           <div class="zappy-inserted-element" id="zappy-element-1772091609783-qz0aq11qn" data-element-id="zappy-element-1772091609783-qz0aq11qn" data-element-type="button" style="margin: 20px auto; text-align: right; display: flex; justify-content: flex-start; align-items: flex-start; max-width: 1118px !important; width: 100% !important; align-self: start !important; height: auto !important;"><a href="/operating-procedures-krauss" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-color: transparent !important; border-style: solid; border-width: 2px; border-image: initial; color: var(--light-text, #ffffff) !important; width: auto !important; flex: 0 0 auto !important; outline: none; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772091626237-cby3g147q" id="btn-1772091626237-cby3g147q" data-i18n="blog_link_48">קרא עוד&nbsp; -&gt;</a></div></div>
       </article><article class="blog-card" style="direction: rtl;">
         <div class="blog-card-image">
-          <img data-context="Dark-themed OSINT intelligence gathering visualization with multiple data source nodes, connections, and competitive intelligence mapping - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-2.webp" alt="מיפוי מקורות OSINT תחרותי" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-hwdjsfns6" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true" data-i18n-alt="blog_alt_83">
+          <img data-context="Dark-themed OSINT intelligence gathering visualization with multiple data source nodes, connections, and competitive intelligence mapping - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-2.webp" alt="מיפוי מקורות OSINT תחרותי" data-element-type="image" data-element-id="img-1771941112608-hwdjsfns6" class="zappy-editable-image"  data-i18n-alt="blog_alt_83">
           <span class="blog-card-label" data-i18n="blog_span_32">OSINT</span>
         </div>
         <div class="blog-card-content">
@@ -6306,7 +6306,7 @@ html[dir="rtl"] body {
           <p data-i18n="blog_p_17">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></p></div>
       </article><article class="blog-card" style="direction: rtl;">
         <div class="blog-card-image">
-          <img data-context="Dark-themed AI and machine learning interface with neural network visualization, data processing pipelines, and decision-making algorithms - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-3.webp" alt="בינה מלאכותית למודיעין עסקי" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-d7v5praz2" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true" data-i18n-alt="blog_alt_84">
+          <img data-context="Dark-themed AI and machine learning interface with neural network visualization, data processing pipelines, and decision-making algorithms - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-3.webp" alt="בינה מלאכותית למודיעין עסקי" data-element-type="image" data-element-id="img-1771941112608-d7v5praz2" class="zappy-editable-image"  data-i18n-alt="blog_alt_84">
           <span class="blog-card-label" data-i18n="blog_span_35">AI</span>
         </div>
         <div class="blog-card-content">
@@ -6316,7 +6316,7 @@ html[dir="rtl"] body {
           <p data-i18n="blog_p_19">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></p></div>
       </article><article class="blog-card" style="direction: rtl;">
         <div class="blog-card-image">
-          <img data-context="Dark-themed digital crisis management command center with real-time monitoring, alert systems, and response coordination dashboards - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-4.webp" alt="ניהול משבר דיגיטלי" data-zappy-editable-image="true" data-element-type="image" data-element-id="img-1771941112608-cff740h9l" class="zappy-editable-image" data-original-position="static" style="position: relative" data-resize-handler-attached="true" data-i18n-alt="blog_alt_85">
+          <img data-context="Dark-themed digital crisis management command center with real-time monitoring, alert systems, and response coordination dashboards - professional business intelligence aesthetic" width="600" height="400" src="/assets/ezuz-intel-section-blog-grid-ezuz-intel-blog-grid-image-4.webp" alt="ניהול משבר דיגיטלי" data-element-type="image" data-element-id="img-1771941112608-cff740h9l" class="zappy-editable-image"  data-i18n-alt="blog_alt_85">
           <span class="blog-card-label" data-i18n="blog_span_38">משבר</span>
         </div>
         <div class="blog-card-content">
@@ -6326,21 +6326,21 @@ html[dir="rtl"] body {
           <p data-i18n="blog_p_21">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></p></div>
       </article><article class="blog-card" style="direction: rtl; display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: stretch !important; align-self: stretch !important; height: 100% !important;">
   <div class="blog-card-image">
-    <div data-zappy-zoom-wrapper="true" data-element-id="img-1772043755201-achz623w4" data-element-type="image" data-zappy-zoom-wrapper-width="540px" data-zappy-zoom-wrapper-height="303px" data-zappy-zoom-wrapper-width-mode="px" style="position: relative !important; overflow: hidden !important; width: 540px !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important; height: 303px !important; display: block !important;" data-zappy-zoom-clip="true" data-zappy-wrapper-margins-applied="true"><img data-context="Brand monitoring and signal detection interface" width="600" height="400" src="/assets/ezuz-intel-section-blog-article-ezuz-intel-blog-article-image-1.webp" alt="ניטור סיגנלים למותג" data-zappy-editable-image="true" data-element-type="image" class="zappy-editable-image" data-original-position="static" style="object-position: 50% 50%; position: absolute !important; margin: 0px !important; left: -60% !important; top: -62.0693% !important; width: 220% !important; height: 224.139% !important; max-width: none !important; max-height: none !important; display: block !important; object-fit: cover !important" data-element-id="img-1772043755201-achz623w4" data-zappy-zoom="2.2" data-resize-handler-attached="true" data-i18n-alt="blog_alt_86"></div>
-    <p style="" data-i18n="blog_p_22">מוניטין</p></div>
+    <div data-zappy-zoom-wrapper="true" data-element-id="img-1772043755201-achz623w4" data-element-type="image" data-zappy-zoom-wrapper-width="540px" data-zappy-zoom-wrapper-height="303px" data-zappy-zoom-wrapper-width-mode="px" style="position: relative !important; overflow: hidden !important; width: 540px !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important; height: 303px !important; display: block !important;" data-zappy-zoom-clip="true" data-zappy-wrapper-margins-applied="true"><img data-context="Brand monitoring and signal detection interface" width="600" height="400" src="/assets/ezuz-intel-section-blog-article-ezuz-intel-blog-article-image-1.webp" alt="ניטור סיגנלים למותג" data-element-type="image" class="zappy-editable-image" style="object-position: 50% 50%; position: absolute !important; margin: 0px !important; left: -60% !important; top: -62.0693% !important; width: 220% !important; height: 224.139% !important; max-width: none !important; max-height: none !important; display: block !important; object-fit: cover !important" data-element-id="img-1772043755201-achz623w4" data-zappy-zoom="2.2" data-i18n-alt="blog_alt_86"></div>
+    <p  data-i18n="blog_p_22">מוניטין</p></div>
   <div class="blog-card-content" style="justify-content: flex-start; width: 100%; margin-left: 0px; margin-right: 0px; text-align: right;">
-    <h3 style="" data-i18n="blog_h3_8">למי שייכת הזהות הדיגיטלית שלי&nbsp;</h3>
-    <p style="" data-i18n="blog_p_23">למי למי שייכת הזהות הדיגיטלית שלנו? שאלה שהחוק הישראלי עדיין לא פתר</p>
-    <div class="blog-card-meta" style="" data-i18n="blog_div_70"><span class="blog-card-date" style="" data-i18n="blog_span_41"><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome"></i> 5 פברואר 2026&nbsp;</span><br>      <span class="blog-card-time" data-i18n="blog_span_42"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" style="pointer-events: auto; cursor: pointer;" data-element-id="icon-1772044727111-jyb9yqtnv"></i> 7 דקות קריאה</span></div><div class="zappy-inserted-element" id="zappy-element-1772045303494-6b9ev9a9y" data-element-id="zappy-element-1772045303494-6b9ev9a9y" data-element-type="button" style="margin: 20px auto; text-align: right !important; display: flex !important; justify-content: flex-start !important; align-items: flex-start !important; max-width: 496px !important; width: 100% !important; align-self: start !important; height: auto !important;"><a href="/digital-identity-intelligence" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-style: solid; border-width: 2px; border-image: initial; outline: none; border-color: transparent !important; color: var(--light-text, #ffffff) !important; flex: 0 0 auto !important; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772045350639-y5kemcxw5" id="btn-1772045350639-y5kemcxw5" data-i18n="blog_link_49">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></a></div>
+    <h3  data-i18n="blog_h3_8">למי שייכת הזהות הדיגיטלית שלי&nbsp;</h3>
+    <p  data-i18n="blog_p_23">למי למי שייכת הזהות הדיגיטלית שלנו? שאלה שהחוק הישראלי עדיין לא פתר</p>
+    <div class="blog-card-meta"  data-i18n="blog_div_70"><span class="blog-card-date"  data-i18n="blog_span_41"><i class="far fa-calendar" data-element-type="icon" data-icon-type="fontawesome"></i> 5 פברואר 2026&nbsp;</span><br>      <span class="blog-card-time" data-i18n="blog_span_42"><i class="far fa-clock" data-element-type="icon" data-icon-type="fontawesome" style="pointer-events: auto; cursor: pointer;" data-element-id="icon-1772044727111-jyb9yqtnv"></i> 7 דקות קריאה</span></div><div class="zappy-inserted-element" id="zappy-element-1772045303494-6b9ev9a9y" data-element-id="zappy-element-1772045303494-6b9ev9a9y" data-element-type="button" style="margin: 20px auto; text-align: right !important; display: flex !important; justify-content: flex-start !important; align-items: flex-start !important; max-width: 496px !important; width: 100% !important; align-self: start !important; height: auto !important;"><a href="/digital-identity-intelligence" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-style: solid; border-width: 2px; border-image: initial; outline: none; border-color: transparent !important; color: var(--light-text, #ffffff) !important; flex: 0 0 auto !important; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772045350639-y5kemcxw5" id="btn-1772045350639-y5kemcxw5" data-i18n="blog_link_49">קרא עוד <i class="fas fa-arrow-left" data-element-type="icon" data-icon-type="fontawesome" data-element-id="icon-1772045000863-o6b1qdy4r" style="pointer-events: auto; cursor: pointer;"></i></a></div>
     </div>
 </article><article class="blog-card" style="background-color: rgba(11, 18, 32, 0.72) !important;">
   <div class="blog-card-image">
-    <div data-zappy-zoom-wrapper="true" data-element-id="img-1772043755201-achz623w4-add-1772093658617-u1kjmd" data-element-type="image" data-zappy-zoom-wrapper-width="540px" data-zappy-zoom-wrapper-height="303px" data-zappy-zoom-wrapper-width-mode="px" style="position: relative !important; overflow: hidden !important; width: 540px !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important; height: 303px !important; display: block !important;" data-zappy-zoom-clip="true" data-zappy-wrapper-margins-applied="true"><img data-context="Brand monitoring and signal detection interface" width="600" height="400" src="/assets/image-image-placeholder-1772093836619-alewld.webp?v=1772093838184" alt="Image placeholder" data-zappy-editable-image="true" data-element-type="image" class="zappy-editable-image" data-original-position="static" style="object-position: 50% 50%; position: absolute !important; margin-top: 0px !important; margin-bottom: 0px !important; left: -0.169028% !important; top: 0% !important; width: 100.338% !important; height: 100% !important; max-width: none !important; max-height: none !important; display: block; object-fit: fill !important; cursor: pointer" data-element-id="new-grid-img-1772093658618-0-qx9ia1ms6" data-zappy-zoom="0.9" id="new-grid-img-1772093658618-0-qx9ia1ms6" data-placeholder="image-placeholder" data-ai-slot="grid-item-image" data-zappy-original-width="540" data-zappy-original-height="303" data-resize-handler-attached="true" data-i18n-alt="blog_alt_87"></div>
-    <p style="cursor: text;" data-i18n="blog_p_24">טקסט כאן</p></div>
+    <div data-zappy-zoom-wrapper="true" data-element-id="img-1772043755201-achz623w4-add-1772093658617-u1kjmd" data-element-type="image" data-zappy-zoom-wrapper-width="540px" data-zappy-zoom-wrapper-height="303px" data-zappy-zoom-wrapper-width-mode="px" style="position: relative !important; overflow: hidden !important; width: 540px !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important; height: 303px !important; display: block !important;" data-zappy-zoom-clip="true" data-zappy-wrapper-margins-applied="true"><img data-context="Brand monitoring and signal detection interface" width="600" height="400" src="/assets/image-image-placeholder-1772093836619-alewld.webp?v=1772093838184" alt="Image placeholder" data-element-type="image" class="zappy-editable-image" style="object-position: 50% 50%; position: absolute !important; margin-top: 0px !important; margin-bottom: 0px !important; left: -0.169028% !important; top: 0% !important; width: 100.338% !important; height: 100% !important; max-width: none !important; max-height: none !important; display: block; object-fit: fill !important; cursor: pointer" data-element-id="new-grid-img-1772093658618-0-qx9ia1ms6" data-zappy-zoom="0.9" id="new-grid-img-1772093658618-0-qx9ia1ms6" data-placeholder="image-placeholder" data-ai-slot="grid-item-image" data-zappy-original-width="540" data-zappy-original-height="303" data-i18n-alt="blog_alt_87"></div>
+    <p  data-i18n="blog_p_24">טקסט כאן</p></div>
   <div class="blog-card-content" style="justify-content: flex-start; width: 100%; margin-left: 0px; margin-right: 0px; text-align: right;">
-    <h3 style="cursor: text;" data-i18n="blog_h3_9">דאטה סקרייפינג, מה מותר ומה אסור?</h3>
-    <p style="cursor: text;" data-i18n="blog_p_25">דאטה סקרייפינג (גרידת נתונים) כלי אדיר למודיעין עסקי אבל עם גבולות חוקיים אפורים..&nbsp;</p>
-    <div class="blog-card-meta" style="cursor: text;" data-i18n="blog_div_71"><span class="blog-card-date" style="cursor: text;" data-i18n="blog_span_43">22 פברואר 2026</span><br>      <span class="blog-card-time" style="cursor: text;" data-i18n="blog_span_44">טקסט כאן</span></div><div class="zappy-inserted-element" id="zappy-element-1772045303494-6b9ev9a9y-add-1772093658617-u1kjmd" data-element-id="zappy-element-1772045303494-6b9ev9a9y-add-1772093658617-u1kjmd" data-element-type="button" style="margin: 20px auto; text-align: right !important; display: flex !important; justify-content: flex-start !important; align-items: flex-start !important; max-width: 496px !important; width: 100% !important; align-self: start !important; height: auto !important; cursor: text;"><a href="/digital-identity-intelligence" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-style: solid; border-width: 2px; border-image: initial; outline: none; border-color: transparent !important; color: var(--light-text, #ffffff) !important; flex: 0 0 auto !important; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772045350639-y5kemcxw5-add-1772093658617-u1kjmd" id="btn-1772045350639-y5kemcxw5-add-1772093658617-u1kjmd" data-i18n="blog_link_50">כפתור</a></div>
+    <h3  data-i18n="blog_h3_9">דאטה סקרייפינג, מה מותר ומה אסור?</h3>
+    <p  data-i18n="blog_p_25">דאטה סקרייפינג (גרידת נתונים) כלי אדיר למודיעין עסקי אבל עם גבולות חוקיים אפורים..&nbsp;</p>
+    <div class="blog-card-meta"  data-i18n="blog_div_71"><span class="blog-card-date"  data-i18n="blog_span_43">22 פברואר 2026</span><br>      <span class="blog-card-time"  data-i18n="blog_span_44">טקסט כאן</span></div><div class="zappy-inserted-element" id="zappy-element-1772045303494-6b9ev9a9y-add-1772093658617-u1kjmd" data-element-id="zappy-element-1772045303494-6b9ev9a9y-add-1772093658617-u1kjmd" data-element-type="button" style="margin: 20px auto; text-align: right !important; display: flex !important; justify-content: flex-start !important; align-items: flex-start !important; max-width: 496px !important; width: 100% !important; align-self: start !important; height: auto !important; "><a href="/digital-identity-intelligence" class="btn btn-ghost" style="text-decoration: none; padding: 12px 24px; border-radius: 6px; display: inline-block; border-style: solid; border-width: 2px; border-image: initial; outline: none; border-color: transparent !important; color: var(--light-text, #ffffff) !important; flex: 0 0 auto !important; background-color: transparent !important; background-image: none !important;" data-element-type="button" data-text-color="light" data-element-id="btn-1772045350639-y5kemcxw5-add-1772093658617-u1kjmd" id="btn-1772045350639-y5kemcxw5-add-1772093658617-u1kjmd" data-i18n="blog_link_50">כפתור</a></div>
     </div>
 </article></div></div>
 </section>
@@ -6595,29 +6595,116 @@ html[dir="rtl"] body {
 
     <script>
     (function(){
-      if(window.innerWidth>768)return;
-      function fixZW(){
+      var _applied=false;
+      function _isHeroBg(w){var img=w.querySelector('img');if(img&&(img.getAttribute('data-hero-bg')==='true'||img.getAttribute('data-hero-background')==='true'))return true;var p=(w.style.position||'').replace(/\s*!important\s*/g,'').trim();var ww=(w.style.width||'').replace(/\s*!important\s*/g,'').trim();var hh=(w.style.height||'').replace(/\s*!important\s*/g,'').trim();return p==='absolute'&&ww==='100%'&&hh==='100%';}
+      function fixDesktopWrappers(){
+        // No-op: desktop wrapper restoration is handled by ZAPPY_PUBLISHED_ZOOM_WRAPPER_RUNTIME
+        // in script.js (restoreWrapperDimensions). The old inflation logic here was expanding
+        // small wrappers (e.g. 139px logo wrappers) to their parent width, conflicting with
+        // the correct stored dimensions.
+      }
+      function applyMobile(){
+        if(_applied)return;_applied=true;
         document.querySelectorAll('[data-zappy-zoom-wrapper="true"]').forEach(function(w){
           var cw=w.style.getPropertyValue('width');
           if(!cw||cw==='100%')return;
-          w.style.setProperty('width','100%','important');
-          w.style.setProperty('max-width','100%','important');
-          w.style.setProperty('height','auto','important');
+          if(!w._zappyDesktop)w._zappyDesktop={wStyle:w.getAttribute('style')};
           var img=w.querySelector('img');
-          if(img){
+          if(!img)return;
+          if(!img._zappyDesktop)img._zappyDesktop={src:img.getAttribute('src'),style:img.getAttribute('style')};
+          var mobileZoom=parseFloat(img.getAttribute('data-zappy-mobile-zoom'));
+          var mobileSrc=img.getAttribute('data-zappy-mobile-src');
+          var mobilePos=img.getAttribute('data-zappy-mobile-object-position');
+          var parentOvf=w.parentElement?((w.parentElement.style.overflow||'')+(window.getComputedStyle(w.parentElement).overflow||'')).trim():'';
+          var inConstrainedParent=parentOvf.indexOf('hidden')!==-1||parentOvf.indexOf('clip')!==-1;
+          if(inConstrainedParent){
+            w.style.setProperty('max-width','100%','important');
+          }else{
+            w.style.setProperty('width','100%','important');
+            w.style.setProperty('max-width','100%','important');
+          }
+          if(mobileSrc)img.src=mobileSrc;
+          var pos=mobilePos||img.style.getPropertyValue('object-position')||'50% 50%';
+          if(mobileZoom>1){
+            var wH=w.getAttribute('data-zappy-zoom-wrapper-height');
+            w.style.setProperty('height',wH||'200px','important');
+            img.style.setProperty('position','relative','important');
+            img.style.setProperty('width','100%','important');
+            img.style.setProperty('height','auto','important');
+            img.style.setProperty('min-height','100%','important');
+            img.style.setProperty('max-width','none','important');
+            img.style.setProperty('max-height','none','important');
+            img.style.setProperty('object-fit','cover','important');
+            img.style.setProperty('left','0','important');
+            img.style.setProperty('top','0','important');
+            img.style.setProperty('object-position',pos,'important');
+            img.style.setProperty('transform','scale('+mobileZoom+')','important');
+            img.style.setProperty('transform-origin',pos,'important');
+          }else{
+            if(!inConstrainedParent)w.style.setProperty('height','auto','important');
             img.style.setProperty('position','relative','important');
             img.style.setProperty('width','100%','important');
             img.style.setProperty('height','auto','important');
             img.style.setProperty('max-width','100%','important');
-            img.style.setProperty('max-height','400px','important');
+            img.style.setProperty('max-height',inConstrainedParent?'none':'400px','important');
             img.style.setProperty('object-fit','cover','important');
             img.style.setProperty('left','0','important');
             img.style.setProperty('top','0','important');
+            img.style.setProperty('transform','none','important');
+            if(mobilePos)img.style.setProperty('object-position',pos,'important');
+          }
+        });
+        document.querySelectorAll('img[data-zappy-mobile-src],img[data-zappy-mobile-object-position],img[data-zappy-mobile-zoom]').forEach(function(img){
+          var zw=img.closest('[data-zappy-zoom-wrapper="true"]');
+          if(zw&&!_isHeroBg(zw))return;
+          if(!img._zappyDesktop)img._zappyDesktop={src:img.getAttribute('src'),style:img.getAttribute('style')};
+          var mobileSrc=img.getAttribute('data-zappy-mobile-src');
+          var mobilePos=img.getAttribute('data-zappy-mobile-object-position');
+          var mobileZoom=parseFloat(img.getAttribute('data-zappy-mobile-zoom'));
+          if(mobileSrc)img.src=mobileSrc;
+          if(mobilePos)img.style.setProperty('object-position',mobilePos,'important');
+          if(mobileZoom>1){
+            img.style.setProperty('transform','scale('+mobileZoom+')','important');
+            img.style.setProperty('transform-origin',mobilePos||'50% 50%','important');
+            var p=img.parentElement;
+            if(p)p.style.setProperty('overflow','hidden','important');
           }
         });
       }
-      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fixZW);
-      else setTimeout(fixZW,50);
+      function revertDesktop(){
+        if(!_applied)return;_applied=false;
+        document.querySelectorAll('[data-zappy-zoom-wrapper="true"]').forEach(function(w){
+          if(w._zappyDesktop&&w._zappyDesktop.wStyle!=null){w.setAttribute('style',w._zappyDesktop.wStyle);}
+          var img=w.querySelector('img');
+          if(img&&img._zappyDesktop){
+            if(img._zappyDesktop.src!=null)img.setAttribute('src',img._zappyDesktop.src);
+            if(img._zappyDesktop.style!=null)img.setAttribute('style',img._zappyDesktop.style);
+            else img.removeAttribute('style');
+          }
+        });
+        document.querySelectorAll('img[data-zappy-mobile-src],img[data-zappy-mobile-object-position],img[data-zappy-mobile-zoom]').forEach(function(img){
+          var zw=img.closest('[data-zappy-zoom-wrapper="true"]');
+          if(zw&&!_isHeroBg(zw))return;
+          if(img._zappyDesktop){
+            if(img._zappyDesktop.src!=null)img.setAttribute('src',img._zappyDesktop.src);
+            if(img._zappyDesktop.style!=null)img.setAttribute('style',img._zappyDesktop.style);
+            else img.removeAttribute('style');
+          }
+        });
+        _fixHeroBgWrappers();
+        fixDesktopWrappers();
+      }
+      function _fixHeroBgWrappers(){var isMob=window.innerWidth<=768;document.querySelectorAll('[data-zappy-zoom-wrapper="true"]').forEach(function(w){if(!_isHeroBg(w))return;w.style.setProperty('position','absolute','important');w.style.setProperty('top','0','important');w.style.setProperty('left','0','important');w.style.setProperty('width','100%','important');w.style.setProperty('height','100%','important');w.style.setProperty('max-width','none','important');w.style.setProperty('overflow','hidden','important');w.setAttribute('data-zappy-zoom-wrapper-width-mode','full');var img=w.querySelector('img');if(img){img.style.setProperty('width','100%','important');img.style.setProperty('height','100%','important');img.style.setProperty('object-fit','cover','important');img.style.setProperty('position','relative','important');img.style.setProperty('top','0','important');img.style.setProperty('left','0','important');img.style.setProperty('max-width','none','important');img.style.setProperty('max-height','none','important');img.style.setProperty('display','block','important');if(isMob){var mSrc=img.getAttribute('data-zappy-mobile-src');var mPos=img.getAttribute('data-zappy-mobile-object-position');var mZoom=parseFloat(img.getAttribute('data-zappy-mobile-zoom'));if(mSrc){if(!img._zappyDesktop)img._zappyDesktop={src:img.getAttribute('src'),style:img.getAttribute('style')};img.src=mSrc;}if(mPos)img.style.setProperty('object-position',mPos,'important');if(mZoom>1){img.style.setProperty('transform','scale('+mZoom+')','important');img.style.setProperty('transform-origin',mPos||'50% 50%','important');}}}});}
+      function init(){
+        _fixHeroBgWrappers();
+        var mq=window.matchMedia('(max-width:768px)');
+        function onChange(e){if(e.matches)applyMobile();else revertDesktop();}
+        if(mq.matches)applyMobile();
+        else fixDesktopWrappers();
+        try{mq.addEventListener('change',onChange);}catch(e){mq.addListener(onChange);}
+      }
+      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+      else setTimeout(init,50);
     })();
     </script>
 </body>
